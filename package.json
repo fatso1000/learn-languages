@@ -4,11 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && prisma db push && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "migrate:dev": "npx prisma migrate dev --name dev",
+    "db:push": "npx prisma db push",
+    "prisma:studio": "npx prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.1",
+    "@vercel/postgres": "^0.5.0",
+    "bcrypt": "^5.1.1",
+    "class-validator": "^0.14.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
@@ -17,6 +26,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -25,6 +36,7 @@
     "eslint": "^8",
     "eslint-config-next": "13.5.4",
     "postcss": "^8",
+    "prisma": "^5.4.1",
     "tailwindcss": "^3",
     "typescript": "^5"
   }

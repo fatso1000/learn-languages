@@ -9,6 +9,8 @@ import franceFlag from "public/images/flags/france_flag.png";
 import italianFlag from "public/images/flags/italy_flag.png";
 import germanFlag from "public/images/flags/german_flag.png";
 import japaneseFlag from "public/images/flags/japan_flag.png";
+import generic from "public/images/generic/test.png";
+import flagsDisplayGif from "public/images/flags/flags_display.gif";
 
 const LanguagesSelection = (props: LanguagesSelectionProps) => (
   <div className="grid grid-cols-2 gap-4">
@@ -47,6 +49,10 @@ const flags: IFlags[] = [
   { language: Languages.french, flagUrl: franceFlag, displayName: "French" },
 ];
 
+const FlagRandomDisplay = () => (
+  <img className="w-20 h-10 ml-3 shadow-sm" src={flagsDisplayGif.src} alt="" />
+);
+
 export default function HomeHeader() {
   const modalRef = useRef<any>(null);
 
@@ -63,12 +69,14 @@ export default function HomeHeader() {
       <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
         <div className="relative">
           <div className="relative mx-auto flex items-center flex-col">
-            <h1 className="text-6xl font-black">Learn Languages Online</h1>
-            <p className="text-xl">
+            <h1 className="text-6xl leading-6 font-black text-center inline-flex items-center">
+              Learn Languages Online <FlagRandomDisplay />
+            </h1>
+            <p className="mt-6 text-xl text-base-content/60 font-light">
               Learn the desired language you want with online tools and content,
               all for free!
             </p>
-            <div className="inline-flex items-center w-full flex-col justify-center gap-2 px-4 md:flex-row xl:px-0">
+            <div className="mt-6 inline-flex items-center w-full flex-col justify-center gap-2 px-4 md:flex-row xl:px-0">
               <button
                 className="btn md:btn-lg md:btn-wide group px-12 normal-case"
                 onClick={onShowModal}
@@ -79,6 +87,18 @@ export default function HomeHeader() {
                 Login
               </button>
             </div>
+            <section className="flex flex-col gap-y-5">
+              <div>
+                <h2>READING</h2>
+                <p>lorem ipsum</p>
+                <a className="link" href="/english/reading">
+                  Go to Reading
+                </a>
+              </div>
+              <div>
+                <img src={generic.src} alt="" />
+              </div>
+            </section>
           </div>
         </div>
       </header>

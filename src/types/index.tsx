@@ -31,3 +31,15 @@ export interface LanguagesSelectionProps {
     onClick: (value: IFlags) => void;
   };
 }
+
+export interface IReadingSections {
+  section: string;
+  readingTexts: IReadingTexts[];
+  lockedTexts: number;
+}
+
+export interface IReadingTexts {
+  title: string;
+  id: string;
+  description: string;
+}
