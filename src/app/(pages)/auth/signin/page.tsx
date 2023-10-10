@@ -1,18 +1,19 @@
-import { signinUser } from "src/queryFn";
-import { setLoginCookies } from "src/shared/apiShared";
-
-export default function SignIn({ searchParams }: any) {
-  const hasError = searchParams.hasOwnProperty("error")
-    ? searchParams["error"]
-    : undefined;
+import {signinUser} from "src/queryFn";
+import {setLoginCookies} from "src/shared/apiShared";
+import {redirect} from "next/navigation";
+export default function SignIn({
+  searchParams,
+}: {
+  searchParams: {error?: string};
+}) {
+  const hasError = searchParams?.error;
 
   const submitForm = async (formData: FormData) => {
     "use server";
-    const { redirect } = require("next/navigation");
 
     const email = formData.get("email"),
       password = formData.get("password");
-    const user = await signinUser({ email, password });
+    const user = await signinUser({email, password});
 
     if (!user.error)
       setLoginCookies(JSON.stringify(user.data.user), user.data.token);
@@ -26,8 +27,7 @@ export default function SignIn({ searchParams }: any) {
         <h1 className="font-black text-6xl text-center">SignIn User</h1>
         <form
           action={submitForm}
-          className="flex flex-col items-center gap-y-5"
-        >
+          className="flex flex-col items-center gap-y-5">
           {hasError && (
             <div className="card w-96 bg-red-600 text-white">
               <div className="card-body items-center text-center">
@@ -37,7 +37,7 @@ export default function SignIn({ searchParams }: any) {
             </div>
           )}
           <input
-            type="text"
+            type="email"
             required
             placeholder="Email"
             name="email"
