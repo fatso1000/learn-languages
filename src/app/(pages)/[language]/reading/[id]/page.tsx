@@ -22,7 +22,11 @@ const QA = (props: any) => {
             <h5 className="ml-1">{v.title}</h5>
             <div className="join">
               {v.options.map((x: any) => {
-                return <button className="btn join-item">{x}</button>;
+                return (
+                  <button key={x} className="btn join-item">
+                    {x}
+                  </button>
+                );
               })}
             </div>
           </div>
