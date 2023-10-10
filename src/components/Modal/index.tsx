@@ -4,7 +4,7 @@ import { ModalProps } from "src/types";
 
 const Modal = memo(function Modal(props: ModalProps) {
   const { title, content, onSuccess, onClose, ref } = props.props;
-  console.log(props);
+  // console.log(props);
   return (
     <dialog id="generic_modal" className="modal" ref={ref}>
       <div className="modal-box ">

@@ -9,6 +9,10 @@ const config: Config = {
   daisyui: {
     themes: ["cupcake"],
   },
-  plugins: [require("daisyui"), require("@tailwindcss/typography")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/forms"),
+  ],
 };
 export default config;

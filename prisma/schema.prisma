@@ -10,9 +10,62 @@ datasource db {
 }
 
 model User {
-    id         Int      @id @default(autoincrement())
-    created_at DateTime @default(now())
-    email      String   @unique
-    password   String
-    name       String?
+    id               Int          @id @default(autoincrement())
+    created_at       DateTime     @default(now())
+    email            String       @unique
+    password         String
+    name             String?
+    user_readings    UserReadings @relation(fields: [user_readings_id], references: [id])
+    user_readings_id Int          @unique
+}
+
+model Readings {
+    id            Int            @id @default(autoincrement())
+    title         String
+    locked_texts  Int
+    reading_texts ReadingTexts[]
+    language      Languages      @relation(fields: [language_id], references: [id])
+    language_id   Int
+}
+
+model Languages {
+    id       Int        @id @default(autoincrement())
+    name     String
+    readings Readings[]
+}
+
+model ReadingTexts {
+    id                     Int                   @id @default(autoincrement())
+    title                  String
+    description            String
+    text                   String[]
+    reading                Readings              @relation(fields: [reading_id], references: [id])
+    reading_id             Int
+    question_and_answer    QuestionAndAnswer[]
+    PendingsReadingTexts   PendingsReadingTexts? @relation(fields: [pendingsReadingTextsId], references: [id])
+    pendingsReadingTextsId Int?
+}
+
+model QuestionAndAnswer {
+    id               Int          @id @default(autoincrement())
+    title            String
+    options          String[]
+    correct_answer   String
+    reading_texts    ReadingTexts @relation(fields: [reading_texts_id], references: [id])
+    reading_texts_id Int
+}
+
+model UserReadings {
+    id       Int                    @id @default(autoincrement())
+    readings PendingsReadingTexts[]
+    user     User?
+}
+
+model PendingsReadingTexts {
+    id               Int            @id @default(autoincrement())
+    pendings         ReadingTexts[]
+    user_readings    UserReadings   @relation(fields: [user_readings_id], references: [id])
+    marked_as_read   Boolean
+    reading_texts_id Int
+    user_readings_id Int
 }

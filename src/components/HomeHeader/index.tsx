@@ -11,6 +11,7 @@ import germanFlag from "public/images/flags/german_flag.png";
 import japaneseFlag from "public/images/flags/japan_flag.png";
 import generic from "public/images/generic/test.png";
 import flagsDisplayGif from "public/images/flags/flags_display.gif";
+import Link from "next/link";
 
 const LanguagesSelection = (props: LanguagesSelectionProps) => (
   <div className="grid grid-cols-2 gap-4">
@@ -83,9 +84,12 @@ export default function HomeHeader() {
               >
                 Select Language
               </button>
-              <button className="btn btn-neutral md:btn-lg md:btn-wide group px-12 normal-case">
+              <Link
+                className="btn btn-neutral md:btn-lg md:btn-wide group px-12 normal-case"
+                href={"/auth/signin"}
+              >
                 Login
-              </button>
+              </Link>
             </div>
             <section className="flex flex-col gap-y-5">
               <div>

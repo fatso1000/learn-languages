@@ -1,12 +1,12 @@
 import { StaticImageData } from "next/image";
 
 export enum Languages {
-  spanish = "spanish",
-  english = "english",
-  italian = "italian",
-  japanese = "japanese",
-  german = "german",
-  french = "french",
+  spanish = "Spanish",
+  english = "English",
+  italian = "Italian",
+  japanese = "Japanese",
+  german = "German",
+  french = "French",
 }
 
 export interface ModalProps {
@@ -33,9 +33,9 @@ export interface LanguagesSelectionProps {
 }
 
 export interface IReadingSections {
-  section: string;
-  readingTexts: IReadingTexts[];
-  lockedTexts: number;
+  title: string;
+  reading_texts: IReadingTexts[];
+  locked_texts: number;
 }
 
 export interface IReadingTexts {
