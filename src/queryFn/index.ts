@@ -30,4 +30,16 @@ const signupUser = async (userData: any) => {
     userData
   );
 };
-export {getReadingById, getReadingByLanguage, signinUser, signupUser, getUrl};
+
+const signOutUser = async () => {
+  return await handleApiRequest(getUrl + "/api/auth/logout");
+};
+
+export {
+  getReadingById,
+  getReadingByLanguage,
+  signinUser,
+  getUrl,
+  signOutUser,
+  signupUser,
+};

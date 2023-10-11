@@ -1,19 +1,14 @@
-import React from "react";
 import Navbar from "../Navbar";
 import Link from "next/link";
 
-export default function LayoutComponent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LayoutComponent(props: any) {
   return (
     <div className="mx-auto bg-base-100 drawer">
       <input id="drawer" type="checkbox" className="drawer-toggle"></input>
       <div className="drawer-content">
-        <Navbar />
+        <Navbar props={props} />
         <div>
-          {children}
+          {props.children}
           <footer className="flex flex-row gap-x-7 mb-2 p-2">
             <div>
               <h3 className="text-lg font-extrabold tracking-tight">Links</h3>
