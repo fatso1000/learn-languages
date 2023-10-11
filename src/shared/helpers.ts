@@ -4,7 +4,7 @@ function getRandomItemFromArray<T>(array: T[]) {
 }
 
 function getRandomAnimalName() {
-  return getRandomItemFromArray<string>(animalsList);
+  return getRandomItemFromArray<string>(animalsList).toLowerCase();
 }
 
 const animalsList = [
