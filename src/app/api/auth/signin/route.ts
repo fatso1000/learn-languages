@@ -23,6 +23,13 @@ export async function POST(req: Request, res: Response) {
 
     const request = await prisma.user.findFirst({
       where: { email: body.email },
+      select: {
+        name: true,
+        email: true,
+        profile: true,
+        id: true,
+        password: true,
+      },
     });
     if (!request)
       throw new CustomError({

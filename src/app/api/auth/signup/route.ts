@@ -5,6 +5,7 @@ import { onThrowError } from "../../apiService";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import bcrypt from "bcrypt";
+import { getRandomAnimalName } from "src/shared/helpers";
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,12 +23,18 @@ export async function POST(req: NextRequest) {
     }
 
     body.password = await bcrypt.hash(body.password, 8);
+    const name = body.name ? body.name : getRandomAnimalName();
+
+    const fullBody = {
+      email: body.email,
+      password: body.password,
+      name,
+      user_readings: { create: { readings: { connect: [] } } },
+      profile: { create: { color: body.profile_color } },
+    };
 
     const request = await prisma.user.create({
-      data: {
-        ...body,
-        user_readings: { create: { readings: { connect: [] } } },
-      },
+      data: fullBody,
     });
     if (!request)
       throw new CustomError({
