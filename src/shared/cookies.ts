@@ -1,3 +1,4 @@
+"use server";
 import { cookies } from "next/headers";
 
 const getCookie = async (cookieKey: string) => {
@@ -20,4 +21,28 @@ const getBearerToken = async () => {
   };
 };
 
-export { getBearerToken, isUserLoggedIn, getCookie };
+const logoutUser = async () => {
+  const oneDay = 24 * 60 * 60 * 1000;
+  return {
+    user: await cookies().set({
+      name: "current_user",
+      value: "",
+      expires: Date.now() - oneDay,
+    }),
+    token: await cookies().set({
+      name: "token",
+      value: "",
+      expires: Date.now() - oneDay,
+    }),
+  };
+};
+
+const deleteCookie = async (cookieKey: string) => {
+  try {
+    return await cookies().delete(cookieKey);
+  } catch (error: any) {
+    return undefined;
+  }
+};
+
+export { getBearerToken, isUserLoggedIn, getCookie, deleteCookie, logoutUser };
