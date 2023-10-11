@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { logoutUserAction } from "src/app/actions";
 import { isUserLoggedIn } from "src/shared/cookies";
 
@@ -73,6 +74,9 @@ export default function Navbar(props: any) {
                   <form
                     action={async () => {
                       await logoutUserAction();
+                      toast("User logged out successfully.", {
+                        type: "info",
+                      });
                       router.push("/");
                     }}
                   >
