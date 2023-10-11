@@ -23,5 +23,11 @@ const signinUser = async (userData: any) => {
     userData
   );
 };
-
-export { getReadingById, getReadingByLanguage, signinUser, getUrl };
+const signupUser = async (userData: any) => {
+  return await handleCustomApiRequest(
+    getUrl + "/api/auth/signup",
+    "POST",
+    userData
+  );
+};
+export {getReadingById, getReadingByLanguage, signinUser, signupUser, getUrl};
