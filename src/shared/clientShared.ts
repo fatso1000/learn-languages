@@ -1,16 +1,16 @@
-import {HttpStatusCode} from "src/types/httpStatusCode";
+import { HttpStatusCode } from "src/types/httpStatusCode";
 
 const revalidate = 60;
 
 const handleApiRequest = async <T = any>(request: string) => {
   try {
     const fetching = await fetch(request, {
-      next: {revalidate},
+      next: { revalidate },
     });
     const petition = await fetching.json();
-    return {error: undefined, data: petition.data as T};
+    return { error: undefined, data: petition.data as T };
   } catch (error) {
-    return {error: error, data: undefined};
+    return { error: error, data: undefined };
   }
 };
 
@@ -23,30 +23,28 @@ const handleCustomApiRequest = async <T = any>(
     const fetching = await fetch(request, {
       method,
       body: JSON.stringify(body),
-      next: {revalidate},
+      next: { revalidate },
     });
     const petition = await fetching.json();
-    console.log(petition);
 
     return handleStatusCode(petition.httpStatusCode, petition);
     // return { error: undefined, data: petition.data as T };
   } catch (error: any) {
-    console.log(error.message);
-    return {error: error, data: undefined};
+    return { error: error, data: undefined };
   }
 };
 
 const handleStatusCode = (statusCode: HttpStatusCode, petition: any) => {
   switch (statusCode) {
     case HttpStatusCode.OK:
-      return {error: undefined, data: petition.data};
+      return { error: undefined, data: petition.data };
 
     default:
-      return {error: petition.message, data: undefined};
+      return { error: petition.message, data: undefined };
   }
 };
 
 const randomKey = () =>
   new Date(new Date().valueOf() - Math.random() * 1e12).toString();
 
-export {handleApiRequest, randomKey, handleCustomApiRequest};
+export { handleApiRequest, randomKey, handleCustomApiRequest };
