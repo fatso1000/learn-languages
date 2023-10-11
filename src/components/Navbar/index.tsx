@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { logoutUserAction } from "src/app/actions";
-import { isUserLoggedIn } from "src/shared/cookies";
+import { getCurrentUser, isUserLoggedIn } from "src/shared/cookies";
+import { IUser } from "src/types";
+import AnimalComponent from "../Animal";
 
 const ProfilePic = () => (
   <svg
@@ -22,11 +24,14 @@ const ProfilePic = () => (
 
 export default function Navbar(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<IUser>();
   const router = useRouter();
 
   const checkUserLoggedIn = async () => {
     const isLoggedIn = await isUserLoggedIn();
+    const user = await getCurrentUser();
     setIsLoggedIn(isLoggedIn);
+    if (user) setCurrentUser(JSON.parse(user.value));
   };
 
   useEffect(() => {
@@ -55,7 +60,14 @@ export default function Navbar(props: any) {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full !flex flex-col items-center justify-center">
-              <ProfilePic />
+              {isLoggedIn && currentUser && currentUser.profile ? (
+                <AnimalComponent
+                  color={currentUser.profile.color}
+                  animalName={currentUser.profile.animal_name}
+                />
+              ) : (
+                <ProfilePic />
+              )}
             </div>
           </label>
           <ul

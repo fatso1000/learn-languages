@@ -21,6 +21,10 @@ const getBearerToken = async () => {
   };
 };
 
+const getCurrentUser = async () => {
+  return await getCookie("current_user");
+};
+
 const logoutUser = async () => {
   const oneDay = 24 * 60 * 60 * 1000;
   return {
@@ -45,4 +49,11 @@ const deleteCookie = async (cookieKey: string) => {
   }
 };
 
-export { getBearerToken, isUserLoggedIn, getCookie, deleteCookie, logoutUser };
+export {
+  getBearerToken,
+  isUserLoggedIn,
+  getCookie,
+  getCurrentUser,
+  deleteCookie,
+  logoutUser,
+};

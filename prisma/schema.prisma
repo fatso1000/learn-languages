@@ -25,6 +25,7 @@ model UserProfile {
     id    Int    @id @default(autoincrement())
     user  User?
     color String
+    animal_name String
 }
 
 model Readings {

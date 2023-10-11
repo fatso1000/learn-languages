@@ -7,11 +7,14 @@ function getRandomAnimalName() {
   return getRandomItemFromArray<string>(animalsList).toLowerCase();
 }
 
+function getRandomColor() {
+  return getRandomItemFromArray<string>(colorsList);
+}
+
 const animalsList = [
   "Alligator",
   "Anteater",
   "Armadillo",
-  "Aurochs",
   "Axolotl",
   "Badger",
   "Bat",
@@ -44,20 +47,17 @@ const animalsList = [
   "Ifrit", // Mythical creature
   "Iguana",
   "Jackal",
-  "Jackalope", // Mythical creature
   "Kangaroo",
   "Koala",
   "Kraken", // Mythical creature
   "Leopard",
   "Lemur",
   "Liger", // Hybrid animal
-  "Lori",
   "Manatee",
   "Mink",
   "Monkey",
   "Moose",
   "Narwhal",
-  "Nyan Cat", // Internet meme
   "Orangutan",
   "Otter",
   "Panda",
@@ -81,4 +81,12 @@ const animalsList = [
   "Wombat",
 ];
 
-export { getRandomAnimalName, animalsList, getRandomItemFromArray };
+const colorsList = ["red", "orange", "yellow", "green", "purple", "teal"];
+
+export {
+  getRandomAnimalName,
+  animalsList,
+  getRandomItemFromArray,
+  colorsList,
+  getRandomColor,
+};
