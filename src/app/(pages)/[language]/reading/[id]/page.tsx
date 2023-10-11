@@ -3,7 +3,13 @@ import { getReadingById } from "src/queryFn";
 import { IoArrowBack } from "react-icons/io5";
 import Link from "next/link";
 
-export async function generateMetadata(props: any): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id?: string };
+}): Promise<Metadata> {
+  const id = params.hasOwnProperty("id") ? params["id"] : "1";
+  
   return {
     title: "Search Blog By Name - Matias Benitez Blog",
     description: "",
@@ -36,10 +42,16 @@ const QA = (props: any) => {
   );
 };
 
-export default async function ReadingPageById({ params }: any) {
+export default async function ReadingPageById({
+  params,
+}: {
+  params: { id?: string };
+}) {
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
-  const readingText = await getReadingById(id);
+  const readingText = await getReadingById(id!);
+
   if (readingText.error || !readingText.data) return <div>ERROR</div>;
+
   return (
     <main className="mt-4 max-w-[1100px] m-auto px-4 sm:px-4 md:px-16 grid grid-cols-2 gap-x-4">
       <header className="mb-4">

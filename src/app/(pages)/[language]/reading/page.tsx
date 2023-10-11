@@ -3,10 +3,17 @@ import { Metadata } from "next";
 import { Languages } from "src/types";
 import { getReadingByLanguage } from "src/queryFn";
 
-export async function generateMetadata(props: any): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { language?: Languages };
+}): Promise<Metadata> {
+  const language = params.hasOwnProperty("language")
+    ? params["language"]
+    : undefined;
   return {
-    title: "Search Blog By Name - Matias Benitez Blog",
-    description: "",
+    title: `${language} Readings Texts for Beginners - E-Learn`,
+    description: `${language} readings texts for beginners, the best texts to learn ${language} online and for free!`,
   };
 }
 
@@ -18,7 +25,11 @@ const languageslist = [
   Languages.japanese,
 ];
 
-export default async function ReadingsPage({ params }: any) {
+export default async function ReadingsPage({
+  params,
+}: {
+  params: { language?: Languages };
+}) {
   const language = params.hasOwnProperty("language")
     ? params["language"]
     : undefined;
