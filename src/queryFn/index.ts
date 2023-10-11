@@ -23,6 +23,13 @@ const signinUser = async (userData: any) => {
     userData
   );
 };
+const signupUser = async (userData: any) => {
+  return await handleCustomApiRequest(
+    getUrl + "/api/auth/signup",
+    "POST",
+    userData
+  );
+};
 
 const signOutUser = async () => {
   return await handleApiRequest(getUrl + "/api/auth/logout");
@@ -34,4 +41,5 @@ export {
   signinUser,
   getUrl,
   signOutUser,
+  signupUser,
 };
