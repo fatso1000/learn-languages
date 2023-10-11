@@ -1,11 +1,14 @@
-import {redirect} from "next/navigation";
-import {signupUser} from "src/queryFn";
+import { redirect } from "next/navigation";
+import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
+import { signupUser } from "src/queryFn";
+
 export default function SignUp({
   searchParams,
 }: {
-  searchParams: {error?: string};
+  searchParams: { error?: string };
 }) {
   const hasError = searchParams?.error;
+
   const submitForm = async (formData: FormData) => {
     "use server";
     const name = formData.get("name"),
@@ -14,19 +17,21 @@ export default function SignUp({
       repeat_password = formData.get("repeat_password");
 
     if (password === repeat_password) {
-      const user = await signupUser({email, password, name});
+      const user = await signupUser({ email, password, name });
       redirect(user.error ? `?error=${user.error}` : "/auth/signin");
     } else {
-      redirect("?error=RepeatedPasswordIsDifferent");
+      redirect("?error=Passwords are not the same");
     }
   };
+
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">
       <section className="flex flex-col gap-y-5 max-w-[50ch] m-auto">
         <h1 className="font-black text-6xl text-center">SignUp User</h1>
         <form
           action={submitForm}
-          className="flex flex-col items-center gap-y-5">
+          className="flex flex-col items-center gap-y-5"
+        >
           {hasError && (
             <div className="card w-96 bg-red-600 text-white">
               <div className="card-body items-center text-center">
@@ -100,9 +105,7 @@ export default function SignUp({
               className="input input-bordered w-full"
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Sign Up
-          </button>
+          <SubmitButton className="btn btn-primary">Sign Up</SubmitButton>
         </form>
       </section>
     </main>
