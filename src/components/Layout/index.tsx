@@ -9,7 +9,7 @@ export default function LayoutComponent(props: any) {
         <Navbar props={props} />
         <div>
           {props.children}
-          <footer className="flex flex-row gap-x-7 mb-2 p-2">
+          <footer className="flex flex-row gap-x-7 mb-2 p-2 mt-4 px-4 sm:px-4 md:px-16">
             <div>
               <h3 className="text-lg font-extrabold tracking-tight">Links</h3>
               <ul className="text-stone-400">
