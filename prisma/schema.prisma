@@ -14,9 +14,18 @@ model User {
     created_at       DateTime     @default(now())
     email            String       @unique
     password         String
-    name             String?
+    name             String
+    profile          UserProfile  @relation(fields: [profile_id], references: [id])
     user_readings    UserReadings @relation(fields: [user_readings_id], references: [id])
     user_readings_id Int          @unique
+    profile_id       Int          @unique
+}
+
+model UserProfile {
+    id    Int    @id @default(autoincrement())
+    user  User?
+    color String
+    animal_name String
 }
 
 model Readings {

@@ -43,3 +43,17 @@ export interface IReadingTexts {
   id: string;
   description: string;
 }
+
+export interface IUser {
+  name: string;
+  email: string;
+  profile: Profile;
+  id: number;
+  password: string;
+}
+
+export interface Profile {
+  id: number;
+  color: string;
+  animal_name: string;
+}

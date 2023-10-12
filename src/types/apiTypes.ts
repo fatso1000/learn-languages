@@ -145,10 +145,13 @@ export class UserSignUpPOST {
   @Length(1)
   public name?: string;
 
-  constructor({ email, password, name }: IUserSignUp) {
+  public profile_color: string;
+
+  constructor({ email, password, name, profile_color }: IUserSignUp) {
     this.email = email;
     this.password = password;
     this.name = name;
+    this.profile_color = profile_color;
   }
 }
 
@@ -161,6 +164,14 @@ export interface IUserSignUp {
   email: string;
   password: string;
   name?: string;
+  profile_color:
+    | string
+    | "red"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal";
 }
 
 export interface IUserLogout {
