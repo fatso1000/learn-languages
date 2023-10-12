@@ -38,7 +38,10 @@ const logInUser = (user: IUserLogin) => {
       time: new Date(),
       ...user,
     };
-    const token = jwt.sign(data, jwt_secret);
+    const options = {
+      expiresIn: 3600, // 1 hour
+    };
+    const token = jwt.sign(data, jwt_secret, options);
     return token;
   } catch (error) {
     return null;

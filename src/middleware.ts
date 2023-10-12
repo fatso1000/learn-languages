@@ -13,6 +13,10 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith("/auth")) {
       return NextResponse.redirect(new URL("/", request.url));
     }
+  } else {
+    if (pathname.startsWith("/user")) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 
   return NextResponse.next();

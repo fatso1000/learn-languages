@@ -64,6 +64,7 @@ export default function Navbar(props: any) {
                 <AnimalComponent
                   color={currentUser.profile.color}
                   animalName={currentUser.profile.animal_name}
+                  size="2em"
                 />
               ) : (
                 <ProfilePic />
