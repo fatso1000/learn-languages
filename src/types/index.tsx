@@ -57,3 +57,21 @@ export interface Profile {
   color: string;
   animal_name: string;
 }
+
+export interface IReadings {
+  id: number;
+  title: string;
+  description: string;
+  text: string[];
+  reading_id: number;
+  pendingsReadingTextsId: null;
+  question_and_answer: IQuestionAndAnswer[];
+}
+
+export interface IQuestionAndAnswer {
+  id: number;
+  title: string;
+  options: string[];
+  correct_answer: string;
+  reading_texts_id: number;
+}

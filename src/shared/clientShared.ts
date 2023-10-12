@@ -27,17 +27,17 @@ const handleCustomApiRequest = async <T = any>(
     });
     const petition = await fetching.json();
 
-    return handleStatusCode(petition.httpStatusCode, petition);
+    return handleStatusCode<T>(petition.httpStatusCode, petition);
     // return { error: undefined, data: petition.data as T };
   } catch (error: any) {
     return { error: error, data: undefined };
   }
 };
 
-const handleStatusCode = (statusCode: HttpStatusCode, petition: any) => {
+const handleStatusCode = <T>(statusCode: HttpStatusCode, petition: any) => {
   switch (statusCode) {
     case HttpStatusCode.OK:
-      return { error: undefined, data: petition.data };
+      return { error: undefined, data: petition.data as T };
 
     default:
       return { error: petition.message, data: undefined };

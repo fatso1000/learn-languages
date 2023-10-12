@@ -88,11 +88,11 @@ export interface ILanguage {
 // READINGS
 export class ReadingsPOST {
   public title: string;
-  public reading_texts: IReadingTexts[];
-  public qa: IQuestionAndAnswer[];
+  public reading_texts: APIReadingTexts[];
+  public qa: APIQuestionAndAnswer[];
   public language_id: number;
 
-  constructor({ qa, reading_texts, title, language_id }: IReadings) {
+  constructor({ qa, reading_texts, title, language_id }: APIReadings) {
     this.qa = qa;
     this.reading_texts = reading_texts;
     this.title = title;
@@ -100,21 +100,21 @@ export class ReadingsPOST {
   }
 }
 
-export interface IReadings {
+export interface APIReadings {
   title: string;
   language_id: number;
-  reading_texts: IReadingTexts[];
-  qa: IQuestionAndAnswer[];
+  reading_texts: APIReadingTexts[];
+  qa: APIQuestionAndAnswer[];
 }
 
-export interface IReadingTexts {
+export interface APIReadingTexts {
   title: string;
   description: string;
   text: string;
-  question_and_answer: IQuestionAndAnswer[];
+  question_and_answer: APIQuestionAndAnswer[];
 }
 
-export interface IQuestionAndAnswer {
+export interface APIQuestionAndAnswer {
   title: string;
   options: string[];
   correct_answer: string;

@@ -1,6 +1,6 @@
 import { validate } from "class-validator";
 import { NextRequest, NextResponse } from "next/server";
-import { CustomError, IReadings, ReadingsPOST } from "types/apiTypes";
+import { CustomError, APIReadings, ReadingsPOST } from "types/apiTypes";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import { onThrowError } from "../apiService";
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     // verifyUserAuth(req);
-    let body: IReadings = await req.json();
+    let body: APIReadings = await req.json();
     const bodyType = new ReadingsPOST(body);
 
     const validation = await validate(bodyType);
