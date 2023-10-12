@@ -8,8 +8,8 @@ const getUrl =
     ? "https://personal-blog-delta-amber.vercel.app"
     : "http://localhost:3000";
 
-const getReadingById = async (id: string) => {
-  return await handleApiRequest(getUrl + "/api/reading/" + id);
+const getReadingById = async <T,>(id: string) => {
+  return await handleApiRequest<T>(getUrl + "/api/reading/" + id);
 };
 
 const getReadingByLanguage = async (name: string) => {

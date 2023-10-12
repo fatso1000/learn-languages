@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { getReadingById } from "src/queryFn";
 import { IoArrowBack } from "react-icons/io5";
 import Link from "next/link";
+import { IReadings } from "src/types";
+import QA from "src/components/Reading/QA";
 
 export async function generateMetadata({
   params,
@@ -9,38 +11,12 @@ export async function generateMetadata({
   params: { id?: string };
 }): Promise<Metadata> {
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
-  
+
   return {
     title: "Search Blog By Name - Matias Benitez Blog",
     description: "",
   };
 }
-
-const QA = (props: any) => {
-  return (
-    <div className="mt-6 flex flex-col gap-y-5">
-      {props.values.map((v: any, i: number) => {
-        return (
-          <div key={v.id} className="flex flex-col gap-y-1">
-            <h3 className="badge badge-neutral badge-lg text-lg">
-              Question {i + 1}:
-            </h3>
-            <h5 className="ml-1">{v.title}</h5>
-            <div className="join">
-              {v.options.map((x: any) => {
-                return (
-                  <button key={x} className="btn join-item">
-                    {x}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
 
 export default async function ReadingPageById({
   params,
@@ -48,7 +24,7 @@ export default async function ReadingPageById({
   params: { id?: string };
 }) {
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
-  const readingText = await getReadingById(id!);
+  const readingText = await getReadingById<IReadings>(id!);
 
   if (readingText.error || !readingText.data) return <div>ERROR</div>;
 
