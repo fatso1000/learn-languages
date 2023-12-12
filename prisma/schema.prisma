@@ -1,5 +1,6 @@
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["views"]
 }
 
 datasource db {
@@ -9,72 +10,103 @@ datasource db {
     shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+enum Levels {
+    A1
+    A2
+    B1
+    B2
+    C1
+    C2
+}
+
+enum Types {
+    Listening
+    Exercise
+    Reading
+}
+
 model User {
-    id               Int          @id @default(autoincrement())
-    created_at       DateTime     @default(now())
-    email            String       @unique
-    password         String
-    name             String
-    profile          UserProfile  @relation(fields: [profile_id], references: [id])
-    user_readings    UserReadings @relation(fields: [user_readings_id], references: [id])
-    user_readings_id Int          @unique
-    profile_id       Int          @unique
+    id          Int           @id @default(autoincrement())
+    created_at  DateTime      @default(now())
+    email       String        @unique
+    password    String
+    name        String
+    profile     UserProfile   @relation(fields: [profile_id], references: [id])
+    profile_id  Int           @unique
+    UserContent UserContent[]
+    Historical  Historical[]
 }
 
 model UserProfile {
-    id    Int    @id @default(autoincrement())
-    user  User?
-    color String
+    id          Int    @id @default(autoincrement())
+    user        User?
+    color       String
     animal_name String
 }
 
-model Readings {
-    id            Int            @id @default(autoincrement())
-    title         String
-    locked_texts  Int
-    reading_texts ReadingTexts[]
-    language      Languages      @relation(fields: [language_id], references: [id])
-    language_id   Int
-}
-
 model Languages {
-    id       Int        @id @default(autoincrement())
-    name     String
-    readings Readings[]
-}
-
-model ReadingTexts {
-    id                     Int                   @id @default(autoincrement())
-    title                  String
-    description            String
-    text                   String[]
-    reading                Readings              @relation(fields: [reading_id], references: [id])
-    reading_id             Int
-    question_and_answer    QuestionAndAnswer[]
-    PendingsReadingTexts   PendingsReadingTexts? @relation(fields: [pendingsReadingTextsId], references: [id])
-    pendingsReadingTextsId Int?
+    id      Int       @id @default(autoincrement())
+    name    String
+    Content Content[]
 }
 
 model QuestionAndAnswer {
-    id               Int          @id @default(autoincrement())
-    title            String
-    options          String[]
-    correct_answer   String
-    reading_texts    ReadingTexts @relation(fields: [reading_texts_id], references: [id])
-    reading_texts_id Int
+    id                 Int             @id @default(autoincrement())
+    title              String
+    options            String[]
+    correct_answer     String
+    content_details    ContentDetails? @relation(fields: [content_details_id], references: [id])
+    content_details_id Int
 }
 
-model UserReadings {
-    id       Int                    @id @default(autoincrement())
-    readings PendingsReadingTexts[]
-    user     User?
+// ---------------- ******************************** --------------------------------
+
+model Content {
+    id          Int              @id @default(autoincrement())
+    title       String
+    details     ContentDetails[]
+    type        Types
+    level       Levels
+    language    Languages        @relation(fields: [language_id], references: [id])
+    language_id Int
+    historical  Historical[]
 }
 
-model PendingsReadingTexts {
-    id               Int            @id @default(autoincrement())
-    pendings         ReadingTexts[]
-    user_readings    UserReadings   @relation(fields: [user_readings_id], references: [id])
-    marked_as_read   Boolean
-    reading_texts_id Int
-    user_readings_id Int
+// AGREGAR FIELDS PARA AUDIO LISTENING Y EXERCISES
+model ContentDetails {
+    id                  Int                 @id @default(autoincrement())
+    title               String
+    description         String
+    text                String[]
+    level               Levels
+    type                Types
+    content             Content             @relation(fields: [content_id], references: [id])
+    content_id          Int
+    question_and_answer QuestionAndAnswer[]
+    PendingContent      PendingContent[]
+}
+
+model UserContent {
+    id      Int              @id @default(autoincrement())
+    content PendingContent[]
+    user    User?            @relation(fields: [user_id], references: [id])
+    user_id Int?
+}
+
+model PendingContent {
+    id              Int            @id @default(autoincrement())
+    pending_content ContentDetails @relation(fields: [pending_id], references: [id])
+    user_content    UserContent    @relation(fields: [user_content_id], references: [id])
+    marked_as_read  Boolean
+    user_content_id Int
+    pending_id      Int
+}
+
+model Historical {
+    id           Int      @id @default(autoincrement())
+    user         User?    @relation(fields: [user_id], references: [id])
+    user_id      Int?
+    content      Content  @relation(fields: [content_id], references: [id])
+    last_watched DateTime @default(now())
+    content_id   Int
 }
