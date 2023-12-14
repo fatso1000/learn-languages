@@ -8,12 +8,14 @@ const getUrl =
     ? "https://personal-blog-delta-amber.vercel.app"
     : "http://localhost:3000";
 
-const getReadingById = async (id: string) => {
-  return await handleApiRequest(getUrl + "/api/reading/" + id);
+const getContentById = async <T>(id: string) => {
+  return await handleApiRequest<T>(getUrl + "/api/content/" + id);
 };
 
-const getReadingByLanguage = async (name: string) => {
-  return await handleApiRequest(getUrl + "/api/reading?name=" + name);
+const getContentByLanguageAndType = async (name: string, type: string) => {
+  return await handleApiRequest(
+    getUrl + "/api/content?language=" + name + "&type=" + type
+  );
 };
 
 const signinUser = async (userData: any) => {
@@ -43,8 +45,8 @@ const signOutUser = async () => {
 };
 
 export {
-  getReadingById,
-  getReadingByLanguage,
+  getContentByLanguageAndType,
+  getContentById,
   signinUser,
   getUrl,
   signOutUser,

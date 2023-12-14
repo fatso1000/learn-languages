@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
+import { PendingContentContent } from "src/types";
 import { CustomError, IUserLogin } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 
@@ -77,7 +78,29 @@ const verifyUserAuth = (req: NextRequest) => {
     });
 };
 
+const groupByContentLevel = (array: PendingContentContent[]) => {
+  let obj: any = {};
+
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+
+    if (obj.hasOwnProperty(element.level)) {
+      obj[element.level] = [...obj[element.level], element];
+    } else {
+      obj[element.level] = [element];
+    }
+  }
+
+  const objValues = Object.values(obj);
+
+  return Object.keys(obj).map((elem, i) => ({
+    level: elem,
+    data: objValues[i],
+  }));
+};
+
 export {
+  groupByContentLevel,
   verifyUserAuth,
   verifyToken,
   setCookie,

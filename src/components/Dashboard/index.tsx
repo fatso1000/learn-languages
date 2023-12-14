@@ -1,28 +1,34 @@
-import { Metadata } from "next";
+"use client";
+import { useEffect, useState } from "react";
 import HomeHeader from "src/components/HomeHeader";
+import { getCurrentUser, isUserLoggedIn } from "src/shared/cookies";
+import { IUser } from "src/types";
+import LoggedInDashboard from "./LoggedInDashboard";
 
-export async function generateMetadata(props: any): Promise<Metadata> {
-  return {
-    title: "Matias Benitez Blog",
-    description: "",
+export default function Dashboard(props: any) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<IUser>();
+
+  const checkUserLoggedIn = async () => {
+    const isLoggedIn = await isUserLoggedIn();
+    const user = await getCurrentUser();
+    setIsLoggedIn(isLoggedIn);
+    if (user) setCurrentUser(JSON.parse(user.value));
   };
-}
 
-export default async function Home(props: any) {
+  useEffect(() => {
+    checkUserLoggedIn();
+  }, [props]);
+
   return (
-    <main className="mt-4 px-4 sm:px-4 md:px-16">
-      <HomeHeader />
-      <section className="flex flex-col gap-y-5">
-        <div>
-          <h2>READING</h2>
-          <p>lorem ipsum</p>
-          <a className="link" href="/reading">
-            Go to Reading
-          </a>
-        </div>
-        <div></div>
-      </section>
-      <section></section>
-    </main>
+    <>
+      {isLoggedIn && currentUser ? (
+        <LoggedInDashboard userId={currentUser.id} />
+      ) : (
+        <main className="mt-4 px-4 sm:px-4 md:px-16">
+          <HomeHeader />
+        </main>
+      )}
+    </>
   );
 }

@@ -14,12 +14,14 @@ export async function GET(req: NextRequest) {
         msg: "Error parsing request id.",
       });
 
-    let request = await prisma.readingTexts.findUnique({
+    let request = await prisma.content.findUnique({
       where: {
         id: +id,
       },
       include: {
-        question_and_answer: true,
+        details: {
+          include: { question_and_answer: true },
+        },
       },
     });
 
@@ -29,8 +31,6 @@ export async function GET(req: NextRequest) {
         httpStatusCode: HttpStatusCode.NOT_FOUND,
         msg: "Reading not found.",
       });
-
-    // request.text = request.text.split('\n');
 
     return NextResponse.json({ data: request });
   } catch (error: any) {

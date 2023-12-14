@@ -32,10 +32,12 @@ body {
   background-color: transparent;
 }
 
-/* .container {
-  max-width: calc(100% - 1.35rem);
+/* CUSTOM */
+.swiper-button-disabled {
+  display: none !important;
 }
 
-.container-reading {
-  max-width: 72ch;
-} */
+.swiper-button-prev,
+.swiper-button-next {
+  color: hsl(var(--p) / var(--tw-border-opacity)) !important;
+}
