@@ -6,7 +6,7 @@ import { IUser } from "src/types";
 
 export default function Settings() {
   const [currentUser, setCurrentUser] = useState<IUser>();
-  
+
   const checkUser = async () => {
     const user = await getCurrentUser();
     if (user) setCurrentUser(JSON.parse(user.value));
@@ -19,7 +19,7 @@ export default function Settings() {
   if (currentUser && currentUser.profile)
     return (
       <div className="flex bg-[#f0edea] rounded-[1em] mx-[10em] my-[2em]">
-        <div className="flex flex-col gap-5 w-[20em] h-[35em] bg-[#E7E2DF] p-[2em] rounded-[1em] ">
+        <div className="flex flex-col gap-5 w-[20em] h-[30em] bg-[#E7E2DF] p-[2em] rounded-[1em] ">
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <AnimalComponent
@@ -27,21 +27,15 @@ export default function Settings() {
                 animalName={currentUser.profile.animal_name}
                 size="6em"
               />
-              <button className="w-8 h-8 bg-[#ffffff] absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center">
-                ⚙️
-              </button>
             </div>
             <div className="flex gap-2">
               <h1 className="text-[1.5em] font-extrabold">
                 {currentUser.name}
               </h1>
-              <button className="w-8 h-8 bg-[#ffffff]  rounded-[2rem] flex items-center justify-center">
-                ⚙️
-              </button>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-5 w-full h-[35em]"></div>
+        <div className="flex flex-col gap-5 w-full h-[30em]"></div>
       </div>
     );
   return <div className="w-[10em] h-[10em]">User not found</div>;

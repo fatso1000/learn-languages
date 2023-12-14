@@ -16,7 +16,7 @@ const handleApiRequest = async <T = any>(request: string) => {
 
 const handleCustomApiRequest = async <T = any>(
   request: string,
-  method: "POST" | "GET",
+  method: "POST" | "GET" | "PATCH",
   body: any
 ) => {
   try {

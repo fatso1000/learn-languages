@@ -30,6 +30,13 @@ const signupUser = async (userData: any) => {
     userData
   );
 };
+const editUserProfile = async (userData: any) => {
+  return await handleCustomApiRequest(
+    getUrl + "/api/auth/profile",
+    "PATCH",
+    userData
+  );
+};
 
 const signOutUser = async () => {
   return await handleApiRequest(getUrl + "/api/auth/logout");
@@ -42,4 +49,5 @@ export {
   getUrl,
   signOutUser,
   signupUser,
+  editUserProfile,
 };
