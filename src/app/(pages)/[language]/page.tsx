@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export async function generateMetadata(props: any): Promise<Metadata> {
   return {
-    title: "Search Blog By Name - Matias Benitez Blog",
+    title: "Reading Language Select",
     description: "",
   };
 }
@@ -22,7 +22,7 @@ export default async function ReadingsPage({ params }: any) {
     ? params["language"]
     : undefined;
 
-  if (!language || languageslist.includes(language)) return <div>ERROR</div>;
+  if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
 
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">

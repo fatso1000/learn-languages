@@ -8,7 +8,9 @@ import {
   ReadingIcon,
 } from "src/components/Icons";
 import { DashboardProps } from "src/types";
+import Link from "next/link";
 
+// SEPARAR EN COMPONENTE APARTE
 const Header = (props: { data: DashboardProps }) => {
   const { data } = props;
   return (
@@ -23,18 +25,27 @@ const Header = (props: { data: DashboardProps }) => {
           </p>
           <div className="flex flex-col mt-6">
             <div className="inline-flex gap-1">
-              <div className="btn btn-primary font-black bg-base-100">
+              <Link
+                href={"/reading"}
+                className="btn btn-primary font-black bg-base-100"
+              >
                 Readings <ReadingIcon />
-              </div>
-              <div className="btn btn-secondary font-black bg-base-100">
+              </Link>
+              <Link
+                href={""}
+                className="btn btn-secondary font-black bg-base-100"
+              >
                 Languages <LanguageIcon />
-              </div>
-              <div className="btn btn-accent font-black bg-base-100">
+              </Link>
+              <Link href={""} className="btn btn-accent font-black bg-base-100">
                 Listenings <ListeningIcon />
-              </div>
-              <div className="btn btn-success font-black bg-base-100">
+              </Link>
+              <Link
+                href={""}
+                className="btn btn-success font-black bg-base-100"
+              >
                 Excercises <ActivitiesIcon />
-              </div>
+              </Link>
             </div>
           </div>
           <div className="mt-6 flex w-full flex-col gap-2 px-4 xl:px-0">

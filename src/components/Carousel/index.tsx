@@ -22,7 +22,9 @@ export default function CarouselComponent(props: { items: ContentElement[] }) {
               <SwiperSlide className="!w-auto" key={i}>
                 <CarouselCard
                   description={item.pending_content.description}
-                  href=""
+                  href={`${item.pending_content.content.language.name.toLowerCase()}/${item.pending_content.type.toLowerCase()}/${
+                    item.id
+                  }`}
                   language={item.pending_content.content.language.name}
                   level={item.pending_content.level}
                   title={item.pending_content.title}

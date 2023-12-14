@@ -1,7 +1,7 @@
 import ReadingList from "src/components/Reading";
 import { Metadata } from "next";
 import { Languages } from "src/types";
-import { getReadingByLanguage } from "src/queryFn";
+import { getContentByLanguageAndType } from "src/queryFn";
 
 export async function generateMetadata({
   params,
@@ -34,8 +34,8 @@ export default async function ReadingsPage({
     ? params["language"]
     : undefined;
 
-  if (!language || languageslist.includes(language)) return <div>ERROR</div>;
-  const readingTexts = await getReadingByLanguage(language);
+  if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
+  const readingTexts = await getContentByLanguageAndType(language, "Reading");
   if (!readingTexts.data || readingTexts.error) return <div>ERROR</div>;
 
   return (

@@ -5,7 +5,7 @@ export default function CarouselCard(props: CarouselCardProps) {
   const { href, language, level, title, type, description } = props;
   return (
     <Link
-      href={''}
+      href={href}
       className="card card-compact border border-primary hover:bg-primary/20 transition"
     >
       <div className="card-body">

@@ -88,29 +88,54 @@ export interface ILanguage {
 // READINGS
 export class ReadingsPOST {
   public title: string;
-  public reading_texts: APIReadingTexts[];
-  public qa: APIQuestionAndAnswer[];
+  public description: string;
+  public level: LevelsTypes;
+  public text: string;
+  public type: ContentTypes;
+  public question_and_answer: APIQuestionAndAnswer[];
   public language_id: number;
 
-  constructor({ qa, reading_texts, title, language_id }: APIReadings) {
-    this.qa = qa;
-    this.reading_texts = reading_texts;
+  constructor({
+    description,
+    language_id,
+    level,
+    question_and_answer,
+    text,
+    title,
+    type,
+  }: APIContent) {
     this.title = title;
+    this.description = description;
+    this.text = text;
+    this.type = type;
+    this.level = level;
     this.language_id = language_id;
+    this.question_and_answer = question_and_answer;
   }
 }
 
-export interface APIReadings {
-  title: string;
-  language_id: number;
-  reading_texts: APIReadingTexts[];
-  qa: APIQuestionAndAnswer[];
+export enum ContentTypes {
+  Reading = "Reading",
+  Listening = "Listening",
+  Exercises = "Exercises",
 }
 
-export interface APIReadingTexts {
+export enum LevelsTypes {
+  A1 = "A1",
+  A2 = "A2",
+  B1 = "B1",
+  B2 = "B2",
+  C1 = "C1",
+  C2 = "C2",
+}
+
+export interface APIContent {
   title: string;
   description: string;
   text: string;
+  language_id: number;
+  type: ContentTypes;
+  level: LevelsTypes;
   question_and_answer: APIQuestionAndAnswer[];
 }
 

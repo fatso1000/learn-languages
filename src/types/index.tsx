@@ -1,12 +1,12 @@
 import { StaticImageData } from "next/image";
 
 export enum Languages {
-  spanish = "Spanish",
-  english = "English",
-  italian = "Italian",
-  japanese = "Japanese",
-  german = "German",
-  french = "French",
+  spanish = "spanish",
+  english = "english",
+  italian = "italian",
+  japanese = "japanese",
+  german = "german",
+  french = "french",
 }
 
 export interface ModalProps {
@@ -58,16 +58,6 @@ export interface Profile {
   animal_name: string;
 }
 
-export interface IReadings {
-  id: number;
-  title: string;
-  description: string;
-  text: string[];
-  reading_id: number;
-  pendingsReadingTextsId: null;
-  question_and_answer: IQuestionAndAnswer[];
-}
-
 export interface IQuestionAndAnswer {
   id: number;
   title: string;
@@ -114,6 +104,7 @@ export interface PendingContent {
   type: string;
   content_id: number;
   content: PendingContentContent;
+  question_and_answer: IQuestionAndAnswer[];
 }
 
 export interface PendingContentContent {
@@ -121,8 +112,14 @@ export interface PendingContentContent {
   title: string;
   type: string;
   level: string;
+  details?: PendingContent[];
   language_id: number;
   language: Language;
+}
+
+export interface ContentByLevel {
+  level: string;
+  data: PendingContentContent[];
 }
 
 export interface Language {
