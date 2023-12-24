@@ -45,10 +45,10 @@ export interface IReadingTexts {
 }
 
 export interface IUser {
+  id: number;
   name: string;
   email: string;
   profile: Profile;
-  id: number;
   password: string;
 }
 

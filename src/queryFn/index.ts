@@ -32,9 +32,9 @@ const signupUser = async (userData: any) => {
     userData
   );
 };
-const editUserProfile = async (userData: any) => {
+const editUserProfile = async (userData: any, userId: number) => {
   return await handleCustomApiRequest(
-    getUrl + "/api/auth/profile",
+    getUrl + `/api/auth/profile/${userId}`,
     "PATCH",
     userData
   );

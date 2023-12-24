@@ -7,6 +7,7 @@ import { onThrowError } from "../../apiService";
 export async function GET(req: NextRequest) {
   try {
     const id = req.nextUrl.pathname.slice(13);
+
     if (!id)
       throw new CustomError({
         errors: [],

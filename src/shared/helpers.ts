@@ -81,7 +81,29 @@ const animalsList = [
   "Wombat",
 ];
 
-const colorsList = ["red", "orange", "yellow", "green", "purple", "teal"];
+const colorsList = [
+  "red",
+  "blue",
+  "orange",
+  "yellow",
+  "green",
+  "purple",
+  "teal",
+];
+
+interface IColorsObject {
+  [key: string]: string;
+}
+
+const colorsObject: IColorsObject = {
+  red: "#FF0044",
+  blue: "#006CFE",
+  yellow: "#FFCC41",
+  purple: "#B476FB",
+  orange: "#FE9D24",
+  green: "#29B278",
+  teal: "#00D7BF",
+};
 
 export {
   getRandomAnimalName,
@@ -89,4 +111,5 @@ export {
   getRandomItemFromArray,
   colorsList,
   getRandomColor,
+  colorsObject,
 };

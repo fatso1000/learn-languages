@@ -28,11 +28,11 @@ export async function POST(req: NextRequest) {
     body.password = await bcrypt.hash(body.password, 8);
     const name = body.name ? body.name : randomAnimal;
 
-    const fullBody = {
+    const fullBody: any = {
       email: body.email,
       password: body.password,
       name,
-      user_readings: { create: { readings: { connect: [] } } },
+      UserContent: { create: { content: { connect: [] } } },
       profile: {
         create: {
           color: randomColor,

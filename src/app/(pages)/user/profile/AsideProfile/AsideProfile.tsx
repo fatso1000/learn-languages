@@ -16,15 +16,18 @@ const ButtonComponent = ({
   </button>
 );
 
-export default function AsideProfile(props: { currentUser: IUser }) {
-  const { currentUser } = props;
+export default function AsideProfile(props: {
+  currentUser: IUser;
+  handleEditIconMode: (e?: boolean) => void;
+}) {
+  const { currentUser, handleEditIconMode } = props;
 
   const [isEditMode, setIsEditMode] = useState(false);
 
   const handleEditMode = () => setIsEditMode(!isEditMode);
 
   return (
-    <aside className="flex flex-col gap-5 w-[30em] h-[42em] bg-[#E7E2DF] p-[2em] rounded-[1em]">
+    <aside className="flex flex-col gap-5 w-[30em] h-full bg-[#E7E2DF] p-[2em] rounded-[1em]">
       {!isEditMode ? (
         <>
           <header className="flex flex-col items-center gap-4 p-2">
@@ -44,12 +47,11 @@ export default function AsideProfile(props: { currentUser: IUser }) {
           <ButtonComponent handleEditMode={handleEditMode} />
         </>
       ) : (
-        <div>
-          {/* <EditProfileComponent
-            user={currentUser}
-            closeEditMode={handleEditMode}
-          /> */}
-        </div>
+        <EditProfileComponent
+          user={currentUser}
+          closeEditMode={handleEditMode}
+          handleEditIconMode={handleEditIconMode}
+        />
       )}
     </aside>
   );
