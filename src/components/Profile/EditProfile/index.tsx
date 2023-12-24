@@ -4,7 +4,7 @@ import GenericTextarea from "src/components/InputsAndButtons/GenericTextarea";
 import { IUser } from "src/types";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
 
-export default function EditProfileComponent({
+export default function EditProfile({
   user,
   closeEditMode,
   handleEditIconMode,
@@ -24,7 +24,7 @@ export default function EditProfileComponent({
           />
           <button
             type="button"
-            className="w-8 h-8 bg-[#ffffff] absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
+            className="w-8 h-8 bg-base-100 absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
             onClick={() => handleEditIconMode()}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -34,19 +34,29 @@ export default function EditProfileComponent({
           </button>
         </div>
       </div>
-      <div className="h-full overflow-y-auto flex flex-col gap-2 my-4">
+      <div className="h-full overflow-y-auto flex flex-col gap-2 my-4 px-2">
         <GenericInput
           label="Name"
           name="name"
           inputType="text"
           defaultValue={user.name}
         />
-        <GenericTextarea label="Biography" name="biography" maxLength={50} />
-        <GenericInput label="Ubication" name="ubication" inputType="text" />
+        <GenericTextarea
+          label="Biography"
+          name="biography"
+          maxLength={75}
+          defaultValue={user.biography}
+        />
+        <GenericInput
+          label="Ubication"
+          name="ubication"
+          inputType="text"
+          defaultValue={user.ubication}
+        />
       </div>
       <div className="flex gap-2 w-full justify-between">
         <button
-          className="btn bg-[#e3d7cf] hover:bg-[#d9c8bc] border-0 w-[45%]"
+          className="btn btn-secondary w-[45%]"
           onClick={() => {
             closeEditMode();
             handleEditIconMode(false);
@@ -54,12 +64,9 @@ export default function EditProfileComponent({
         >
           Cancel
         </button>
-        <SubmitButton className="btn bg-[#a2d5cf] hover:bg-[#80bdb6] border-0 w-[45%]">
+        <SubmitButton className="btn btn-success hover:brightness-95 border-0 w-[45%]">
           Save
         </SubmitButton>
-        {/*<button className="btn btn-error hover:bg-[#f65c5c] w-[90%] text-neutral-50 border-0">
-            Delete Account
-        </button> */}
       </div>
     </div>
   );
