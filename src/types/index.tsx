@@ -47,6 +47,8 @@ export interface IReadingTexts {
 export interface IUser {
   id: number;
   name: string;
+  biography?: string;
+  ubication?: string;
   email: string;
   profile: Profile;
   password: string;
@@ -125,4 +127,8 @@ export interface ContentByLevel {
 export interface Language {
   id: number;
   name: string;
+}
+
+export interface IColorsObject {
+  [key: string]: string;
 }

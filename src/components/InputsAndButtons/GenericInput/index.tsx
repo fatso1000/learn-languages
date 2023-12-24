@@ -24,7 +24,7 @@ export default function GenericInput(props: {
         className={
           inputStyle
             ? inputStyle
-            : "input w-full max-w-xs input-primary h-6 rounded-[0.5rem]"
+            : "input w-full max-w-xs input-primary h-6 rounded-[0.5rem] px-2 py-0"
         }
       />
     </label>
