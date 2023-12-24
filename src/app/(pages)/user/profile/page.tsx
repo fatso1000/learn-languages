@@ -1,14 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AnimalComponent from "src/components/Animal";
 import { getCurrentUser } from "src/shared/cookies";
 import { IUser } from "src/types";
+import AsideProfile from "./AsideProfile/AsideProfile";
+import EditIconComponent from "./AsideProfile/EditIconComponent";
+import { submitForm } from "./AsideProfile/submitForm";
 
-export default function UserProfile() {
+export default function UserProfile(props: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
-  const [isOpenSettings, setIsOpenSettings] = useState(false);
+  const [editIconMode, setEditIconMode] = useState<boolean>();
 
+  const handleEditIconMode = (stateDefault?: boolean) =>
+    setEditIconMode(stateDefault ? stateDefault : !editIconMode);
+
+  const submit = submitForm.bind(null, currentUser?.id);
   const checkUser = async () => {
     const user = await getCurrentUser();
     if (user) setCurrentUser(JSON.parse(user.value));
@@ -16,43 +22,31 @@ export default function UserProfile() {
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, [props]);
+
   if (currentUser && currentUser.profile)
     return (
-      <div className="flex bg-[#f0edea] rounded-[1em] mx-[10em] my-[2em]">
-        <div className="flex flex-col  gap-5 w-[20em] h-[35em] bg-[#E7E2DF] p-[2em] rounded-[1em] ">
-          <div className="flex flex-col items-center gap-4">
-            <AnimalComponent
-              color={currentUser.profile.color}
-              animalName={currentUser.profile.animal_name}
-              size="6em"
-            />
-            <h1 className="text-[1.5em] font-extrabold">{currentUser.name}</h1>
+      <div className="flex w-full h-full items-center justify-center my-5">
+        <form
+          action={submit}
+          className="flex bg-[#f0edea] rounded-[1em] items-center w-[75vw] h-[70vh] "
+        >
+          <AsideProfile
+            currentUser={currentUser}
+            handleEditIconMode={handleEditIconMode}
+          />
+          <div className="h-full w-full p-[3em] flex">
+            {editIconMode ? (
+              <EditIconComponent
+                defaultNameColor={currentUser.profile.color}
+                defaultAnimalName={currentUser.profile.animal_name}
+              />
+            ) : (
+              <h2 className="text-[2rem] font-extrabold">Languages</h2>
+            )}
           </div>
-          <ul className="flex flex-col justify-between h-full">
-            <li className="flex flex-col items-center">
-              <span className="font-bold">Email</span> {currentUser.email}
-            </li>
-            <li className="mt-auto">
-              <ul className="flex flex-col gap-2">
-                <li className="flex flex-col items-center w-full">
-                  <button className="btn bg-[#e3d7cf] hover:bg-[#d9c8bc] border-0 w-[90%]">
-                    Change Password
-                  </button>
-                </li>
-                <li className="flex flex-col items-center">
-                  <button className="btn btn-error hover:bg-[#f65c5c] w-[90%] text-neutral-50 border-0">
-                    Delete Account
-                  </button>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-        <div className="w-full p-[3em]">
-          <h2 className="text-[2rem] font-extrabold">Languages</h2>
-        </div>
+        </form>
       </div>
     );
-  return <div className="w-[10em] h-[10em]"></div>;
+  return <div className="w-[10em] h-[10em]">User not found</div>;
 }
