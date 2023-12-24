@@ -32,6 +32,10 @@ const setLoginCookies = (user: string, token: string) => {
   setCookie("token", token);
 };
 
+const setUserCookie = (user: string) => {
+  setCookie("current_user", user);
+};
+
 const logInUser = (user: IUserLogin) => {
   try {
     const jwt_secret = process.env.JWT_SECRET_KEY || "";
@@ -108,4 +112,5 @@ export {
   removeCookie,
   logInUser,
   setLoginCookies,
+  setUserCookie,
 };

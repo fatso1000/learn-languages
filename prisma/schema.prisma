@@ -31,6 +31,8 @@ model User {
     email       String        @unique
     password    String
     name        String
+    biography   String?
+    ubication   String?
     profile     UserProfile   @relation(fields: [profile_id], references: [id])
     profile_id  Int           @unique
     UserContent UserContent[]

@@ -147,6 +147,26 @@ export interface APIQuestionAndAnswer {
 
 // AUTH
 
+export class UserPATCH {
+  public name: string;
+
+  @IsOptional()
+  public biography?: string;
+
+  @IsOptional()
+  public ubication?: string;
+
+  @IsOptional()
+  public profile?: { animal_name?: string; color?: string };
+
+  constructor({ name, biography, ubication, profile }: IUser) {
+    this.name = name;
+    this.biography = biography;
+    this.ubication = ubication;
+    this.profile = profile;
+  }
+}
+
 export class UserLoginPOST {
   @IsEmail()
   public email: string;
@@ -180,6 +200,17 @@ export class UserSignUpPOST {
   }
 }
 
+export interface IUser {
+  name: string;
+  biography?: string;
+  ubication?: string;
+  profile?: {
+    animal_name?: string;
+    color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+  };
+}
+export interface IProfile {}
+
 export interface IUserLogin {
   email: string;
   password: string;
@@ -192,6 +223,7 @@ export interface IUserSignUp {
   profile_color:
     | string
     | "red"
+    | "blue"
     | "orange"
     | "yellow"
     | "green"
