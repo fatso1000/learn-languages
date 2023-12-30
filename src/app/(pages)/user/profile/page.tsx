@@ -9,9 +9,15 @@ import { submitForm } from "../../../../shared/submitForm";
 
 export default function UserProfile(props: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
+  const [isEditMode, setIsEditMode] = useState(false);
   const [editIconMode, setEditIconMode] = useState<boolean>();
 
   const submit = submitForm.bind(null, currentUser?.id);
+
+  const handleEditMode = (stateDefault?: boolean) =>
+    setIsEditMode(
+      typeof stateDefault === "boolean" ? stateDefault : !isEditMode
+    );
 
   const handleEditIconMode = (stateDefault?: boolean) =>
     setEditIconMode(
@@ -24,7 +30,13 @@ export default function UserProfile(props: any) {
   };
 
   useEffect(() => {
+    const closeEditMode = () => {
+      setEditIconMode(false);
+      setIsEditMode(false);
+    };
+
     checkUser();
+    closeEditMode();
   }, [props]);
 
   if (currentUser && currentUser.profile)
@@ -36,7 +48,7 @@ export default function UserProfile(props: any) {
         >
           <AsideProfile
             currentUser={currentUser}
-            handleEditIconMode={handleEditIconMode}
+            editMode={{ isEditMode, handleEditMode, handleEditIconMode }}
           />
           <div className="h-full w-full p-[3em] flex">
             {editIconMode ? (
