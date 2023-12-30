@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
 import EditProfile from "../EditProfile";
@@ -18,14 +18,14 @@ const ButtonComponent = ({
 
 export default function AsideProfile(props: {
   currentUser: IUser;
-  handleEditIconMode: (e?: boolean) => void;
+  editMode: {
+    isEditMode: boolean;
+    handleEditMode: (stateDefault?: boolean) => void;
+    handleEditIconMode: (stateDefault?: boolean) => void;
+  };
 }) {
-  const { currentUser, handleEditIconMode } = props;
-
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const handleEditMode = () => setIsEditMode(!isEditMode);
-
+  const { currentUser, editMode } = props;
+  const { isEditMode, handleEditMode, handleEditIconMode } = editMode;
   return (
     <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
       {!isEditMode ? (
