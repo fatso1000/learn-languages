@@ -102,10 +102,6 @@ const languagesList = [
   "french",
 ];
 
-interface IColorsObject {
-  [key: string]: string;
-}
-
 const colorsObject: IColorsObject = {
   red: "#FF0044",
   blue: "#006CFE",
