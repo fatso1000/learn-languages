@@ -16,7 +16,6 @@ const fetcher = async () => {
       .then((url: any) => url.default.src)
       .catch((error) => {
         console.error(error);
-        return "";
       });
     return importURL;
   };
@@ -31,7 +30,7 @@ const fetcher = async () => {
 };
 
 export default function LanguageInput() {
-  const { data, error, isLoading } = useSWR("", fetcher);
+  const { data, error, isLoading } = useSWR("/auth/user", fetcher);
 
   if (error) return <div>error</div>;
   if (isLoading) return "Loading...";
