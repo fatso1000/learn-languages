@@ -3,25 +3,40 @@
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "src/shared/cookies";
 import { IUser } from "src/types";
-import AsideProfile from "./AsideProfile/AsideProfile";
-import EditIconComponent from "./AsideProfile/EditIconComponent";
-import { submitForm } from "./AsideProfile/submitForm";
+import AsideProfile from "../../../../components/Profile/AsideProfile";
+import EditIconProfile from "../../../../components/Profile/EditIconProfile";
+import { submitForm } from "../../../../shared/submitForm";
 
 export default function UserProfile(props: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
+  const [isEditMode, setIsEditMode] = useState(false);
   const [editIconMode, setEditIconMode] = useState<boolean>();
 
-  const handleEditIconMode = (stateDefault?: boolean) =>
-    setEditIconMode(stateDefault ? stateDefault : !editIconMode);
-
   const submit = submitForm.bind(null, currentUser?.id);
+
+  const handleEditMode = (stateDefault?: boolean) =>
+    setIsEditMode(
+      typeof stateDefault === "boolean" ? stateDefault : !isEditMode
+    );
+
+  const handleEditIconMode = (stateDefault?: boolean) =>
+    setEditIconMode(
+      typeof stateDefault === "boolean" ? stateDefault : !editIconMode
+    );
+
   const checkUser = async () => {
     const user = await getCurrentUser();
     if (user) setCurrentUser(JSON.parse(user.value));
   };
 
   useEffect(() => {
+    const closeEditMode = () => {
+      setEditIconMode(false);
+      setIsEditMode(false);
+    };
+
     checkUser();
+    closeEditMode();
   }, [props]);
 
   if (currentUser && currentUser.profile)
@@ -29,15 +44,15 @@ export default function UserProfile(props: any) {
       <div className="flex w-full h-full items-center justify-center my-5">
         <form
           action={submit}
-          className="flex bg-[#f0edea] rounded-[1em] items-center w-[75vw] h-[70vh] "
+          className="flex bg-base-200 rounded-[1em] items-center w-[75vw] h-[70vh] border-4 border-base-300"
         >
           <AsideProfile
             currentUser={currentUser}
-            handleEditIconMode={handleEditIconMode}
+            editMode={{ isEditMode, handleEditMode, handleEditIconMode }}
           />
           <div className="h-full w-full p-[3em] flex">
             {editIconMode ? (
-              <EditIconComponent
+              <EditIconProfile
                 defaultNameColor={currentUser.profile.color}
                 defaultAnimalName={currentUser.profile.animal_name}
               />

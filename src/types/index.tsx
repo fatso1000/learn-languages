@@ -48,6 +48,8 @@ export interface IReadingTexts {
 export interface IUser {
   id: number;
   name: string;
+  biography?: string;
+  ubication?: string;
   email: string;
   profile: Profile;
   password: string;
@@ -130,4 +132,8 @@ export interface Language {
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+}
+
+export interface IColorsObject {
+  [key: string]: string;
 }

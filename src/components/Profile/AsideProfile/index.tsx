@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
-import EditProfileComponent from "./EditProfileComponent";
+import EditProfile from "../EditProfile";
 
 const ButtonComponent = ({
   handleEditMode,
@@ -9,7 +9,7 @@ const ButtonComponent = ({
   handleEditMode: () => void;
 }) => (
   <button
-    className="btn bg-[#e3d7cf] hover:bg-[#d9c8bc] border-0 w-full"
+    className="btn btn-info hover:brightness-95 w-full"
     onClick={handleEditMode}
   >
     Edit Profile
@@ -18,16 +18,16 @@ const ButtonComponent = ({
 
 export default function AsideProfile(props: {
   currentUser: IUser;
-  handleEditIconMode: (e?: boolean) => void;
+  editMode: {
+    isEditMode: boolean;
+    handleEditMode: (stateDefault?: boolean) => void;
+    handleEditIconMode: (stateDefault?: boolean) => void;
+  };
 }) {
-  const { currentUser, handleEditIconMode } = props;
-
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const handleEditMode = () => setIsEditMode(!isEditMode);
-
+  const { currentUser, editMode } = props;
+  const { isEditMode, handleEditMode, handleEditIconMode } = editMode;
   return (
-    <aside className="flex flex-col gap-5 w-[30em] h-full bg-[#E7E2DF] p-[2em] rounded-[1em]">
+    <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
       {!isEditMode ? (
         <>
           <header className="flex flex-col items-center gap-4 p-2">
@@ -38,16 +38,27 @@ export default function AsideProfile(props: {
             />
             <h2 className="text-[1.5em] font-extrabold">{currentUser.name}</h2>
           </header>
-          <ul className="flex flex-col justify-between h-full">
-            <li className="flex flex-col items-center">
+          <ul className="flex flex-col h-full gap-5">
+            <li className="flex flex-col">
               <span className="font-bold">Email</span> {currentUser.email}
             </li>
-            <li className="mt-auto"></li>
+            {currentUser.biography && (
+              <li className="flex flex-col">
+                <span className="font-bold">Biography</span>
+                {currentUser.biography}
+              </li>
+            )}
+            {currentUser.ubication && (
+              <li className="flex flex-col">
+                <span className="font-bold">Ubication</span>
+                {currentUser.ubication}
+              </li>
+            )}
           </ul>
           <ButtonComponent handleEditMode={handleEditMode} />
         </>
       ) : (
-        <EditProfileComponent
+        <EditProfile
           user={currentUser}
           closeEditMode={handleEditMode}
           handleEditIconMode={handleEditIconMode}

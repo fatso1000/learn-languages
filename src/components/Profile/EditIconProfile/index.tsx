@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { animalsList, colorsList, colorsObject } from "src/shared/helpers";
-export default function EditIconComponent(props: {
+export default function EditIconProflie(props: {
   defaultNameColor: string;
   defaultAnimalName: string;
 }) {

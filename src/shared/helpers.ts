@@ -1,3 +1,5 @@
+import { IColorsObject } from "src/types";
+
 function getRandomItemFromArray<T>(array: T[]) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];

@@ -26,6 +26,8 @@ export async function POST(req: Request, res: Response) {
       select: {
         name: true,
         email: true,
+        biography: true,
+        ubication: true,
         profile: true,
         id: true,
         password: true,
