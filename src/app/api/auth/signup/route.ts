@@ -28,21 +28,20 @@ export async function POST(req: NextRequest) {
     body.password = await bcrypt.hash(body.password, 8);
     const name = body.name ? body.name : randomAnimal;
 
-    const fullBody: any = {
-      email: body.email,
-      password: body.password,
-      name,
-      UserContent: { create: { content: { connect: [] } } },
-      profile: {
-        create: {
-          color: randomColor,
-          animal_name: randomAnimal,
+    const request = await prisma.user.create({
+      data: {
+        email: body.email,
+        password: body.password,
+        name,
+        UserContent: { create: { content: { connect: [] } } },
+        profile: {
+          create: {
+            color: randomColor,
+            animal_name: randomAnimal,
+            language: { connect: { id: +body.language + 1 } },
+          },
         },
       },
-    };
-
-    const request = await prisma.user.create({
-      data: fullBody,
     });
     if (!request)
       throw new CustomError({

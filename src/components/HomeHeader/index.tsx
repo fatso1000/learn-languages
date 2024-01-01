@@ -3,13 +3,12 @@ import React, { useRef } from "react";
 import Modal from "../Modal";
 import { IFlags, Languages, LanguagesSelectionProps } from "src/types";
 
-import ukFlag from "public/images/flags/uk_flag.png";
-import spainFlag from "public/images/flags/spain_flag.png";
-import franceFlag from "public/images/flags/france_flag.png";
-import italianFlag from "public/images/flags/italy_flag.png";
+import ukFlag from "public/images/flags/english_flag.png";
+import spainFlag from "public/images/flags/spanish_flag.png";
+import franceFlag from "public/images/flags/french_flag.png";
+import italianFlag from "public/images/flags/italian_flag.png";
 import germanFlag from "public/images/flags/german_flag.png";
-import japaneseFlag from "public/images/flags/japan_flag.png";
-import generic from "public/images/generic/test.png";
+import japaneseFlag from "public/images/flags/japanese_flag.png";
 import flagsDisplayGif from "public/images/flags/flags_display.gif";
 import Link from "next/link";
 
@@ -98,9 +97,6 @@ export default function HomeHeader() {
                 <a className="link" href="/english/reading">
                   Go to Reading
                 </a>
-              </div>
-              <div>
-                <img src={generic.src} alt="" />
               </div>
             </section>
           </div>

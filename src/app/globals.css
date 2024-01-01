@@ -45,3 +45,9 @@ body {
 input.radio-input:checked + div {
   border: 5px solid #291334;
 }
+
+.hidden:checked + label img {
+  --tw-border-opacity: 1;
+  border-color: hsl(var(--p) / var(--tw-border-opacity));
+  box-sizing: border-box;
+}
