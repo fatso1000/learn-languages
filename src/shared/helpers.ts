@@ -91,6 +91,15 @@ const colorsList = [
   "teal",
 ];
 
+const languagesList = [
+  "english",
+  "spanish",
+  "italian",
+  "japanese",
+  "german",
+  "french",
+];
+
 interface IColorsObject {
   [key: string]: string;
 }
@@ -112,4 +121,5 @@ export {
   colorsList,
   getRandomColor,
   colorsObject,
+  languagesList,
 };

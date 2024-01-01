@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+import { InputHTMLAttributes } from "react";
 
 export enum Languages {
   spanish = "spanish",
@@ -125,4 +126,8 @@ export interface ContentByLevel {
 export interface Language {
   id: number;
   name: string;
+}
+
+export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label: string;
 }

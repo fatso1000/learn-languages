@@ -40,16 +40,19 @@ model User {
 }
 
 model UserProfile {
-    id          Int    @id @default(autoincrement())
+    id          Int       @id @default(autoincrement())
     user        User?
     color       String
     animal_name String
+    language    Languages @relation(fields: [language_id], references: [id])
+    language_id Int
 }
 
 model Languages {
-    id      Int       @id @default(autoincrement())
-    name    String
-    Content Content[]
+    id          Int           @id @default(autoincrement())
+    name        String        @unique
+    Content     Content[]
+    UserProfile UserProfile[]
 }
 
 model QuestionAndAnswer {
