@@ -5,6 +5,7 @@ import { ErrorIconCircle, SuccessIconCircle } from "src/components/Icons";
 import { IQuestionAndAnswer } from "src/types";
 // @ts-expect-error
 import confetti from "canvas-confetti";
+import { toast } from "react-toastify";
 
 export async function generateMetadata(props: any): Promise<Metadata> {
   return {
@@ -18,11 +19,19 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
 
   const { values } = props;
 
+  // section = 52, perder = -13
+
   useEffect(() => {
     setQuestionAndAnswers(
       values.map((v) => ({
         ...v,
-        options: [...v.options.map((x) => ({ title: x, status: "default" }))],
+        options: [
+          ...v.options.map((x) => ({
+            title: x,
+            status: "default",
+            points: 0,
+          })),
+        ],
       }))
     );
   }, []);
@@ -47,6 +56,7 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
               ? {
                   title: x.title,
                   status: "incorrect",
+                  points: -13,
                 }
               : x;
           }),
@@ -61,8 +71,13 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
               ? {
                   title: x.title,
                   status: "correct",
+                  points: 13,
                 }
-              : { title: x.title, status: "incorrect" }
+              : {
+                  title: x.title,
+                  status: "completed",
+                  points: x.points === null ? 0 : x.points,
+                }
           ),
         ],
       };
@@ -73,6 +88,27 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
     }
     setQuestionAndAnswers(response);
   };
+
+  useEffect(() => {
+    if (questionAndAnswers.length === 0) return;
+    const isQACompleted = questionAndAnswers.every(
+      (x: any) =>
+        x.options.findIndex((v: any) => v.status === "completed") !== -1
+    );
+    if (isQACompleted) {
+      const points = questionAndAnswers.reduce((acc, answer) => {
+        return (
+          acc +
+          answer.options.reduce((rd: number, opt: any) => {
+            return rd + opt.points;
+          }, 0)
+        );
+      }, 0);
+      toast("Exercises completed!", {
+        type: "success",
+      });
+    }
+  }, [questionAndAnswers]);
 
   return (
     <div className="mt-6 flex flex-col gap-y-5">
@@ -91,7 +127,9 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
                     id={x.title}
                     onClick={() => onAnswerClick(x, v.correct_answer, i)}
                     className={`btn ${
-                      x.status !== "default"
+                      x.status === "completed"
+                        ? "btn-disabled text-neutral-50"
+                        : x.status !== "default"
                         ? x.status === "correct"
                           ? "btn-success text-neutral-50"
                           : "btn-error text-neutral-50 opacity-70"

@@ -37,7 +37,7 @@ model User {
     profile_id  Int           @unique
     UserContent UserContent[]
     Historical  Historical[]
-    rank        UserRank?     
+    rank        UserRank?
 }
 
 model UserProfile {
@@ -65,23 +65,23 @@ model QuestionAndAnswer {
     content_details_id Int
 }
 
-model Ranks{
-    id                 Int             @id @default(autoincrement())
-    name               String
-    experience         Int
-    distintive         String
-    user               UserRank[]
+model Ranks {
+    id         Int        @id @default(autoincrement())
+    name       String
+    experience Int
+    distintive String
+    user       UserRank[]
 }
 
-model UserRank{
-    user_experience    Int
-    
-    rank               Ranks           @relation(fields: [rank_id], references: [id])
-    rank_id            Int
-    user               User            @relation(fields: [user_id], references: [id])
-    user_id            Int             @unique
+model UserRank {
+    user_experience Int
 
-    @@id([rank_id , user_id])
+    rank    Ranks @relation(fields: [rank_id], references: [id])
+    rank_id Int
+    user    User  @relation(fields: [user_id], references: [id])
+    user_id Int   @unique
+
+    @@id([rank_id, user_id])
 }
 
 // ---------------- ******************************** --------------------------------
@@ -123,6 +123,7 @@ model PendingContent {
     pending_content ContentDetails @relation(fields: [pending_id], references: [id])
     user_content    UserContent    @relation(fields: [user_content_id], references: [id])
     marked_as_read  Boolean
+    is_completed    Boolean
     user_content_id Int
     pending_id      Int
 }
