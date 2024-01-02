@@ -52,6 +52,13 @@ export async function PATCH(
             create: {
               animal_name: body.profile?.animal_name || "",
               color: body.profile?.color || "",
+              language: {
+                connect: {
+                  id: body.profile?.language
+                    ? Number(body.profile.language)
+                    : 1,
+                },
+              },
             },
             update: {
               animal_name: body.profile?.animal_name,
