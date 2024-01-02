@@ -37,19 +37,23 @@ model User {
     profile_id  Int           @unique
     UserContent UserContent[]
     Historical  Historical[]
+    rank        UserRank?     
 }
 
 model UserProfile {
-    id          Int    @id @default(autoincrement())
+    id          Int       @id @default(autoincrement())
     user        User?
     color       String
     animal_name String
+    language    Languages @relation(fields: [language_id], references: [id])
+    language_id Int
 }
 
 model Languages {
-    id      Int       @id @default(autoincrement())
-    name    String
-    Content Content[]
+    id          Int           @id @default(autoincrement())
+    name        String        @unique
+    Content     Content[]
+    UserProfile UserProfile[]
 }
 
 model QuestionAndAnswer {
@@ -59,6 +63,25 @@ model QuestionAndAnswer {
     correct_answer     String
     content_details    ContentDetails? @relation(fields: [content_details_id], references: [id])
     content_details_id Int
+}
+
+model Ranks{
+    id                 Int             @id @default(autoincrement())
+    name               String
+    experience         Int
+    distintive         String
+    user               UserRank[]
+}
+
+model UserRank{
+    user_experience    Int
+    
+    rank               Ranks           @relation(fields: [rank_id], references: [id])
+    rank_id            Int
+    user               User            @relation(fields: [user_id], references: [id])
+    user_id            Int             @unique
+
+    @@id([rank_id , user_id])
 }
 
 // ---------------- ******************************** --------------------------------

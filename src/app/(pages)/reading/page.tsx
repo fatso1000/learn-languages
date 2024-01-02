@@ -1,11 +1,11 @@
 import { IFlags, Languages } from "src/types";
 
-import ukFlag from "public/images/flags/uk_flag.png";
-import spainFlag from "public/images/flags/spain_flag.png";
-import franceFlag from "public/images/flags/france_flag.png";
-import italianFlag from "public/images/flags/italy_flag.png";
+import ukFlag from "public/images/flags/english_flag.png";
+import spainFlag from "public/images/flags/spanish_flag.png";
+import franceFlag from "public/images/flags/french_flag.png";
+import italianFlag from "public/images/flags/italian_flag.png";
 import germanFlag from "public/images/flags/german_flag.png";
-import japaneseFlag from "public/images/flags/japan_flag.png";
+import japaneseFlag from "public/images/flags/japanese_flag.png";
 
 import Link from "next/link";
 
