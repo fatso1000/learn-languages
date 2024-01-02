@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
 import EditProfile from "../EditProfile";
+import Image from "next/image";
 
 const ButtonComponent = ({
   handleEditMode,
@@ -16,26 +17,36 @@ const ButtonComponent = ({
   </button>
 );
 
-export default function AsideProfile(props: {
+export default function AsideProfile({
+  currentUser,
+  handleEditIconMode,
+  handleEditMode,
+  isEditMode,
+}: {
   currentUser: IUser;
-  handleEditIconMode: (e?: boolean) => void;
+  handleEditIconMode: (stateDefault?: boolean) => void;
+  handleEditMode: (stateDefault?: boolean) => void;
+  isEditMode: boolean;
 }) {
-  const { currentUser, handleEditIconMode } = props;
-
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const handleEditMode = () => setIsEditMode(!isEditMode);
-
   return (
     <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
       {!isEditMode ? (
         <>
           <header className="flex flex-col items-center gap-4 p-2">
-            <AnimalComponent
-              color={currentUser.profile.color}
-              animalName={currentUser.profile.animal_name}
-              size="6em"
-            />
+            <div className="relative">
+              <AnimalComponent
+                color={currentUser.profile.color}
+                animalName={currentUser.profile.animal_name}
+                size="6em"
+              />
+              <Image
+                width={100}
+                height={100}
+                src={currentUser.rank.rank.distintive}
+                alt={`distintive from ${currentUser.rank.rank.name} rank`}
+                className="absolute top-10 h-[6rem] w-[300px]"
+              />
+            </div>
             <h2 className="text-[1.5em] font-extrabold">{currentUser.name}</h2>
           </header>
           <ul className="flex flex-col h-full gap-5">
@@ -60,8 +71,8 @@ export default function AsideProfile(props: {
       ) : (
         <EditProfile
           user={currentUser}
-          closeEditMode={handleEditMode}
           handleEditIconMode={handleEditIconMode}
+          handleEditMode={handleEditMode}
         />
       )}
     </aside>

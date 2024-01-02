@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { ValidationError } from "class-validator";
 import { NextResponse } from "next/server";
 import { CustomError } from "src/types/apiTypes";
@@ -46,6 +47,19 @@ const onValidationError = (validation: ValidationError[]) => {
 };
 
 const onThrowError = (error: any) => {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    if (error.code === "P2002") {
+      return NextResponse.json(
+        generateErrorMessage({
+          httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+          errors: [{ message: "Email already in use." }],
+          message: "Database Error.",
+        }),
+        { status: 500 }
+      );
+    }
+  }
+
   if (error instanceof CustomError)
     return NextResponse.json(
       generateErrorMessage({

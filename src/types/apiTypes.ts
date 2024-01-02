@@ -1,11 +1,4 @@
-import {
-  IsAlphanumeric,
-  IsBoolean,
-  IsEmail,
-  IsNumber,
-  IsOptional,
-  Length,
-} from "class-validator";
+import { IsBoolean, IsEmail, IsOptional, Length } from "class-validator";
 import { HttpStatusCode } from "./httpStatusCode";
 
 export class BlogPOST {
@@ -157,7 +150,7 @@ export class UserPATCH {
   public ubication?: string;
 
   @IsOptional()
-  public profile?: { animal_name?: string; color?: string };
+  public profile?: { animal_name?: string; color?: string; language?: number };
 
   constructor({ name, biography, ubication, profile }: IUser) {
     this.name = name;
@@ -192,11 +185,14 @@ export class UserSignUpPOST {
 
   public profile_color: string;
 
-  constructor({ email, password, name, profile_color }: IUserSignUp) {
+  public language: number;
+
+  constructor({ email, password, name, profile_color, language }: IUserSignUp) {
     this.email = email;
     this.password = password;
     this.name = name;
     this.profile_color = profile_color;
+    this.language = language;
   }
 }
 
@@ -207,6 +203,7 @@ export interface IUser {
   profile?: {
     animal_name?: string;
     color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    language?: number;
   };
 }
 export interface IProfile {}
@@ -220,6 +217,7 @@ export interface IUserSignUp {
   email: string;
   password: string;
   name?: string;
+  language: number;
   profile_color:
     | string
     | "red"

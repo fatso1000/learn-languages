@@ -93,6 +93,15 @@ const colorsList = [
   "teal",
 ];
 
+const languagesList = [
+  "english",
+  "spanish",
+  "italian",
+  "japanese",
+  "german",
+  "french",
+];
+
 const colorsObject: IColorsObject = {
   red: "#FF0044",
   blue: "#006CFE",
@@ -110,4 +119,5 @@ export {
   colorsList,
   getRandomColor,
   colorsObject,
+  languagesList,
 };

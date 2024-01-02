@@ -1,11 +1,9 @@
 import { HttpStatusCode } from "src/types/httpStatusCode";
 
-const revalidate = 60;
-
 const handleApiRequest = async <T = any>(request: string) => {
   try {
     const fetching = await fetch(request, {
-      next: { revalidate },
+      next: { revalidate: 0 },
     });
     const petition = await fetching.json();
     return { error: undefined, data: petition.data as T };
@@ -23,24 +21,29 @@ const handleCustomApiRequest = async <T = any>(
     const fetching = await fetch(request, {
       method,
       body: JSON.stringify(body),
-      next: { revalidate },
+      next: { revalidate: 0 },
     });
-    const petition = await fetching.json();
+    const petition = await fetching.json(),
+      statusCode = fetching.status;
 
-    return handleStatusCode<T>(petition.httpStatusCode, petition);
+    return handleStatusCode<T>(statusCode, petition);
     // return { error: undefined, data: petition.data as T };
   } catch (error: any) {
-    return { error: error, data: undefined };
+    return { errors: error, message: "Unknown error", data: undefined };
   }
 };
 
 const handleStatusCode = <T>(statusCode: HttpStatusCode, petition: any) => {
   switch (statusCode) {
     case HttpStatusCode.OK:
-      return { error: undefined, data: petition.data as T };
+      return { message: undefined, errors: [], data: petition.data as T };
 
     default:
-      return { error: petition.message, data: undefined };
+      return {
+        message: petition.message,
+        errors: petition.errors,
+        data: undefined,
+      };
   }
 };
 
