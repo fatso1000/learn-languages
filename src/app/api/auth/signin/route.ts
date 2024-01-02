@@ -31,6 +31,7 @@ export async function POST(req: Request, res: Response) {
         profile: true,
         id: true,
         password: true,
+        rank: { include: { rank: true } },
       },
     });
     if (!request)

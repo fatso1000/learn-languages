@@ -1,17 +1,17 @@
 import AnimalComponent from "src/components/Animal";
-import GenericInput from "src/components/InputsAndButtons/GenericInput";
-import GenericTextarea from "src/components/InputsAndButtons/GenericTextarea";
 import { IUser } from "src/types";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
+import FormInput from "src/components/InputsAndButtons/FormInput";
+import FormTextarea from "src/components/InputsAndButtons/FormTextarea";
 
 export default function EditProfile({
   user,
-  closeEditMode,
   handleEditIconMode,
+  handleEditMode,
 }: {
   user: IUser;
-  closeEditMode: () => void;
-  handleEditIconMode: (e?: boolean) => void;
+  handleEditIconMode: (stateDefault?: boolean) => void;
+  handleEditMode: (stateDefault?: boolean) => void;
 }) {
   return (
     <div className="flex flex-col h-full justify-around">
@@ -35,30 +35,43 @@ export default function EditProfile({
         </div>
       </div>
       <div className="h-full overflow-y-auto flex flex-col gap-2 my-4 px-2">
-        <GenericInput
+        <FormInput
           label="Name"
           name="name"
-          inputType="text"
+          type="text"
           defaultValue={user.name}
         />
-        <GenericTextarea
+
+        <FormTextarea
           label="Biography"
           name="biography"
           maxLength={75}
           defaultValue={user.biography}
         />
-        <GenericInput
+        <FormInput
           label="Ubication"
           name="ubication"
-          inputType="text"
+          type="text"
           defaultValue={user.ubication}
+        />
+        <input
+          type="text"
+          name="id"
+          defaultValue={user.id}
+          className="invisible h-0 w-0 radio-input p-0 m-0"
+        />
+        <input
+          type="text"
+          name="language"
+          defaultValue={user.profile.language_id}
+          className="invisible h-0 w-0 radio-input p-0 m-0"
         />
       </div>
       <div className="flex gap-2 w-full justify-between">
         <button
           className="btn btn-secondary w-[45%]"
           onClick={() => {
-            closeEditMode();
+            handleEditMode(false);
             handleEditIconMode(false);
           }}
         >

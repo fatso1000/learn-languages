@@ -1,5 +1,5 @@
 import { StaticImageData } from "next/image";
-import { InputHTMLAttributes } from "react";
+import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
 
 export enum Languages {
   spanish = "spanish",
@@ -53,12 +53,29 @@ export interface IUser {
   email: string;
   profile: Profile;
   password: string;
+  rank: UserRank;
+}
+
+export interface UserRank {
+  user_experience: number;
+  rank_id: number;
+  rank: Rank;
+  user: IUser;
+  user_id: number;
+}
+
+export interface Rank {
+  id: number;
+  name: number;
+  experience: number;
+  distintive: string;
 }
 
 export interface Profile {
   id: number;
   color: string;
   animal_name: string;
+  language_id: number;
 }
 
 export interface IQuestionAndAnswer {
@@ -134,6 +151,10 @@ export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
+export interface FormTextareaProps
+  extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label: string;
+}
 export interface IColorsObject {
   [key: string]: string;
 }
