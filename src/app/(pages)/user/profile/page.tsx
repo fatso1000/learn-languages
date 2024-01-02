@@ -6,23 +6,13 @@ import { IUser } from "src/types";
 import AsideProfile from "../../../../components/Profile/AsideProfile";
 import EditIconProfile from "../../../../components/Profile/EditIconProfile";
 import { submitForm } from "../../../../shared/submitForm";
+import { useEditMode } from "src/hooks/useEditMenu";
 
 export default function UserProfile(props: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editIconMode, setEditIconMode] = useState<boolean>();
+  const { isEditIconMode } = useEditMode(props);
 
   const submit = submitForm.bind(null, currentUser?.id);
-
-  const handleEditMode = (stateDefault?: boolean) =>
-    setIsEditMode(
-      typeof stateDefault === "boolean" ? stateDefault : !isEditMode
-    );
-
-  const handleEditIconMode = (stateDefault?: boolean) =>
-    setEditIconMode(
-      typeof stateDefault === "boolean" ? stateDefault : !editIconMode
-    );
 
   const checkUser = async () => {
     const user = await getCurrentUser();
@@ -30,13 +20,7 @@ export default function UserProfile(props: any) {
   };
 
   useEffect(() => {
-    const closeEditMode = () => {
-      setEditIconMode(false);
-      setIsEditMode(false);
-    };
-
     checkUser();
-    closeEditMode();
   }, [props]);
 
   if (currentUser && currentUser.profile)
@@ -46,12 +30,9 @@ export default function UserProfile(props: any) {
           action={submit}
           className="flex bg-base-200 rounded-[1em] items-center w-[75vw] h-[70vh] border-4 border-base-300"
         >
-          <AsideProfile
-            currentUser={currentUser}
-            editMode={{ isEditMode, handleEditMode, handleEditIconMode }}
-          />
+          <AsideProfile currentUser={currentUser} />
           <div className="h-full w-full p-[3em] flex">
-            {editIconMode ? (
+            {isEditIconMode ? (
               <EditIconProfile
                 defaultNameColor={currentUser.profile.color}
                 defaultAnimalName={currentUser.profile.animal_name}

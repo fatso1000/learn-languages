@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
 import EditProfile from "../EditProfile";
+import { useEditMode } from "src/hooks/useEditMenu";
 
 const ButtonComponent = ({
   handleEditMode,
@@ -16,16 +17,10 @@ const ButtonComponent = ({
   </button>
 );
 
-export default function AsideProfile(props: {
-  currentUser: IUser;
-  editMode: {
-    isEditMode: boolean;
-    handleEditMode: (stateDefault?: boolean) => void;
-    handleEditIconMode: (stateDefault?: boolean) => void;
-  };
-}) {
-  const { currentUser, editMode } = props;
-  const { isEditMode, handleEditMode, handleEditIconMode } = editMode;
+export default function AsideProfile(props: { currentUser: IUser }) {
+  const { currentUser } = props;
+  const { isEditMode, handleEditMode } = useEditMode(props);
+
   return (
     <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
       {!isEditMode ? (
@@ -58,11 +53,7 @@ export default function AsideProfile(props: {
           <ButtonComponent handleEditMode={handleEditMode} />
         </>
       ) : (
-        <EditProfile
-          user={currentUser}
-          closeEditMode={handleEditMode}
-          handleEditIconMode={handleEditIconMode}
-        />
+        <EditProfile user={currentUser} />
       )}
     </aside>
   );

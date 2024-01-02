@@ -3,16 +3,11 @@ import GenericInput from "src/components/InputsAndButtons/GenericInput";
 import GenericTextarea from "src/components/InputsAndButtons/GenericTextarea";
 import { IUser } from "src/types";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
+import { useEditMode } from "src/hooks/useEditMenu";
 
-export default function EditProfile({
-  user,
-  closeEditMode,
-  handleEditIconMode,
-}: {
-  user: IUser;
-  closeEditMode: () => void;
-  handleEditIconMode: (e?: boolean) => void;
-}) {
+export default function EditProfile({ user }: { user: IUser }) {
+  const { handleEditMode, handleEditIconMode } = useEditMode();
+
   return (
     <div className="flex flex-col h-full justify-around">
       <div className="flex flex-col items-center  gap-4 py-2">
@@ -58,7 +53,7 @@ export default function EditProfile({
         <button
           className="btn btn-secondary w-[45%]"
           onClick={() => {
-            closeEditMode();
+            handleEditMode(false);
             handleEditIconMode(false);
           }}
         >
