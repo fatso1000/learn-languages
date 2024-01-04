@@ -5,7 +5,7 @@ import { onThrowError } from "../../apiService";
 export async function POST(req: NextRequest) {
   try {
     let message = "Historical Saved successfully";
-    const { user_id, content_id } = await req.json();
+    const { user_id } = await req.json();
 
     const isExisting = await prisma.userRank.findFirst({
       where: {
@@ -13,18 +13,12 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    if (!isExisting) {
-      await prisma.userRank.create({
-        data: { user_id, content_id },
-      });
-    } else {
-      const current_date = new Date();
-      await prisma.historical.update({
-        where: { id: isExisting.id },
-        data: { last_watched: current_date },
-      });
-      message = "Historical modified successfully.";
-    }
+    const current_date = new Date();
+    await prisma.user.update({
+      where: { id: 2 },
+      data: { rank: { update: { data: { user_experience: 2 } } } },
+    });
+    message = "Historical modified successfully.";
 
     return NextResponse.json({ message });
   } catch (error) {
