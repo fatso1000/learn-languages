@@ -62,8 +62,7 @@ model QuestionAndAnswer {
     content_details    ContentDetails? @relation(fields: [content_details_id], references: [id])
     content_details_id Int
 }
-postgresql://postgres:poderOS123@localhost:5432/elearning?schema=public
-postgres://default:6nkurqLU0xOe@ep-mute-pine-00137916-pooler.us-east-1.postgres.vercel-storage.com:5432/verceldb
+
 model Ranks {
     id         Int        @id @default(autoincrement())
     name       String
