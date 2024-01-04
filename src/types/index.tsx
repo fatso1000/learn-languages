@@ -81,9 +81,14 @@ export interface Profile {
 export interface IQuestionAndAnswer {
   id: number;
   title: string;
-  options: string[];
+  options: Option[];
   correct_answer: string;
-  reading_texts_id: number;
+  content_details_id: number;
+}
+
+export interface Option {
+  title: string;
+  status: string;
 }
 
 export interface CarouselCardProps {
