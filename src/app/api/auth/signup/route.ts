@@ -41,6 +41,9 @@ export async function POST(req: NextRequest) {
             language: { connect: { id: +body.language + 1 } },
           },
         },
+        rank: {
+          create: { user_experience: 0, rank: { connect: { id: 1 } } },
+        },
       },
     });
     if (!request)
