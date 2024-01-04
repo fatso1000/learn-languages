@@ -150,7 +150,7 @@ export class UserPATCH {
   public ubication?: string;
 
   @IsOptional()
-  public profile?: { animal_name?: string; color?: string };
+  public profile?: { animal_name?: string; color?: string; language?: number };
 
   constructor({ name, biography, ubication, profile }: IUser) {
     this.name = name;
@@ -203,6 +203,7 @@ export interface IUser {
   profile?: {
     animal_name?: string;
     color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    language?: number;
   };
 }
 export interface IProfile {}

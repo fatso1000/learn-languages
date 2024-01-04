@@ -4,16 +4,12 @@ export default function FormInput(props: FormInputProps) {
   const { label, ...rest } = props;
 
   return (
-    <div className="form-control w-full">
-      <label className="label p-0 px-4">
-        <span>
-          {label}{" "}
-          {props.required && (
-            <span className="label-text-alt text-[red]">*</span>
-          )}
-        </span>
-      </label>
+    <label className="label p-0 form-control w-full items-start">
+      <span className="pl-4">
+        {label}{" "}
+        {props.required && <span className="label-text-alt text-[red]">*</span>}
+      </span>
       <input {...rest} className="input input-bordered w-full" />
-    </div>
+    </label>
   );
 }
