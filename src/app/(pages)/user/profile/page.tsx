@@ -1,11 +1,11 @@
 "use client";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "src/shared/cookies";
-import { IUser } from "src/types";
 import AsideProfile from "../../../../components/Profile/AsideProfile";
 import EditIconProfile from "../../../../components/Profile/EditIconProfile";
 import { editProfileFormValidation } from "src/actions/auth";
+import useCurrentUser from "src/hooks/useCurrentUser";
+import { MAX_EXPERIENCE } from "src/shared/helpers";
 
 const initialState = {
   errors: [],
@@ -13,15 +13,15 @@ const initialState = {
 };
 
 export default function UserProfile(props: any) {
-  const [currentUser, setCurrentUser] = useState<IUser>();
+  const currentUser = useCurrentUser(props);
+
   const [state, formAction] = useFormState(
     editProfileFormValidation,
     initialState
   );
+
   const [isEditMode, setIsEditMode] = useState(false);
   const [isEditIconMode, setIsEditIconMode] = useState<boolean>();
-
-  console.log(currentUser);
 
   const handleEditMode = (stateDefault?: boolean) => {
     setIsEditMode(
@@ -34,15 +34,6 @@ export default function UserProfile(props: any) {
       typeof stateDefault === "boolean" ? stateDefault : !isEditIconMode
     );
   };
-
-  const checkUser = async () => {
-    const user = await getCurrentUser();
-    if (user) setCurrentUser(JSON.parse(user.value));
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, [props]);
 
   useEffect(() => {
     const closeEditMode = () => {
@@ -77,12 +68,11 @@ export default function UserProfile(props: any) {
                   {currentUser.rank.rank.name}
                 </h2>
                 <span className="flex flex-col items-center w-full mb-4">
-                  {currentUser.rank.user_experience}/
-                  {currentUser.rank.rank.experience}
+                  {currentUser.rank.user_experience}/{MAX_EXPERIENCE}
                   <progress
                     className="progress progress-info"
                     value={`${currentUser.rank.user_experience}`}
-                    max={`${currentUser.rank.rank.experience}`}
+                    max={`${MAX_EXPERIENCE}`}
                   ></progress>
                 </span>
                 <h2 className="font-bold w-36 text-2xl">Next rank</h2>

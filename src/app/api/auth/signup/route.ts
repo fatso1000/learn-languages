@@ -42,7 +42,11 @@ export async function POST(req: NextRequest) {
           },
         },
         rank: {
-          create: { user_experience: 0, rank: { connect: { id: 1 } } },
+          create: {
+            user_experience: 0,
+            rank: { connect: { id: 1 } },
+            updated_at: new Date(),
+          },
         },
       },
     });

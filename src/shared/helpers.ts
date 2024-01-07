@@ -102,6 +102,8 @@ const languagesList = [
   "french",
 ];
 
+const MAX_EXPERIENCE = 250;
+
 const colorsObject: IColorsObject = {
   red: "#FF0044",
   blue: "#006CFE",
@@ -120,4 +122,5 @@ export {
   getRandomColor,
   colorsObject,
   languagesList,
+  MAX_EXPERIENCE,
 };
