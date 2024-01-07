@@ -77,6 +77,21 @@ export class LanguagePOST {
 export interface ILanguage {
   name: string;
 }
+// RANK
+export class RankPOST {
+  public name: string;
+  public distintive: string;
+
+  constructor({ name, distintive }: IRank) {
+    this.name = name;
+    this.distintive = distintive;
+  }
+}
+
+export interface IRank {
+  name: string;
+  distintive: string;
+}
 
 // READINGS
 export class ReadingsPOST {
