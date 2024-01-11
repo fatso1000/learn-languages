@@ -7,7 +7,7 @@ export default function FormTextarea(props: FormTextareaProps) {
       <span className="pl-4">{label}</span>
       <textarea
         {...rest}
-        className="textarea textarea-primary min-h-[7em] w-full h-6 text-[1rem]"
+        className="textarea textarea-bordered min-h-[7em] w-full h-6 text-[1rem]"
       />
     </label>
   );

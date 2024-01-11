@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { onThrowError } from "../apiService";
-import { getSearchQuery } from "src/shared/apiShared";
+import { getSearchQuery, verifyUserAuth } from "src/shared/apiShared";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import prisma from "src/app/config/db";
 
 export async function GET(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     const userId = getSearchQuery(req.url, ["id"]);
     if (!userId || !userId[0])
       throw new CustomError({
@@ -52,7 +53,9 @@ export async function GET(req: NextRequest) {
         }),
       ]);
 
-    return NextResponse.json({ historical, pendingContent, savedContent });
+    return NextResponse.json({
+      data: { historical, pendingContent, savedContent },
+    });
   } catch (error) {
     return onThrowError(error);
   }

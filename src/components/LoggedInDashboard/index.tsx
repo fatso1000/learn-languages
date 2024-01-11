@@ -9,19 +9,20 @@ import {
 } from "src/components/Icons";
 import { DashboardProps } from "src/types";
 import Link from "next/link";
+import { dashboardData } from "src/queryFn";
 
 // SEPARAR EN COMPONENTE APARTE
-const Header = (props: { data: DashboardProps }) => {
-  const { data } = props;
+const Header = (props: { data: DashboardProps; userName: string }) => {
+  const { data, userName } = props;
   return (
     <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
       <div className="relative">
         <div className="relative flex flex-col">
           <h1 className="text-6xl leading-6 font-black text-center inline-flex items-center">
-            Welcome back, Matias!
+            Welcome back, {userName}!
           </h1>
           <p className="mt-6 text-xl text-base-content/60 font-light">
-            Let's continue with your learning ;)
+            Let&apos;s continue with your learning ;)
           </p>
           <div className="flex flex-col mt-6">
             <div className="inline-flex gap-1">
@@ -93,14 +94,14 @@ const Header = (props: { data: DashboardProps }) => {
   );
 };
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
-export default function LoggedInDashboard(props: { userId: number }) {
-  const { data } = useSWR(`/api/dashboard?id=${props.userId}`, fetcher);
-
+export default function LoggedInDashboard(props: {
+  userId: number;
+  userName: string;
+}) {
+  const { data } = useSWR(`/api/dashboard?id=${props.userId}`, dashboardData);
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">
-      <Header data={data} />
+      <Header data={data?.data} userName={props.userName} />
     </main>
   );
 }

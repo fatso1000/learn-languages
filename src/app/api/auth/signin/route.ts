@@ -1,5 +1,5 @@
 import { validate } from "class-validator";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { CustomError, IUserLogin, UserLoginPOST } from "types/apiTypes";
 import {
   generateSuccessMessage,
@@ -11,7 +11,7 @@ import prisma from "src/app/config/db";
 import { logInUser } from "shared/apiShared";
 import bcrypt from "bcrypt";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body: IUserLogin = await req.json();
     const bodyType = new UserLoginPOST(body);
