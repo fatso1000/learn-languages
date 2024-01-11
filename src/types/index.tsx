@@ -163,3 +163,8 @@ export interface FormTextareaProps
 export interface IColorsObject {
   [key: string]: string;
 }
+
+export interface IconProps {
+  animal: string;
+  color: string[];
+}

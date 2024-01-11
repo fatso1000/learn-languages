@@ -114,6 +114,16 @@ const colorsObject: IColorsObject = {
   teal: "#00D7BF",
 };
 
+const rankFrameColors = [
+  "#5F544E",
+  "#816F40",
+  "#878684",
+  "#D0A940",
+  "#7EC9C9",
+  "#49D983",
+  "#6EA5D8",
+];
+
 export {
   getRandomAnimalName,
   animalsList,
@@ -123,4 +133,5 @@ export {
   colorsObject,
   languagesList,
   MAX_EXPERIENCE,
+  rankFrameColors,
 };

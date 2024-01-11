@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "src/app/config/db";
 import { onThrowError } from "../../apiService";
 import { MAX_EXPERIENCE } from "src/shared/helpers";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function POST(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     let message = "Historical Saved successfully";
     const { user_id, experience } = await req.json();
 
