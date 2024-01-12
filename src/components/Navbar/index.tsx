@@ -1,12 +1,17 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { logoutUserAction } from "src/app/actions";
-import { getCurrentUser, isUserLoggedIn } from "src/shared/cookies";
-import { IUser } from "src/types";
+import {
+  getCurrentUser,
+  getSelectedLanguage,
+  isUserLoggedIn,
+} from "src/shared/cookies";
+import { IUser, SelectedLanguageElement } from "src/types";
 import AnimalComponent from "../Animal";
+import LanguageSelect from "../InputsAndButtons/LanguageSelect";
 
 const ProfilePic = () => (
   <svg
@@ -25,18 +30,25 @@ const ProfilePic = () => (
 export default function Navbar(props: any) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<IUser>();
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<SelectedLanguageElement>();
   const router = useRouter();
+  const pathname = usePathname();
 
   const checkUserLoggedIn = async () => {
     const isLoggedIn = await isUserLoggedIn();
     const user = await getCurrentUser();
+    const selectedLanguageStr = await getSelectedLanguage();
     setIsLoggedIn(isLoggedIn);
-    if (user) setCurrentUser(JSON.parse(user.value));
+    if (user) {
+      setCurrentUser(JSON.parse(user.value));
+      setSelectedLanguage(JSON.parse(selectedLanguageStr!.value));
+    }
   };
 
   useEffect(() => {
     checkUserLoggedIn();
-  }, [props]);
+  }, [props, pathname]);
 
   return (
     <nav className="navbar bg-base-100 px-4 sm:px-4 md:px-16 mt-2 bg-opacity-90 text-base-content h-16 backdrop-blur transition-all duration-100 shadow-sm">
@@ -45,18 +57,14 @@ export default function Navbar(props: any) {
           E-LEARN
         </Link>
       </div>
+
       <div className="flex-none">
-        <ul className="menu menu-horizontal px-1">
-          <li>
-            <Link href={"/reading"}>Reading</Link>
-          </li>
-          <li>
-            <Link href={"/listening"}>Listening</Link>
-          </li>
-          <li>
-            <Link href={"/exercises"}>Exercises</Link>
-          </li>
-        </ul>
+        {isLoggedIn && currentUser && selectedLanguage && (
+          <LanguageSelect
+            selectedLanguage={selectedLanguage}
+            languages={currentUser.profile.languages}
+          />
+        )}
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full !flex flex-col items-center justify-center">

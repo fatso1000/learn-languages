@@ -52,7 +52,7 @@ export async function PATCH(
             create: {
               animal_name: body.profile?.animal_name || "",
               color: body.profile?.color || "",
-              language: {
+              languages: {
                 connect: {
                   id: body.profile?.language
                     ? Number(body.profile.language)
@@ -68,14 +68,9 @@ export async function PATCH(
         },
       },
       where: { id: id },
-      select: {
-        name: true,
-        email: true,
-        biography: true,
-        ubication: true,
-        profile: true,
-        id: true,
-        password: true,
+      include: {
+        profile: { include: { languages: { include: { details: true } } } },
+        rank: { include: { rank: true } },
       },
     });
     if (!request)

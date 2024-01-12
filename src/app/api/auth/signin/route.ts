@@ -23,14 +23,8 @@ export async function POST(req: Request, res: Response) {
 
     const request = await prisma.user.findFirst({
       where: { email: body.email },
-      select: {
-        name: true,
-        email: true,
-        biography: true,
-        ubication: true,
-        profile: true,
-        id: true,
-        password: true,
+      include: {
+        profile: { include: { languages: { include: { details: true } } } },
         rank: { include: { rank: true } },
       },
     });
@@ -48,12 +42,13 @@ export async function POST(req: Request, res: Response) {
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
       });
 
-    const jwt = logInUser(body);
+    const { password, ...removePassword } = request;
+    const jwt = logInUser(removePassword);
 
     return NextResponse.json(
       generateSuccessMessage({
         httpStatusCode: HttpStatusCode.OK,
-        data: { token: jwt, user: request },
+        data: { token: jwt, user: removePassword },
         message: "User logged in successfully.",
       }),
       { status: HttpStatusCode.OK }

@@ -2,6 +2,7 @@
 
 import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
 import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
+import { SelectedLanguageElement } from "src/types";
 
 export async function signUpFormValidation(
   currentState: any,
@@ -44,8 +45,8 @@ export async function signInFormValidation(
     if (!user.errors || user.errors.length === 0) {
       const userStringify = JSON.stringify(user.data.user),
         languageStringify = JSON.stringify(
-          user.data.user.profile.language.find(
-            (language: any) => language.active
+          user.data.user.profile.languages.find(
+            (language: SelectedLanguageElement) => language.active
           )
         );
       setLoginCookies(userStringify, languageStringify, user.data.token);

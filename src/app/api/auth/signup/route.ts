@@ -38,7 +38,12 @@ export async function POST(req: NextRequest) {
           create: {
             color: randomColor,
             animal_name: randomAnimal,
-            language: { connect: { id: +body.language + 1 } },
+            languages: {
+              create: {
+                active: true,
+                details: { connect: { id: +body.language + 1 } },
+              },
+            },
           },
         },
         rank: {

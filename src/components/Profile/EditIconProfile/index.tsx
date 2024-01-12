@@ -46,7 +46,7 @@ export default function EditIconProflie(props: {
                       type="radio"
                       name="color"
                       value={color}
-                      className="invisible h-0 w-0 radio-input"
+                      className="invisible h-0 w-0 dropdown-border radio-input"
                       checked={selectedColor[0] === color.toLocaleLowerCase()}
                       onChange={handleColor}
                     />
@@ -75,7 +75,7 @@ export default function EditIconProflie(props: {
                 type="radio"
                 name="animal"
                 value={animal.toLocaleLowerCase()}
-                className="invisible h-0 w-0 radio-input"
+                className="invisible h-0 w-0 dropdown-border radio-input"
                 checked={selectedAnimal === animal.toLocaleLowerCase()}
                 onChange={handleAnimalChange}
               />

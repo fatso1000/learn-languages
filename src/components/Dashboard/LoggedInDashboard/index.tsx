@@ -7,12 +7,15 @@ import {
   ListeningIcon,
   ReadingIcon,
 } from "src/components/Icons";
-import { DashboardProps } from "src/types";
+import { DashboardProps, SelectedLanguageElement } from "src/types";
 import Link from "next/link";
 
 // SEPARAR EN COMPONENTE APARTE
-const Header = (props: { data: DashboardProps }) => {
-  const { data } = props;
+const Header = (props: {
+  data: DashboardProps;
+  selectedLanguage: SelectedLanguageElement;
+}) => {
+  const { data, selectedLanguage } = props;
   return (
     <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
       <div className="relative">
@@ -26,13 +29,13 @@ const Header = (props: { data: DashboardProps }) => {
           <div className="flex flex-col mt-6">
             <div className="inline-flex gap-1">
               <Link
-                href={"/reading"}
+                href={`/${selectedLanguage.details.name}/reading`}
                 className="btn btn-primary font-black bg-base-100"
               >
                 Readings <ReadingIcon />
               </Link>
               <Link
-                href={""}
+                href={"/languages"}
                 className="btn btn-secondary font-black bg-base-100"
               >
                 Languages <LanguageIcon />
@@ -95,12 +98,15 @@ const Header = (props: { data: DashboardProps }) => {
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-export default function LoggedInDashboard(props: { userId: number }) {
+export default function LoggedInDashboard(props: {
+  userId: number;
+  selectedLanguage: SelectedLanguageElement;
+}) {
   const { data } = useSWR(`/api/dashboard?id=${props.userId}`, fetcher);
 
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">
-      <Header data={data} />
+      <Header data={data} selectedLanguage={props.selectedLanguage} />
     </main>
   );
 }

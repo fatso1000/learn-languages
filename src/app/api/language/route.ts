@@ -36,3 +36,12 @@ export async function POST(req: NextRequest) {
     return onThrowError(error);
   }
 }
+
+export async function GET() {
+  try {
+    const request = await prisma.languages.findMany();
+    return NextResponse.json({ request });
+  } catch (error) {
+    return onThrowError(error);
+  }
+}
