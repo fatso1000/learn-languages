@@ -1,6 +1,6 @@
 "use server";
 
-import { editUserProfile, signinUser, signupUser } from "src/queryFn";
+import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
 import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
 
 export async function signUpFormValidation(
@@ -42,7 +42,13 @@ export async function signInFormValidation(
     const user = await signinUser({ email, password });
 
     if (!user.errors || user.errors.length === 0) {
-      setLoginCookies(JSON.stringify(user.data.user), user.data.token);
+      const userStringify = JSON.stringify(user.data.user),
+        languageStringify = JSON.stringify(
+          user.data.user.profile.language.find(
+            (language: any) => language.active
+          )
+        );
+      setLoginCookies(userStringify, languageStringify, user.data.token);
       return { success: true, errors: [] };
     }
 
@@ -86,5 +92,47 @@ export async function editProfileFormValidation(
     return { errors: user.errors };
   } catch (error) {
     return { errors: [{ message: "Unknown error" }], success: false };
+  }
+}
+
+export async function selectUserLanguageFormValidation(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const body = {
+      language_id: +formData.get("language_id")!,
+      user_profile_id: +currentState.user_profile_id,
+      refresh: true,
+    };
+    const request = await fetch(getUrl + "/api/userLanguage", {
+      method: "POST",
+      body: JSON.stringify(body),
+      cache: "no-cache",
+    });
+    const petition = await request.json();
+
+    if (petition && petition.request) {
+      const userStringify = JSON.stringify(petition.request[2]),
+        languageStringify = JSON.stringify(petition.request[1]);
+      setLoginCookies(userStringify, languageStringify);
+      return {
+        errors: [],
+        success: true,
+        user_profile_id: currentState.user_profile_id,
+      };
+    }
+
+    return {
+      errors: [],
+      success: false,
+      user_profile_id: currentState.user_profile_id,
+    };
+  } catch (error) {
+    return {
+      errors: [{ message: "Unknown error" }],
+      success: false,
+      user_profile_id: currentState.user_profile_id,
+    };
   }
 }

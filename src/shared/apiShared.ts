@@ -27,16 +27,17 @@ const setCookie = (cookieKey: string, value: any) => {
   }
 };
 
-const setLoginCookies = (user: string, token: string) => {
+const setLoginCookies = (user: string, language: string, token?: string) => {
   setCookie("current_user", user);
-  setCookie("token", token);
+  setCookie("selected_language", language);
+  token && setCookie("token", token);
 };
 
 const setUserCookie = (user: string) => {
   setCookie("current_user", user);
 };
 
-const logInUser = (user: IUserLogin) => {
+const logInUser = (user: any) => {
   try {
     const jwt_secret = process.env.JWT_SECRET_KEY || "";
     const data = {

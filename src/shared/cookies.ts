@@ -25,6 +25,10 @@ const getCurrentUser = async () => {
   return await getCookie("current_user");
 };
 
+const getSelectedLanguage = async () => {
+  return await getCookie("selected_language");
+};
+
 const logoutUser = async () => {
   const oneDay = 24 * 60 * 60 * 1000;
   return {
@@ -56,4 +60,5 @@ export {
   getCurrentUser,
   deleteCookie,
   logoutUser,
+  getSelectedLanguage,
 };

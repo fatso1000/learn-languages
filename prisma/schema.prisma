@@ -24,60 +24,69 @@ enum Types {
 }
 
 model User {
-    id                    Int              @id @default(autoincrement())
-    created_at            DateTime         @default(now())
-    email                 String           @unique
-    password              String
-    name                  String
-    biography             String?
-    ubication             String?
-    profile               UserProfile      @relation(fields: [profile_id], references: [id])
-    profile_id            Int              @unique
-    UserContent           UserContent[]
-    Historical            Historical[]
-    rank                  UserRank?
+    id          Int           @id @default(autoincrement())
+    created_at  DateTime      @default(now())
+    email       String        @unique
+    password    String
+    name        String
+    biography   String?
+    ubication   String?
+    profile     UserProfile   @relation(fields: [profile_id], references: [id])
+    profile_id  Int           @unique
+    UserContent UserContent[]
+    Historical  Historical[]
+    rank        UserRank?
 }
 
 model UserProfile {
-    id                    Int              @id @default(autoincrement())
-    user                  User?
-    color                 String
-    animal_name           String
-    language              Languages        @relation(fields: [language_id], references: [id])
-    language_id           Int
+    id          Int             @id @default(autoincrement())
+    user        User?
+    color       String
+    animal_name String
+    languages   UserLanguages[]
+}
+
+model UserLanguages {
+    id              Int         @id @default(autoincrement())
+    active          Boolean     @default(false)
+    details         Languages   @relation(fields: [language_id], references: [id])
+    language_id     Int
+    user_profile    UserProfile @relation(fields: [user_profile_id], references: [id])
+    user_profile_id Int
 }
 
 model Languages {
-    id                    Int              @id @default(autoincrement())
-    name                  String           @unique
-    Content               Content[]
-    UserProfile           UserProfile[]
+    id            Int             @id @default(autoincrement())
+    name          String          @unique
+    Content       Content[]
+    UserLanguages UserLanguages[]
 }
 
 model QuestionAndAnswer {
-    id                    Int              @id @default(autoincrement())
-    title                 String
-    options               String[]
-    correct_answer        String
-    content_details       ContentDetails?  @relation(fields: [content_details_id], references: [id])
-    content_details_id    Int
+    id                 Int             @id @default(autoincrement())
+    title              String
+    options            String[]
+    correct_answer     String
+    content_details    ContentDetails? @relation(fields: [content_details_id], references: [id])
+    content_details_id Int
 }
 
 model Ranks {
-    id                    Int              @id @default(autoincrement())
-    name                  String
-    distintive            String
-    user                  UserRank[]
+    id         Int        @id @default(autoincrement())
+    name       String
+    distintive String
+    user       UserRank[]
 }
 
 model UserRank {
-    rank                  Ranks            @relation(fields: [rank_id], references: [id])
-    rank_id               Int
-    user                  User             @relation(fields: [user_id], references: [id])
-    user_id               Int              @unique
-    created_at            DateTime         @default(now())
-    updated_at            DateTime         @updatedAt
-    user_experience       Int
+    rank            Ranks    @relation(fields: [rank_id], references: [id])
+    rank_id         Int
+    user            User     @relation(fields: [user_id], references: [id])
+    user_id         Int      @unique
+    created_at      DateTime @default(now())
+    updated_at      DateTime @updatedAt
+    user_experience Int
+
     @@id([rank_id, user_id])
 }
 

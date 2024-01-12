@@ -42,12 +42,18 @@ body {
   color: hsl(var(--p) / var(--tw-border-opacity)) !important;
 }
 
-input.radio-input:checked + div {
-  border: 5px solid #291334;
-}
-
 .hidden:checked + label img {
   --tw-border-opacity: 1;
   border-color: hsl(var(--p) / var(--tw-border-opacity));
   box-sizing: border-box;
+}
+
+/* DROPDOWN LANGUAGE */
+.menu :where(li > details > summary):after,
+.menu :where(li > .menu-dropdown-toggle):after {
+  width: 0;
+}
+.menu :where(li:not(.menu-title) > *:not(ul):not(details):not(.menu-title)),
+.menu :where(li:not(.menu-title) > details > summary:not(.menu-title)) {
+  gap: 0;
 }
