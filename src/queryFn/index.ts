@@ -2,7 +2,7 @@ import { handleCustomApiRequest } from "src/shared/clientShared";
 
 const getUrl =
   process.env.NODE_ENV === "production"
-    ? "https://personal-blog-delta-amber.vercel.app"
+    ? "https://learn-languages-zeta.vercel.app"
     : "http://localhost:3000";
 
 const getContentById = async <T>(id: string) => {
