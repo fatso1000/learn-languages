@@ -4,10 +4,15 @@ import { APIContent, CustomError, ReadingsPOST } from "types/apiTypes";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import { onThrowError } from "../apiService";
-import { getSearchQuery, groupByContentLevel } from "src/shared/apiShared";
+import {
+  getSearchQuery,
+  groupByContentLevel,
+  verifyUserAuth,
+} from "src/shared/apiShared";
 
 export async function GET(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     const language = getSearchQuery(req.url, ["language"]);
     const type = getSearchQuery(req.url, ["type"]);
 
@@ -49,7 +54,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // verifyUserAuth(req);
+    verifyUserAuth(req);
     let body: APIContent = await req.json();
     const bodyType = new ReadingsPOST(body);
 

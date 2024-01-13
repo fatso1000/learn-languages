@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "src/app/config/db";
-import { onThrowError } from "../apiService";
+import { onSuccessRequest, onThrowError } from "../apiService";
+import { verifyUserAuth } from "src/shared/apiShared";
 
-// ADD NEW LANGUAGE TO USER
 export async function POST(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     let body = await req.json();
 
     const languageAlreadyExistsInUser = await prisma.userLanguages.findFirst({
@@ -50,29 +51,32 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (body.hasOwnProperty("refresh"))
-      transactions.push(
-        prisma.user.findFirst({
-          where: { profile: { id: body.user_profile_id } },
-          include: {
-            profile: { include: { languages: { include: { details: true } } } },
-            rank: { include: { rank: true } },
-          },
-        })
-      );
+    transactions.push(
+      prisma.user.findFirst({
+        where: { profile: { id: body.user_profile_id } },
+        include: {
+          profile: { include: { languages: { include: { details: true } } } },
+          rank: { include: { rank: true } },
+        },
+      })
+    );
 
     const request = await prisma.$transaction(transactions);
 
-    return NextResponse.json({ request });
+    return onSuccessRequest({
+      httpStatusCode: 200,
+      data: request,
+    });
   } catch (error) {
     return onThrowError(error);
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     const request = await prisma.userLanguages.findMany();
-    return NextResponse.json(request);
+    return onSuccessRequest({ data: request, httpStatusCode: 200 });
   } catch (error) {
     return onThrowError(error);
   }

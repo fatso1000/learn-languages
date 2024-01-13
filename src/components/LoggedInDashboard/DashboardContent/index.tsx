@@ -1,5 +1,5 @@
-"use client";
-import useSWR from "swr";
+import Link from "next/link";
+import React from "react";
 import CarouselComponent from "src/components/Carousel";
 import {
   ActivitiesIcon,
@@ -8,23 +8,22 @@ import {
   ReadingIcon,
 } from "src/components/Icons";
 import { DashboardProps, SelectedLanguageElement } from "src/types";
-import Link from "next/link";
 
-// SEPARAR EN COMPONENTE APARTE
-const Header = (props: {
+export default async function Header(props: {
   data: DashboardProps;
+  userName: string;
   selectedLanguage: SelectedLanguageElement;
-}) => {
-  const { data, selectedLanguage } = props;
+}) {
+  const { data, userName, selectedLanguage } = props;
   return (
     <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
       <div className="relative">
         <div className="relative flex flex-col">
-          <h1 className="text-6xl leading-6 font-black text-center inline-flex items-center">
-            Welcome back, Matias!
+          <h1 className="text-6xl font-black inline-flex items-center">
+            Welcome back, {userName}!
           </h1>
           <p className="mt-6 text-xl text-base-content/60 font-light">
-            Let's continue with your learning ;)
+            Let&apos;s continue with your learning ;)
           </p>
           <div className="flex flex-col mt-6">
             <div className="inline-flex gap-1">
@@ -93,20 +92,5 @@ const Header = (props: {
         </div>
       </div>
     </header>
-  );
-};
-
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
-export default function LoggedInDashboard(props: {
-  userId: number;
-  selectedLanguage: SelectedLanguageElement;
-}) {
-  const { data } = useSWR(`/api/dashboard?id=${props.userId}`, fetcher);
-
-  return (
-    <main className="mt-4 px-4 sm:px-4 md:px-16">
-      <Header data={data} selectedLanguage={props.selectedLanguage} />
-    </main>
   );
 }

@@ -42,6 +42,13 @@ body {
   color: hsl(var(--p) / var(--tw-border-opacity)) !important;
 }
 
+.color-select.radio-input:checked + div {
+  border: 3px solid #291334;
+}
+.color-select.radio-input:checked + div + span {
+  font-weight: 800;
+}
+
 .hidden:checked + label img {
   --tw-border-opacity: 1;
   border-color: hsl(var(--p) / var(--tw-border-opacity));
@@ -56,4 +63,42 @@ body {
 .menu :where(li:not(.menu-title) > *:not(ul):not(details):not(.menu-title)),
 .menu :where(li:not(.menu-title) > details > summary:not(.menu-title)) {
   gap: 0;
+}
+
+.user-frame {
+  --offset: 3px;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.user-frame::before {
+  content: "";
+  background-image: linear-gradient(transparent, white, transparent);
+  position: absolute;
+  width: 150%;
+  height: 0.75rem;
+  inset: var(--offset);
+  top: 45%;
+  left: -100%;
+  aspect-ratio: 1;
+  animation: movment 2s linear infinite;
+}
+.user-frame::after {
+  content: "";
+  background: inherit;
+  border-radius: inherit;
+  position: absolute;
+  z-index: 0;
+  aspect-ratio: 1;
+  inset: var(--offset);
+  height: calc(10px);
+  width: calc(10px);
+}
+@keyframes movment {
+  from {
+    transform: translateX(0%) rotate(-60deg);
+  }
+  to {
+    transform: translateX(100%) rotate(-60deg);
+  }
 }

@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 
 import ukFlag from "public/images/flags/english_flag.png";
@@ -73,40 +74,44 @@ export default function LanguageSelect(props: LanguageSelectProps) {
           className="grid grid-cols-4 gap-2 justify-center items-center"
         >
           {languages &&
-            languages.map((language) => (
-              <label
-                className={`w-full cursor-pointer flex flex-col items-center justify-center hover:bg-base-200 rounded p-2 ${
-                  language.id === selectedLanguage.id ? "order-first" : ""
-                }`}
-                key={language.id}
-              >
-                <input
-                  type="radio"
-                  name="language_id"
-                  value={language.id}
-                  onClick={() => formRef.current.requestSubmit()}
-                  disabled={language.id === selectedLanguage.id}
-                  defaultChecked={language.id === selectedLanguage.id}
-                  className="invisible h-0 w-0 radio-input"
-                />
-                <div className="cursor-pointer rounded">
-                  <Image
-                    src={languagesList[language.details.name].flagUrl.src}
-                    alt="flag"
-                    width={48}
-                    height={28}
-                    className="rounded"
-                  />
-                </div>
-                <span
-                  className={`text-[0.7rem] first-letter:uppercase ${
-                    language.id === selectedLanguage.id ? "font-extrabold" : ""
+            languages.map((language) => {
+              return (
+                <label
+                  className={`w-full cursor-pointer flex flex-col items-center justify-center hover:bg-base-200 rounded p-2 ${
+                    language.id === selectedLanguage.id ? "order-first" : ""
                   }`}
+                  key={language.id}
                 >
-                  {language.details.name}
-                </span>
-              </label>
-            ))}
+                  <input
+                    type="radio"
+                    name="language_id"
+                    value={language.id}
+                    onClick={() => formRef.current.requestSubmit()}
+                    disabled={language.id === selectedLanguage.id}
+                    defaultChecked={language.id === selectedLanguage.id}
+                    className="invisible h-0 w-0 radio-input"
+                  />
+                  <div className="cursor-pointer rounded">
+                    <Image
+                      src={languagesList[language.details.name].flagUrl.src}
+                      alt="flag"
+                      width={48}
+                      height={28}
+                      className="rounded"
+                    />
+                  </div>
+                  <span
+                    className={`text-[0.7rem] first-letter:uppercase ${
+                      language.id === selectedLanguage.id
+                        ? "font-extrabold"
+                        : ""
+                    }`}
+                  >
+                    {language.details.name}
+                  </span>
+                </label>
+              );
+            })}
           <label className="order-last col-span-4">
             <Link href="/languages" className="btn w-full">
               <svg

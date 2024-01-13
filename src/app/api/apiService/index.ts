@@ -38,6 +38,18 @@ const generateSuccessMessage = <E = any>({
   };
 };
 
+const onSuccessRequest = <E = any>({
+  httpStatusCode,
+  data,
+  message,
+}: {
+  httpStatusCode: HttpStatusCode;
+  data: E | E[];
+  message?: string;
+}) => {
+  return NextResponse.json({ httpStatusCode, data, message });
+};
+
 const onValidationError = (validation: ValidationError[]) => {
   return new CustomError({
     msg: "Error during data validation.",
@@ -86,4 +98,5 @@ export {
   onThrowError,
   onValidationError,
   generateSuccessMessage,
+  onSuccessRequest,
 };

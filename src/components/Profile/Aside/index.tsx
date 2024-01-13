@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
-import EditProfile from "../EditProfile";
-import Image from "next/image";
+import EditProfile from "../Edit";
+import { rankFrameColors } from "src/shared/helpers";
 
 const ButtonComponent = ({
   handleEditMode,
@@ -17,7 +16,7 @@ const ButtonComponent = ({
   </button>
 );
 
-export default function AsideProfile({
+export default function Aside({
   currentUser,
   handleEditIconMode,
   handleEditMode,
@@ -32,20 +31,29 @@ export default function AsideProfile({
     <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
       {!isEditMode ? (
         <>
-          <header className="flex flex-col items-center gap-4 p-2">
-            <div className="relative">
-              <AnimalComponent
-                color={currentUser.profile.color}
-                animalName={currentUser.profile.animal_name}
-                size="6em"
-              />
-              <Image
-                width={100}
-                height={100}
-                src={currentUser.rank.rank.distintive}
-                alt={`distintive from ${currentUser.rank.rank.name} rank`}
-                className="absolute top-10 h-[6rem] w-[300px]"
-              />
+          <header className="flex flex-col items-center gap-4">
+            <div
+              className="relative rounded-full user-frame w-[6.8rem] h-[6.8rem] flex items-center justify-center"
+              style={{
+                aspectRatio: 1,
+                backgroundColor: `${
+                  rankFrameColors[currentUser.rank.rank_id - 1]
+                }`,
+              }}
+            >
+              <div
+                style={{
+                  height: 96,
+                  width: 96,
+                }}
+                className="absolute rounded-full z-10"
+              >
+                <AnimalComponent
+                  color={currentUser.profile.color}
+                  animalName={currentUser.profile.animal_name}
+                  size="6rem"
+                />
+              </div>
             </div>
             <h2 className="text-[1.5em] font-extrabold">{currentUser.name}</h2>
           </header>

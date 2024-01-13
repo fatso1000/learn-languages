@@ -3,9 +3,11 @@ import prisma from "src/app/config/db";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import { onThrowError } from "../../apiService";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function GET(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     const id = req.nextUrl.pathname.slice(13);
 
     if (!id)

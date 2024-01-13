@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
 import { PendingContentContent } from "src/types";
-import { CustomError, IUserLogin } from "src/types/apiTypes";
+import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 
 const secret = process.env.JWT_SECRET_KEY || "";
@@ -18,7 +18,7 @@ const setCookie = (cookieKey: string, value: any) => {
     cookies().set({
       name: cookieKey,
       value: value,
-      maxAge: 600,
+      maxAge: 3600,
       path: "/",
     });
     return true;

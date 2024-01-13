@@ -2,6 +2,7 @@
 
 import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
 import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
+import { handleCustomApiRequest } from "src/shared/clientShared";
 import { SelectedLanguageElement } from "src/types";
 
 export async function signUpFormValidation(
@@ -101,23 +102,24 @@ export async function selectUserLanguageFormValidation(
   formData: FormData
 ) {
   try {
-    const body = {
+    const body = JSON.stringify({
       language_id: +formData.get("language_id")!,
       user_profile_id: currentState.hasOwnProperty("user_profile_id")
         ? +currentState.user_profile_id
         : +formData.get("user_profile_id")!,
       refresh: true,
-    };
-    const request = await fetch(getUrl + "/api/userLanguage", {
-      method: "POST",
-      body: JSON.stringify(body),
-      cache: "no-cache",
     });
-    const petition = await request.json();
 
-    if (petition && petition.request) {
-      const userStringify = JSON.stringify(petition.request[2]),
-        languageStringify = JSON.stringify(petition.request[1]);
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/userLanguage",
+      "POST",
+      body,
+      true
+    );
+
+    if (request && request.data) {
+      const userStringify = JSON.stringify(request.data[2]),
+        languageStringify = JSON.stringify(request.data[1]);
       setLoginCookies(userStringify, languageStringify);
       return {
         errors: [],
@@ -132,6 +134,7 @@ export async function selectUserLanguageFormValidation(
       user_profile_id: currentState.user_profile_id,
     };
   } catch (error) {
+    console.error(error);
     return {
       errors: [{ message: "Unknown error" }],
       success: false,

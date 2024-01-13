@@ -16,7 +16,7 @@ export default function SignInForm() {
   const [state, formAction] = useFormState(signInFormValidation, initialState);
 
   useEffect(() => {
-    if (state.success) redirect("/");
+    if (state.success) redirect("/dashboard");
   }, [state.success]);
 
   return (

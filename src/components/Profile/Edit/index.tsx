@@ -4,7 +4,7 @@ import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import FormTextarea from "src/components/InputsAndButtons/FormTextarea";
 
-export default function EditProfile({
+export default function Edit({
   user,
   handleEditIconMode,
   handleEditMode,
@@ -69,7 +69,7 @@ export default function EditProfile({
       </div>
       <div className="flex gap-2 w-full justify-between">
         <button
-          className="btn btn-secondary w-[45%]"
+          className="btn btn-error hover:bg-[#dc6262] w-[45%]"
           onClick={() => {
             handleEditMode(false);
             handleEditIconMode(false);

@@ -4,7 +4,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ["lolg-cdn.porofessor.gg"],
+    domains: ["drive.google.com"],
   },
 };
 

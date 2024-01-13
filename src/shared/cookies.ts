@@ -42,6 +42,11 @@ const logoutUser = async () => {
       value: "",
       expires: Date.now() - oneDay,
     }),
+    selected_language: await cookies().set({
+      name: "selected_language",
+      value: "",
+      expires: Date.now() - oneDay,
+    }),
   };
 };
 

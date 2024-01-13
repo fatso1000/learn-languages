@@ -1,23 +1,39 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { languagesList } from "./shared/helpers";
 
-const authRoutes = ["/auth/signin", "/auth/signup"];
-const unauthRoutes = ["/", "/auth/login", "/auth/signup"];
+const authRoutes = ["/user/"];
+const unauthRoutes = ["/"];
 
-export async function middleware(request: NextRequest) {
-  const current_user = request.cookies.get("current_user"),
-    token = request.cookies.get("token");
-  const pathname = request.nextUrl.pathname;
+export async function middleware(req: NextRequest) {
+  const current_user = req.cookies.get("current_user"),
+    token = req.cookies.get("token"),
+    authHeader = req.headers.get("Authorization");
+  const pathname = req.nextUrl.pathname;
 
-  if (current_user || token) {
-    if (pathname.startsWith("/auth")) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-  } else {
-    if (pathname.startsWith("/user")) {
-      return NextResponse.redirect(new URL("/", request.url));
+  if (!token && current_user) {
+    if (
+      ["/languages", "/user", "/dashboard"].includes(pathname) ||
+      languagesList.includes(pathname)
+    ) {
+      return NextResponse.redirect(new URL("/", req.nextUrl));
     }
   }
 
+  if ((current_user && token) || authHeader) {
+    if (pathname.includes("/auth")) {
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    }
+    if (pathname.endsWith("/")) {
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    }
+  } else {
+    if (pathname.includes("/user")) {
+      return NextResponse.redirect(new URL("/", req.nextUrl));
+    }
+    if (pathname.includes("/dashboard")) {
+      return NextResponse.redirect(new URL("/", req.nextUrl));
+    }
+  }
   return NextResponse.next();
 }

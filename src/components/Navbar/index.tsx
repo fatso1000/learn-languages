@@ -1,17 +1,11 @@
-"use client";
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+
 import { logoutUserAction } from "src/app/actions";
-import {
-  getCurrentUser,
-  getSelectedLanguage,
-  isUserLoggedIn,
-} from "src/shared/cookies";
 import { IUser, SelectedLanguageElement } from "src/types";
 import AnimalComponent from "../Animal";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const ProfilePic = () => (
   <svg
@@ -27,28 +21,28 @@ const ProfilePic = () => (
   </svg>
 );
 
-export default function Navbar(props: any) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<IUser>();
-  const [selectedLanguage, setSelectedLanguage] =
-    useState<SelectedLanguageElement>();
-  const router = useRouter();
-  const pathname = usePathname();
-
-  const checkUserLoggedIn = async () => {
-    const isLoggedIn = await isUserLoggedIn();
-    const user = await getCurrentUser();
-    const selectedLanguageStr = await getSelectedLanguage();
-    setIsLoggedIn(isLoggedIn);
-    if (user) {
-      setCurrentUser(JSON.parse(user.value));
-      setSelectedLanguage(JSON.parse(selectedLanguageStr!.value));
-    }
+export default async function Navbar(props: any) {
+  const cookieStore = cookies();
+  const cookiesObj = {
+    current_user: cookieStore.get("current_user"),
+    token: cookieStore.get("token"),
+    selectedLanguage: cookieStore.get("selected_language"),
   };
 
-  useEffect(() => {
-    checkUserLoggedIn();
-  }, [props, pathname]);
+  const currentUser: IUser | undefined =
+      cookiesObj.current_user && cookiesObj.current_user.value !== ""
+        ? JSON.parse(cookiesObj.current_user.value)
+        : undefined,
+    selectedLanguage: SelectedLanguageElement | undefined =
+      cookiesObj.selectedLanguage && cookiesObj.selectedLanguage.value !== ""
+        ? JSON.parse(cookiesObj.selectedLanguage.value)
+        : undefined,
+    token =
+      cookiesObj.token && cookiesObj.token.value !== ""
+        ? cookiesObj.token.value
+        : undefined;
+
+  const isLoggedIn = currentUser && token ? true : false;
 
   return (
     <nav className="navbar bg-base-100 px-4 sm:px-4 md:px-16 mt-2 bg-opacity-90 text-base-content h-16 backdrop-blur transition-all duration-100 shadow-sm">
@@ -94,11 +88,9 @@ export default function Navbar(props: any) {
                 <li>
                   <form
                     action={async () => {
+                      "use server";
                       await logoutUserAction();
-                      toast("User logged out successfully.", {
-                        type: "info",
-                      });
-                      router.push("/");
+                      redirect("/");
                     }}
                   >
                     <button type="submit">Logout</button>

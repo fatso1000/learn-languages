@@ -181,3 +181,8 @@ export interface SelectedLanguageDetail {
   id: number;
   name: string;
 }
+
+export interface IconProps {
+  animal: string;
+  color: string[];
+}
