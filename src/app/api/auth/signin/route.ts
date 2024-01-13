@@ -2,7 +2,7 @@ import { validate } from "class-validator";
 import { NextRequest, NextResponse } from "next/server";
 import { CustomError, IUserLogin, UserLoginPOST } from "types/apiTypes";
 import {
-  generateSuccessMessage,
+  onSuccessRequest,
   onThrowError,
   onValidationError,
 } from "../../apiService";
@@ -45,14 +45,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const { password, ...removePassword } = request;
     const jwt = logInUser(removePassword);
 
-    return NextResponse.json(
-      generateSuccessMessage({
-        httpStatusCode: HttpStatusCode.OK,
-        data: { token: jwt, user: removePassword },
-        message: "User logged in successfully.",
-      }),
-      { status: HttpStatusCode.OK }
-    );
+    return onSuccessRequest({
+      httpStatusCode: HttpStatusCode.CREATED,
+      data: { token: jwt, user: removePassword },
+    });
   } catch (error: any) {
     return onThrowError(error);
   }
