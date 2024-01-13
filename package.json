@@ -9,7 +9,7 @@
     "lint": "next lint",
     "migrate:dev": "npx prisma migrate dev --name dev",
     "db:push": "npx prisma db push",
-    "db:reset": "npx prisma reset",
+    "db:reset": "npx prisma migrate reset",
     "prisma:studio": "npx prisma studio",
     "postinstall": "prisma generate"
   },
@@ -17,12 +17,15 @@
     "@prisma/client": "^5.4.1",
     "@vercel/postgres": "^0.5.0",
     "bcrypt": "^5.1.1",
+    "canvas-confetti": "^1.9.0",
     "class-validator": "^0.14.0",
     "jsonwebtoken": "^9.0.2",
     "next": "13.5.4",
     "react": "^18",
+    "react-animals": "^0.0.82",
     "react-dom": "^18",
     "react-icons": "^4.11.0",
+    "swiper": "^11.0.5",
     "swr": "^2.2.4"
   },
   "devDependencies": {
@@ -32,6 +35,7 @@
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "^20",
     "@types/react": "^18",
+    "@types/react-animals": "^0.0.2",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "daisyui": "^3.9.2",

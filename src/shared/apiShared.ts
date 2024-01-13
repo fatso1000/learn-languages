@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { NextRequest } from "next/server";
-import { CustomError, IUserLogin } from "src/types/apiTypes";
+import { PendingContentContent } from "src/types";
+import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 
 const secret = process.env.JWT_SECRET_KEY || "";
@@ -17,7 +18,7 @@ const setCookie = (cookieKey: string, value: any) => {
     cookies().set({
       name: cookieKey,
       value: value,
-      maxAge: 600,
+      maxAge: 3600,
       path: "/",
     });
     return true;
@@ -26,19 +27,27 @@ const setCookie = (cookieKey: string, value: any) => {
   }
 };
 
-const setLoginCookies = (user: string, token: string) => {
+const setLoginCookies = (user: string, language: string, token?: string) => {
   setCookie("current_user", user);
-  setCookie("token", token);
+  setCookie("selected_language", language);
+  token && setCookie("token", token);
 };
 
-const logInUser = (user: IUserLogin) => {
+const setUserCookie = (user: string) => {
+  setCookie("current_user", user);
+};
+
+const logInUser = (user: any) => {
   try {
     const jwt_secret = process.env.JWT_SECRET_KEY || "";
     const data = {
       time: new Date(),
       ...user,
     };
-    const token = jwt.sign(data, jwt_secret);
+    const options = {
+      expiresIn: 3600, // 1 hour
+    };
+    const token = jwt.sign(data, jwt_secret, options);
     return token;
   } catch (error) {
     return null;
@@ -74,7 +83,29 @@ const verifyUserAuth = (req: NextRequest) => {
     });
 };
 
+const groupByContentLevel = (array: PendingContentContent[]) => {
+  let obj: any = {};
+
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+
+    if (obj.hasOwnProperty(element.level)) {
+      obj[element.level] = [...obj[element.level], element];
+    } else {
+      obj[element.level] = [element];
+    }
+  }
+
+  const objValues = Object.values(obj);
+
+  return Object.keys(obj).map((elem, i) => ({
+    level: elem,
+    data: objValues[i],
+  }));
+};
+
 export {
+  groupByContentLevel,
   verifyUserAuth,
   verifyToken,
   setCookie,
@@ -82,4 +113,5 @@ export {
   removeCookie,
   logInUser,
   setLoginCookies,
+  setUserCookie,
 };

@@ -1,49 +1,57 @@
 import { HttpStatusCode } from "src/types/httpStatusCode";
-
-const revalidate = 60;
-
-const handleApiRequest = async <T = any>(request: string) => {
-  try {
-    const fetching = await fetch(request, {
-      next: { revalidate },
-    });
-    const petition = await fetching.json();
-    return { error: undefined, data: petition.data as T };
-  } catch (error) {
-    return { error: error, data: undefined };
-  }
-};
+import { getBearerToken, logoutUser } from "./cookies";
 
 const handleCustomApiRequest = async <T = any>(
   request: string,
-  method: "POST" | "GET",
-  body: any
+  method: "POST" | "GET" | "PATCH",
+  body: any = undefined,
+  withToken: boolean = false
 ) => {
   try {
+    let headers: any[] = [];
+
+    if (withToken) {
+      const { token } = await getBearerToken();
+      headers = [["Authorization", `${token?.value}`]];
+    }
+
     const fetching = await fetch(request, {
       method,
-      body: JSON.stringify(body),
-      next: { revalidate },
+      body: body ? JSON.stringify(body) : undefined,
+      next: { revalidate: 0 },
+      headers,
     });
-    const petition = await fetching.json();
-    return handleStatusCode(petition.httpStatusCode, petition);
-    // return { error: undefined, data: petition.data as T };
-  } catch (error) {
-    return { error: error, data: undefined };
+
+    const petition = await fetching.json(),
+      statusCode = fetching.status;
+
+    return handleStatusCode<T>(statusCode, petition);
+  } catch (error: any) {
+    return { errors: error, message: "Unknown error", data: undefined };
   }
 };
 
-const handleStatusCode = (statusCode: HttpStatusCode, petition: any) => {
+const handleStatusCode = async <T>(
+  statusCode: HttpStatusCode,
+  petition: any
+) => {
   switch (statusCode) {
+    case HttpStatusCode.UNAUTHORIZED:
+      await logoutUser();
+      return { message: undefined, errors: [], data: undefined };
     case HttpStatusCode.OK:
-      return { error: undefined, data: petition.data };
+      return { message: undefined, errors: [], data: petition.data as T };
 
     default:
-      return { error: petition.message, data: undefined };
+      return {
+        message: petition.message,
+        errors: petition.errors,
+        data: undefined,
+      };
   }
 };
 
 const randomKey = () =>
   new Date(new Date().valueOf() - Math.random() * 1e12).toString();
 
-export { handleApiRequest, randomKey, handleCustomApiRequest };
+export { randomKey, handleCustomApiRequest };

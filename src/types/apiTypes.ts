@@ -1,11 +1,4 @@
-import {
-  IsAlphanumeric,
-  IsBoolean,
-  IsEmail,
-  IsNumber,
-  IsOptional,
-  Length,
-} from "class-validator";
+import { IsBoolean, IsEmail, IsOptional, Length } from "class-validator";
 import { HttpStatusCode } from "./httpStatusCode";
 
 export class BlogPOST {
@@ -84,43 +77,103 @@ export class LanguagePOST {
 export interface ILanguage {
   name: string;
 }
+// RANK
+export class RankPOST {
+  public name: string;
+  public distintive: string;
+
+  constructor({ name, distintive }: IRank) {
+    this.name = name;
+    this.distintive = distintive;
+  }
+}
+
+export interface IRank {
+  name: string;
+  distintive: string;
+}
 
 // READINGS
 export class ReadingsPOST {
   public title: string;
-  public reading_texts: IReadingTexts[];
-  public qa: IQuestionAndAnswer[];
+  public description: string;
+  public level: LevelsTypes;
+  public text: string;
+  public type: ContentTypes;
+  public question_and_answer: APIQuestionAndAnswer[];
   public language_id: number;
 
-  constructor({ qa, reading_texts, title, language_id }: IReadings) {
-    this.qa = qa;
-    this.reading_texts = reading_texts;
+  constructor({
+    description,
+    language_id,
+    level,
+    question_and_answer,
+    text,
+    title,
+    type,
+  }: APIContent) {
     this.title = title;
+    this.description = description;
+    this.text = text;
+    this.type = type;
+    this.level = level;
     this.language_id = language_id;
+    this.question_and_answer = question_and_answer;
   }
 }
 
-export interface IReadings {
-  title: string;
-  language_id: number;
-  reading_texts: IReadingTexts[];
-  qa: IQuestionAndAnswer[];
+export enum ContentTypes {
+  Reading = "Reading",
+  Listening = "Listening",
+  Exercises = "Exercises",
 }
 
-export interface IReadingTexts {
+export enum LevelsTypes {
+  A1 = "A1",
+  A2 = "A2",
+  B1 = "B1",
+  B2 = "B2",
+  C1 = "C1",
+  C2 = "C2",
+}
+
+export interface APIContent {
   title: string;
   description: string;
   text: string;
-  question_and_answer: IQuestionAndAnswer[];
+  language_id: number;
+  type: ContentTypes;
+  level: LevelsTypes;
+  question_and_answer: APIQuestionAndAnswer[];
 }
 
-export interface IQuestionAndAnswer {
+export interface APIQuestionAndAnswer {
   title: string;
   options: string[];
   correct_answer: string;
 }
 
 // AUTH
+
+export class UserPATCH {
+  public name: string;
+
+  @IsOptional()
+  public biography?: string;
+
+  @IsOptional()
+  public ubication?: string;
+
+  @IsOptional()
+  public profile?: { animal_name?: string; color?: string; language?: number };
+
+  constructor({ name, biography, ubication, profile }: IUser) {
+    this.name = name;
+    this.biography = biography;
+    this.ubication = ubication;
+    this.profile = profile;
+  }
+}
 
 export class UserLoginPOST {
   @IsEmail()
@@ -145,12 +198,30 @@ export class UserSignUpPOST {
   @Length(1)
   public name?: string;
 
-  constructor({ email, password, name }: IUserSignUp) {
+  public profile_color: string;
+
+  public language: number;
+
+  constructor({ email, password, name, profile_color, language }: IUserSignUp) {
     this.email = email;
     this.password = password;
     this.name = name;
+    this.profile_color = profile_color;
+    this.language = language;
   }
 }
+
+export interface IUser {
+  name: string;
+  biography?: string;
+  ubication?: string;
+  profile?: {
+    animal_name?: string;
+    color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    language?: number;
+  };
+}
+export interface IProfile {}
 
 export interface IUserLogin {
   email: string;
@@ -161,6 +232,16 @@ export interface IUserSignUp {
   email: string;
   password: string;
   name?: string;
+  language: number;
+  profile_color:
+    | string
+    | "red"
+    | "blue"
+    | "orange"
+    | "yellow"
+    | "green"
+    | "purple"
+    | "teal";
 }
 
 export interface IUserLogout {

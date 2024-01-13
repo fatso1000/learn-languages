@@ -1,7 +1,7 @@
 import LayoutComponent from "src/components/Layout";
 import "./globals.css";
 import React from "react";
-import { Roboto, Onest } from "next/font/google";
+import { Onest } from "next/font/google";
 
 export const metadata = {
   title: "Matias Benitez Blog",

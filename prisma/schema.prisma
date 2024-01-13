@@ -1,71 +1,144 @@
 generator client {
-    provider = "prisma-client-js"
+    provider        = "prisma-client-js"
+    previewFeatures = ["views"]
 }
 
 datasource db {
-    provider          = "postgresql"
-    url               = env("POSTGRES_PRISMA_URL")
-    directUrl         = env("POSTGRES_URL_NON_POOLING")
-    shadowDatabaseUrl = env("POSTGRES_URL_NON_POOLING")
+    provider = "postgresql"
+    url      = env("POSTGRES_PRISMA_URL")
+}
+
+enum Levels {
+    A1
+    A2
+    B1
+    B2
+    C1
+    C2
+}
+
+enum Types {
+    Listening
+    Exercise
+    Reading
 }
 
 model User {
-    id               Int          @id @default(autoincrement())
-    created_at       DateTime     @default(now())
-    email            String       @unique
-    password         String
-    name             String?
-    user_readings    UserReadings @relation(fields: [user_readings_id], references: [id])
-    user_readings_id Int          @unique
+    id          Int           @id @default(autoincrement())
+    created_at  DateTime      @default(now())
+    email       String        @unique
+    password    String
+    name        String
+    biography   String?
+    ubication   String?
+    profile     UserProfile   @relation(fields: [profile_id], references: [id])
+    profile_id  Int           @unique
+    UserContent UserContent[]
+    Historical  Historical[]
+    rank        UserRank?
 }
 
-model Readings {
-    id            Int            @id @default(autoincrement())
-    title         String
-    locked_texts  Int
-    reading_texts ReadingTexts[]
-    language      Languages      @relation(fields: [language_id], references: [id])
-    language_id   Int
+model UserProfile {
+    id          Int             @id @default(autoincrement())
+    user        User?
+    color       String
+    animal_name String
+    languages   UserLanguages[]
+}
+
+model UserLanguages {
+    id              Int         @id @default(autoincrement())
+    active          Boolean     @default(false)
+    details         Languages   @relation(fields: [language_id], references: [id])
+    language_id     Int
+    user_profile    UserProfile @relation(fields: [user_profile_id], references: [id])
+    user_profile_id Int
 }
 
 model Languages {
-    id       Int        @id @default(autoincrement())
-    name     String
-    readings Readings[]
-}
-
-model ReadingTexts {
-    id                     Int                   @id @default(autoincrement())
-    title                  String
-    description            String
-    text                   String[]
-    reading                Readings              @relation(fields: [reading_id], references: [id])
-    reading_id             Int
-    question_and_answer    QuestionAndAnswer[]
-    PendingsReadingTexts   PendingsReadingTexts? @relation(fields: [pendingsReadingTextsId], references: [id])
-    pendingsReadingTextsId Int?
+    id            Int             @id @default(autoincrement())
+    name          String          @unique
+    Content       Content[]
+    UserLanguages UserLanguages[]
 }
 
 model QuestionAndAnswer {
-    id               Int          @id @default(autoincrement())
-    title            String
-    options          String[]
-    correct_answer   String
-    reading_texts    ReadingTexts @relation(fields: [reading_texts_id], references: [id])
-    reading_texts_id Int
+    id                 Int             @id @default(autoincrement())
+    title              String
+    options            String[]
+    correct_answer     String
+    content_details    ContentDetails? @relation(fields: [content_details_id], references: [id])
+    content_details_id Int
 }
 
-model UserReadings {
-    id       Int                    @id @default(autoincrement())
-    readings PendingsReadingTexts[]
-    user     User?
+model Ranks {
+    id         Int        @id @default(autoincrement())
+    name       String
+    distintive String
+    user       UserRank[]
 }
 
-model PendingsReadingTexts {
-    id               Int            @id @default(autoincrement())
-    pendings         ReadingTexts[]
-    user_readings    UserReadings   @relation(fields: [user_readings_id], references: [id])
-    marked_as_read   Boolean
-    reading_texts_id Int
-    user_readings_id Int
+model UserRank {
+    rank            Ranks    @relation(fields: [rank_id], references: [id])
+    rank_id         Int
+    user            User     @relation(fields: [user_id], references: [id])
+    user_id         Int      @unique
+    created_at      DateTime @default(now())
+    updated_at      DateTime @updatedAt
+    user_experience Int
+
+    @@id([rank_id, user_id])
+}
+
+// ---------------- ******************************** --------------------------------
+
+model Content {
+    id          Int              @id @default(autoincrement())
+    title       String
+    details     ContentDetails[]
+    type        Types
+    level       Levels
+    language    Languages        @relation(fields: [language_id], references: [id])
+    language_id Int
+    historical  Historical[]
+}
+
+// AGREGAR FIELDS PARA AUDIO LISTENING Y EXERCISES
+model ContentDetails {
+    id                  Int                 @id @default(autoincrement())
+    title               String
+    description         String
+    text                String[]
+    level               Levels
+    type                Types
+    content             Content             @relation(fields: [content_id], references: [id])
+    content_id          Int
+    question_and_answer QuestionAndAnswer[]
+    PendingContent      PendingContent[]
+}
+
+model UserContent {
+    id      Int              @id @default(autoincrement())
+    content PendingContent[]
+    user    User?            @relation(fields: [user_id], references: [id])
+    user_id Int?
+}
+
+model PendingContent {
+    id              Int            @id @default(autoincrement())
+    pending_content ContentDetails @relation(fields: [pending_id], references: [id])
+    user_content    UserContent    @relation(fields: [user_content_id], references: [id])
+    marked_as_read  Boolean
+    is_completed    Boolean
+    user_content_id Int
+    pending_id      Int
+}
+
+model Historical {
+    id           Int      @id @default(autoincrement())
+    user         User?    @relation(fields: [user_id], references: [id])
+    user_id      Int?
+    content      Content  @relation(fields: [content_id], references: [id])
+    last_watched DateTime @default(now())
+    content_id   Int
 }

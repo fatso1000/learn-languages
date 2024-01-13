@@ -1,25 +1,35 @@
 import { validate } from "class-validator";
 import { NextRequest, NextResponse } from "next/server";
-import { CustomError, IReadings, ReadingsPOST } from "types/apiTypes";
+import { APIContent, CustomError, ReadingsPOST } from "types/apiTypes";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import { onThrowError } from "../apiService";
-import { getSearchQuery } from "src/shared/apiShared";
+import {
+  getSearchQuery,
+  groupByContentLevel,
+  verifyUserAuth,
+} from "src/shared/apiShared";
 
 export async function GET(req: NextRequest) {
   try {
-    const name = getSearchQuery(req.url, ["name"]);
-    if (!name || !name[0])
+    verifyUserAuth(req);
+    const language = getSearchQuery(req.url, ["language"]);
+    const type = getSearchQuery(req.url, ["type"]);
+
+    if (!language || !language[0] || !type || !type[0])
       throw new CustomError({
         errors: [],
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
-        msg: "Error parsing request name.",
+        msg: "Error parsing request type or language.",
       });
 
-    const request = await prisma.readings.findMany({
-      where: { language: { name: { equals: name[0], mode: "insensitive" } } },
+    const request = await prisma.content.findMany({
+      where: {
+        language: { name: { equals: language[0], mode: "insensitive" } },
+        type: { equals: type[0] as any },
+      },
       include: {
-        reading_texts: {
+        details: {
           include: {
             question_and_answer: true,
           },
@@ -31,10 +41,12 @@ export async function GET(req: NextRequest) {
       throw new CustomError({
         errors: [],
         httpStatusCode: HttpStatusCode.NOT_FOUND,
-        msg: "Readings not found.",
+        msg: "Content not found.",
       });
 
-    return NextResponse.json({ data: request });
+    const groupedContentByLevel = groupByContentLevel(request as any[]);
+
+    return NextResponse.json({ data: groupedContentByLevel });
   } catch (error: any) {
     return onThrowError(error);
   }
@@ -42,8 +54,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    // verifyUserAuth(req);
-    let body: IReadings = await req.json();
+    verifyUserAuth(req);
+    let body: APIContent = await req.json();
     const bodyType = new ReadingsPOST(body);
 
     const validation = await validate(bodyType);
@@ -55,28 +67,30 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const request = await prisma.readings.create({
+    const request = await prisma.content.create({
       data: {
-        reading_texts: {
-          create: [
-            ...body.reading_texts.map((reading) => ({
-              ...reading,
-              text: reading.text.split("\n"),
-              question_and_answer: {
-                create: [...reading.question_and_answer],
-              },
-            })),
-          ],
+        details: {
+          create: {
+            level: body.level,
+            description: body.description,
+            title: body.title,
+            type: body.type,
+            text: body.text.split("\n"),
+            question_and_answer: {
+              create: [...body.question_and_answer],
+            },
+          } as any,
         },
         language: { connect: { id: body.language_id } },
         title: body.title,
-        locked_texts: 0,
+        level: body.level,
+        type: body.type as any,
       },
     });
     if (!request)
       throw new CustomError({
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
-        msg: "Unexpected error during user registration.",
+        msg: "Unexpected error during content creation.",
       });
 
     return NextResponse.json(request);
