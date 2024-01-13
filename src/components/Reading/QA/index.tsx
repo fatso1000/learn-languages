@@ -5,7 +5,6 @@ import { ErrorIconCircle, SuccessIconCircle } from "src/components/Icons";
 import { IQuestionAndAnswer } from "src/types";
 // @ts-expect-error
 import confetti from "canvas-confetti";
-import { toast } from "react-toastify";
 
 export async function generateMetadata(props: any): Promise<Metadata> {
   return {
@@ -104,9 +103,6 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
           }, 0)
         );
       }, 0);
-      toast("Exercises completed!", {
-        type: "success",
-      });
     }
   }, [questionAndAnswers]);
 
