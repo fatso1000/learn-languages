@@ -71,7 +71,6 @@ export async function editProfileFormValidation(
       Object.entries({
         color: formData.get("color"),
         animal_name: formData.get("animal"),
-        language: formData.get("language"),
       }).filter((value) => value[1])
     );
 
