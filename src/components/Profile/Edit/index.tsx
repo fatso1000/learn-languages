@@ -60,12 +60,6 @@ export default function Edit({
           defaultValue={user.id}
           className="invisible h-0 w-0 radio-input p-0 m-0"
         />
-        <input
-          type="text"
-          name="language"
-          defaultValue={user.profile.language_id}
-          className="invisible h-0 w-0 radio-input p-0 m-0"
-        />
       </div>
       <div className="flex gap-2 w-full justify-between">
         <button
