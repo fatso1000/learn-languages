@@ -42,10 +42,10 @@ body {
   color: hsl(var(--p) / var(--tw-border-opacity)) !important;
 }
 
-input.radio-input:checked + div {
+.color-select.radio-input:checked + div {
   border: 3px solid #291334;
 }
-input.radio-input:checked + div + span {
+.color-select.radio-input:checked + div + span {
   font-weight: 800;
 }
 
@@ -54,6 +54,17 @@ input.radio-input:checked + div + span {
   border-color: hsl(var(--p) / var(--tw-border-opacity));
   box-sizing: border-box;
 }
+
+/* DROPDOWN LANGUAGE */
+.menu :where(li > details > summary):after,
+.menu :where(li > .menu-dropdown-toggle):after {
+  width: 0;
+}
+.menu :where(li:not(.menu-title) > *:not(ul):not(details):not(.menu-title)),
+.menu :where(li:not(.menu-title) > details > summary:not(.menu-title)) {
+  gap: 0;
+}
+
 .user-frame {
   --offset: 3px;
   overflow: hidden;

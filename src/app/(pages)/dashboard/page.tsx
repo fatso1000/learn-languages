@@ -1,14 +1,43 @@
-"use client";
-
+import { cookies } from "next/headers";
 import LoggedInDashboard from "src/components/LoggedInDashboard";
-import useUser from "src/hooks/useUser";
+import Navbar from "src/components/Navbar";
+import { IUser, SelectedLanguageElement } from "src/types";
 
 export default function Dashboard(props: any) {
-  const { currentUser, isLoggedIn } = useUser(props);
+  const cookieStore = cookies();
+  const cookiesObj = {
+    current_user: cookieStore.get("current_user"),
+    token: cookieStore.get("token"),
+    selectedLanguage: cookieStore.get("selected_language"),
+  };
 
-  if (!isLoggedIn || !currentUser) return null;
+  const currentUser: IUser | undefined =
+      cookiesObj.current_user && cookiesObj.current_user.value !== ""
+        ? JSON.parse(cookiesObj.current_user.value)
+        : undefined,
+    selectedLanguage: SelectedLanguageElement | undefined =
+      cookiesObj.selectedLanguage && cookiesObj.selectedLanguage.value !== ""
+        ? JSON.parse(cookiesObj.selectedLanguage.value)
+        : undefined,
+    token =
+      cookiesObj.token && cookiesObj.token.value !== ""
+        ? cookiesObj.token.value
+        : undefined;
+
+  const isLoggedIn = currentUser && token ? true : false;
+
+  if (!isLoggedIn) return <div></div>;
 
   return (
-    <LoggedInDashboard userId={currentUser.id} userName={currentUser.name} />
+    <>
+      <Navbar props={props} />
+      <div>
+        <LoggedInDashboard
+          userId={currentUser!.id}
+          userName={currentUser!.name}
+          selectedLanguage={selectedLanguage!}
+        />
+      </div>
+    </>
   );
 }

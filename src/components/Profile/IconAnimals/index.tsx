@@ -19,7 +19,7 @@ export default function IconAnimals(props: {
               type="radio"
               name="animal"
               value={animal.toLocaleLowerCase()}
-              className="invisible h-0 w-0 radio-input"
+              className="invisible h-0 w-0 radio-input color-select"
               checked={selectedIcon.animal === animal.toLocaleLowerCase()}
               onChange={handleAnimal}
             />

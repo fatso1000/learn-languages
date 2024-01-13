@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { onThrowError } from "../apiService";
+import { NextRequest } from "next/server";
+import { onSuccessRequest, onThrowError } from "../apiService";
 import { getSearchQuery, verifyUserAuth } from "src/shared/apiShared";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
@@ -53,7 +53,8 @@ export async function GET(req: NextRequest) {
         }),
       ]);
 
-    return NextResponse.json({
+    return onSuccessRequest({
+      httpStatusCode: 200,
       data: { historical, pendingContent, savedContent },
     });
   } catch (error) {

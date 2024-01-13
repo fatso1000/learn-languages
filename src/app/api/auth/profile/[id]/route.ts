@@ -1,8 +1,8 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { CustomError, IUser, UserPATCH } from "types/apiTypes";
 import {
-  generateSuccessMessage,
+  onSuccessRequest,
   onThrowError,
   onValidationError,
 } from "../../../apiService";
@@ -42,7 +42,7 @@ export async function PATCH(
             create: {
               animal_name: body.profile?.animal_name || "",
               color: body.profile?.color || "",
-              language: {
+              languages: {
                 connect: {
                   id: body.profile?.language
                     ? Number(body.profile.language)
@@ -58,14 +58,8 @@ export async function PATCH(
         },
       },
       where: { id: id },
-      select: {
-        name: true,
-        email: true,
-        biography: true,
-        ubication: true,
-        profile: true,
-        id: true,
-        password: true,
+      include: {
+        profile: { include: { languages: { include: { details: true } } } },
         rank: { include: { rank: true } },
       },
     });
@@ -76,14 +70,11 @@ export async function PATCH(
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
 
-    return NextResponse.json(
-      generateSuccessMessage({
-        httpStatusCode: HttpStatusCode.OK,
-        data: { user: request },
-        message: "User logged in successfully.",
-      }),
-      { status: HttpStatusCode.OK }
-    );
+    return onSuccessRequest({
+      httpStatusCode: HttpStatusCode.OK,
+      data: { user: request },
+      message: "User logged in successfully.",
+    });
   } catch (error: any) {
     return onThrowError(error);
   }

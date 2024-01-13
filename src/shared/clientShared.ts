@@ -1,5 +1,5 @@
 import { HttpStatusCode } from "src/types/httpStatusCode";
-import { getBearerToken } from "./cookies";
+import { getBearerToken, logoutUser } from "./cookies";
 
 const handleCustomApiRequest = async <T = any>(
   request: string,
@@ -8,21 +8,20 @@ const handleCustomApiRequest = async <T = any>(
   withToken: boolean = false
 ) => {
   try {
-    let headers = {};
+    let headers: any[] = [];
 
     if (withToken) {
       const { token } = await getBearerToken();
-      headers = { Authorization: `${token?.value}` };
+      headers = [["Authorization", `${token?.value}`]];
     }
-
-    if (body) body = JSON.stringify(body);
 
     const fetching = await fetch(request, {
       method,
-      body,
+      body: body ? JSON.stringify(body) : undefined,
       next: { revalidate: 0 },
       headers,
     });
+
     const petition = await fetching.json(),
       statusCode = fetching.status;
 
@@ -32,8 +31,14 @@ const handleCustomApiRequest = async <T = any>(
   }
 };
 
-const handleStatusCode = <T>(statusCode: HttpStatusCode, petition: any) => {
+const handleStatusCode = async <T>(
+  statusCode: HttpStatusCode,
+  petition: any
+) => {
   switch (statusCode) {
+    case HttpStatusCode.UNAUTHORIZED:
+      await logoutUser();
+      return { message: undefined, errors: [], data: undefined };
     case HttpStatusCode.OK:
       return { message: undefined, errors: [], data: petition.data as T };
 

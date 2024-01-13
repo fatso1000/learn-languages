@@ -2,7 +2,6 @@ import LayoutComponent from "src/components/Layout";
 import "./globals.css";
 import React from "react";
 import { Onest } from "next/font/google";
-import ToastProvider from "src/components/ToastProvider";
 
 export const metadata = {
   title: "Matias Benitez Blog",
@@ -25,9 +24,7 @@ export default async function RootLayout({
       className={onest.className + " antialiased"}
     >
       <body>
-        <ToastProvider>
-          <LayoutComponent>{children}</LayoutComponent>
-        </ToastProvider>
+        <LayoutComponent>{children}</LayoutComponent>
       </body>
     </html>
   );

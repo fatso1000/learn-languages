@@ -75,7 +75,7 @@ export interface Profile {
   id: number;
   color: string;
   animal_name: string;
-  language_id: number;
+  languages: SelectedLanguageElement[];
 }
 
 export interface IQuestionAndAnswer {
@@ -162,6 +162,24 @@ export interface FormTextareaProps
 }
 export interface IColorsObject {
   [key: string]: string;
+}
+
+export interface LanguageSelectProps {
+  selectedLanguage: SelectedLanguageElement;
+  languages: SelectedLanguageElement[];
+}
+
+export interface SelectedLanguageElement {
+  id: number;
+  active: boolean;
+  language_id: number;
+  user_profile_id: number;
+  details: SelectedLanguageDetail;
+}
+
+export interface SelectedLanguageDetail {
+  id: number;
+  name: string;
 }
 
 export interface IconProps {

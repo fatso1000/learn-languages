@@ -1,12 +1,14 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "src/app/config/db";
 import { CustomError, IRank, RankPOST } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
-import { onThrowError } from "../apiService";
+import { onSuccessRequest, onThrowError } from "../apiService";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function POST(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     let body: IRank = await req.json();
     const bodyType = new RankPOST(body);
 
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest) {
         msg: "Unexpected error during user registration.",
       });
 
-    return NextResponse.json(request);
+    return onSuccessRequest({ httpStatusCode: 200, data: request });
   } catch (error: any) {
     return onThrowError(error);
   }

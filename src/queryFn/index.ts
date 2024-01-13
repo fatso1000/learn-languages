@@ -39,8 +39,13 @@ const editUserProfile = async (userData: any, userId: number) => {
   );
 };
 
-const dashboardData = async (url: string) => {
-  return await handleCustomApiRequest(getUrl + url, "GET", null, true);
+const getDashboardData = async <T>(userId: number, token: string) => {
+  return await handleCustomApiRequest<T>(
+    getUrl + `/api/dashboard?id=${userId}`,
+    "GET",
+    null,
+    true
+  );
 };
 
 const signOutUser = async () => {
@@ -59,5 +64,5 @@ export {
   signOutUser,
   signupUser,
   editUserProfile,
-  dashboardData,
+  getDashboardData,
 };

@@ -1,14 +1,24 @@
 import { useEffect, useState } from "react";
-import { getCurrentUser, isUserLoggedIn } from "src/shared/cookies";
+import HomeHeader from "src/components/HomeHeader";
+import {
+  getCurrentUser,
+  getSelectedLanguage,
+  isUserLoggedIn,
+} from "src/shared/cookies";
 import { IUser } from "src/types";
 
 export default function useUser(props?: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
+  const [selectedLanguage, setSelectedLanguage] = useState<any>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkUser = async () => {
     const user = await getCurrentUser();
-    if (user) setCurrentUser(JSON.parse(user.value));
+    const selectedLanguageStr = await getSelectedLanguage();
+    if (user) {
+      setCurrentUser(JSON.parse(user.value));
+      setSelectedLanguage(JSON.parse(selectedLanguageStr!.value));
+    }
   };
 
   const checkUserLoggedIn = async () => {
@@ -21,5 +31,5 @@ export default function useUser(props?: any) {
     checkUserLoggedIn();
   }, [props]);
 
-  return { currentUser, isLoggedIn };
+  return { currentUser, isLoggedIn, selectedLanguage };
 }
