@@ -54,7 +54,7 @@ export async function signInFormValidation(
       return { success: true, errors: [] };
     }
 
-    return { errors: user.errors };
+    return { errors: user.errors, success: false };
   } catch (error) {
     return { errors: [{ message: "Unknown error" }], success: false };
   }
