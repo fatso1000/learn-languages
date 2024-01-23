@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "build:test": "npm run build && npm start",
-    "migrante:dev": "npx prisma migrate dev --name dev",
+    "migrate:dev": "npx prisma migrate dev --name dev",
     "db:push": "npx prisma db push",
     "db:reset": "npx prisma migrate reset",
     "prisma:studio": "npx prisma studio",
