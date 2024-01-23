@@ -26,6 +26,7 @@ enum Types {
 
 model User {
     id          Int           @id @default(autoincrement())
+    active      Boolean?      
     created_at  DateTime      @default(now())
     email       String        @unique
     password    String

@@ -28,11 +28,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
         rank: { include: { rank: true } },
       },
     });
+
     if (!request)
       throw new CustomError({
         errors: [],
         msg: "User not found.",
         httpStatusCode: HttpStatusCode.NOT_FOUND,
+      });
+
+    if (!request?.active)
+      throw new CustomError({
+        errors: [],
+        msg: "User not verified.",
+        httpStatusCode: HttpStatusCode.UNAUTHORIZED,
       });
 
     const isMatch = bcrypt.compareSync(body.password, request.password);
