@@ -7,15 +7,19 @@ import prisma from "src/app/config/db";
 import bcrypt from "bcrypt";
 import { getRandomAnimalName, getRandomColor } from "src/shared/helpers";
 
+import { sendMail } from "src/shared/mailService";
+import { logInUser } from "src/shared/apiShared";
+
 export async function POST(req: NextRequest) {
   try {
-    // verifyUserAuth(req);
     let body: IUserSignUp = await req.json();
     const bodyType = new UserSignUpPOST(body);
     const validation = await validate(bodyType);
 
     const randomAnimal = getRandomAnimalName();
     const randomColor = getRandomColor();
+
+    const token = logInUser(body);
 
     if (validation.length > 0) {
       throw new CustomError({
@@ -25,8 +29,19 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    if (!token)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.BAD_REQUEST,
+        msg: "Error parsing token.",
+      });
+
+    const encodedToken = btoa(token);
+
     body.password = await bcrypt.hash(body.password, 8);
     const name = body.name ? body.name : randomAnimal;
+
+    await sendMail(body.name, body.email, encodedToken);
 
     const request = await prisma.user.create({
       data: {
@@ -55,6 +70,7 @@ export async function POST(req: NextRequest) {
         },
       },
     });
+
     if (!request)
       throw new CustomError({
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,

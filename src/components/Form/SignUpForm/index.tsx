@@ -17,7 +17,7 @@ export default function SignUpForm() {
   const [state, formAction] = useFormState(signUpFormValidation, initialState);
 
   useEffect(() => {
-    if (state.success) redirect("/auth/signin");
+    if (state.success) redirect("/auth/verify");
   }, [state.success]);
 
   return (
