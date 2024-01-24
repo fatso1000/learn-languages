@@ -13,6 +13,49 @@ function getRandomColor() {
   return getRandomItemFromArray<string>(colorsList);
 }
 
+function areArraysEqual(arr1: any[], arr2: any[]) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function areArraysEqualUnordered(arr1: any[], arr2: any[]) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  const sortedArr1 = arr1.slice().sort();
+  const sortedArr2 = arr2.slice().sort();
+
+  for (let i = 0; i < sortedArr1.length; i++) {
+    if (sortedArr1[i] !== sortedArr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function parseTimeLevelCompleted(inputTime: string) {
+  // Split the input string into minutes and seconds
+  const [minutes, seconds] = inputTime.split(":").map(Number);
+
+  // Use conditional (ternary) operators to ensure leading zeros
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+  // Return the formatted time
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
 const animalsList = [
   "Alligator",
   "Anteater",
@@ -134,4 +177,7 @@ export {
   languagesList,
   MAX_EXPERIENCE,
   rankFrameColors,
+  areArraysEqual,
+  areArraysEqualUnordered,
+  parseTimeLevelCompleted,
 };

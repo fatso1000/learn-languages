@@ -186,3 +186,74 @@ export interface IconProps {
   animal: string;
   color: string[];
 }
+
+export interface IUserCourse {
+  id: number;
+  course_id: number;
+  user_id: number;
+  completed_levels: ILevel[];
+  course: ICourse;
+}
+
+export interface ILevel {
+  id: number;
+  title: string;
+  description: string | null;
+  unitId: number;
+  userCoursesId: number | null;
+  difficulty: "easy" | "medium" | "hard";
+}
+
+export interface IExercise {
+  id: number;
+  difficulty: string;
+  type: string;
+  sentences: string[];
+  correct_answers: string[];
+  audio_url: string | null;
+  answer_by_order: boolean;
+  options: string[];
+  levelId: number;
+  hasPreviousError?: boolean;
+}
+
+export interface ICourse {
+  id: number;
+  title: string;
+  description: string;
+  language_id: number;
+  sections: ISection[];
+}
+
+export interface ISection {
+  id: number;
+  title: string;
+  description: string | null;
+  bg_color: string | null;
+  img_src: string | null;
+  courseId: number;
+  user_courses_id: null;
+  units: IUnit[];
+}
+
+export interface IUnit {
+  id: number;
+  title: string;
+  description: string | null;
+  sectionId: number;
+  user_courses_id: number | null;
+  levels: ILevel[];
+  completed: boolean;
+  completed_levels: number;
+}
+
+export interface ExercisesProps {
+  data: IExercise;
+  onCheckAnswer: (values: {
+    type: string;
+    correct_answers: string[];
+    answer_by_order: boolean;
+    selectedOption: any;
+  }) => void;
+  isMessageActive: boolean;
+}

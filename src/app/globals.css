@@ -102,3 +102,7 @@ body {
     transform: translateX(100%) rotate(-60deg);
   }
 }
+
+progress[value]::-webkit-progress-value {
+  transition: width 0.5s;
+}
