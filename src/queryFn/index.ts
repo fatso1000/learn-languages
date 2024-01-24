@@ -49,6 +49,7 @@ const signinUser = async (userData: any) => {
     userData
   );
 };
+
 const signupUser = async (userData: any) => {
   return await handleCustomApiRequest(
     getUrl + "/api/auth/signup",
@@ -56,6 +57,7 @@ const signupUser = async (userData: any) => {
     userData
   );
 };
+
 const editUserProfile = async (userData: any, userId: number) => {
   return await handleCustomApiRequest(
     getUrl + `/api/auth/profile/${userId}`,
@@ -82,6 +84,14 @@ const signOutUser = async () => {
   );
 };
 
+const authorizeUser = async (token: any) => {
+  return await handleCustomApiRequest(
+    getUrl + "/api/auth/verify",
+    "PATCH",
+    token
+  );
+};
+
 export {
   getContentByLanguageAndType,
   getContentById,
@@ -94,4 +104,5 @@ export {
   getCourses,
   getSectionUnits,
   getExercises,
+  authorizeUser,
 };

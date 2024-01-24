@@ -228,6 +228,16 @@ export interface IUserLogin {
   password: string;
 }
 
+export interface ITokenUser {
+  time: Date;
+  email: string;
+  password: string;
+  name: string;
+  language: string;
+  iat: number;
+  exp: number;
+}
+
 export interface IUserSignUp {
   email: string;
   password: string;
