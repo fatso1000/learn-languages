@@ -3,6 +3,7 @@ import React from "react";
 import CarouselComponent from "src/components/Carousel";
 import {
   ActivitiesIcon,
+  CourseIcon,
   LanguageIcon,
   ListeningIcon,
   ReadingIcon,
@@ -47,6 +48,12 @@ export default async function Header(props: {
                 className="btn btn-success font-black bg-base-100"
               >
                 Excercises <ActivitiesIcon />
+              </Link>
+              <Link
+                href={"course"}
+                className="btn btn-info font-black bg-base-100"
+              >
+                Course <CourseIcon />
               </Link>
             </div>
           </div>
