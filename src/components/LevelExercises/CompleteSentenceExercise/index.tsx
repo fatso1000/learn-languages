@@ -1,46 +1,44 @@
 "use client";
 
-import { memo, useState } from "react";
+import { useEffect, useState } from "react";
 import { RepeatIcon } from "src/components/Icons";
+import GenericExerciseInput from "src/components/InputsAndButtons/GenericExerciseInput";
 import { ExercisesProps } from "src/types";
-
-const GetSentences = (sentences: {
-  data: string[];
-  onInputChange: (value: any) => void;
-}) =>
-  sentences.data.map((stc) => {
-    if (stc === "%complete%") {
-      return (
-        <input
-          key={stc}
-          autoFocus
-          className="input border border-zinc-600 border-dashed min-w-[70px] mx-2"
-          onChange={sentences.onInputChange}
-        ></input>
-      );
-    }
-    return <span key={stc}>{stc}</span>;
-  });
+import TTSButtons from "../TTSButtons";
 
 export function CompleteSentenceExercise(props: ExercisesProps) {
-  const { data, onCheckAnswer } = props;
-  const {
-    sentences,
-    options,
+  const { data, onCheckAnswer, isMessageActive, onExerciseFail } = props;
+  const { type, displayTokens, prompt, tts, targetLanguage, hasPreviousError } =
+    data;
+  const [selectedOption, setSelectedOption] = useState<undefined | string>(
+    undefined
+  );
+  const answerObj = {
+    correctAnswers: [
+      displayTokens.find((answer) => answer.isBlank)!.text,
+      displayTokens.map((value) => value.text).join(" "),
+    ],
     type,
-    correct_answers,
-    answer_by_order,
-    hasPreviousError,
-  } = data;
-  const [selectedOption, setSelectedOption] = useState<null | string>(null);
-  const answerObj = { correct_answers, answer_by_order, type, selectedOption };
+    selectedOption,
+  };
+  const [ttsAudio, setTtsAudio] = useState<HTMLAudioElement | undefined>();
 
   const onInputChange = (str: any) => {
     setSelectedOption(str.target.value);
   };
 
+  useEffect(() => {
+    if (data) {
+      setSelectedOption("");
+      const audio = new Audio(tts);
+      const slowedTtsAudio = new Audio(tts);
+      slowedTtsAudio.playbackRate = 0.5;
+      setTtsAudio(audio);
+    }
+  }, [data]);
+
   return (
-    <div className="flex flex-col justify-center items-center h-full gap-10">
+    <div className="flex flex-col w-full justify-center items-start h-full gap-10">
       <div className="mt-auto">
         {hasPreviousError && (
           <div className="inline-flex items-center gap-2">
@@ -50,34 +48,52 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
             <span className="text-error font-bold">Previous Error</span>
           </div>
         )}
-        <h3 className="font-extrabold text-4xl">
-          Escoge el significado correcto
-        </h3>
+        <h3 className="font-extrabold text-4xl">Escribe esto en Ingles</h3>
       </div>
-      <div className="flex flex-col gap-5 text-xl">
-        <div className="font-bold">{options.join(" ")}</div>
-        <div className=" text-center min-w-[70px]">
-          <GetSentences data={sentences} onInputChange={onInputChange} />
+      <div className="flex flex-col gap-10 text-xl w-full">
+        <div className="inline-flex items-center gap-4">
+          <TTSButtons ttsAudio={ttsAudio} />
+          <span className="">{prompt}</span>
+        </div>
+        <div className="text-center min-w-[70px]">
+          <GenericExerciseInput
+            targetLanguage={targetLanguage}
+            displayTokens={displayTokens}
+            onInputChange={onInputChange}
+            selectedOption={selectedOption}
+            onCheckAnswer={() => selectedOption && onCheckAnswer(answerObj)}
+          />
         </div>
       </div>
-      <div className="inline-flex justify-between w-full p-10 mt-auto">
-        <div className="w-2/12 flex justify-center">
-          <button className="btn">Skip</button>
+      <div className="inline-flex justify-between w-full h-20 mt-auto">
+        <div className="w-[13%] flex justify-center">
+          {!isMessageActive && (
+            <button
+              className="btn"
+              onClick={() =>
+                onExerciseFail(
+                  displayTokens.map((value) => value.text).join(" ")
+                )
+              }
+            >
+              Skip
+            </button>
+          )}
         </div>
         <div className="w-2/3"></div>
-        <div className="w-2/12 flex justify-center">
-          <button
-            type="button"
-            className="btn btn-success"
-            disabled={!selectedOption}
-            onClick={() => onCheckAnswer(answerObj)}
-          >
-            Check
-          </button>
+        <div className="w-[13%] flex justify-center">
+          {!isMessageActive && (
+            <button
+              type="button"
+              className="btn btn-success"
+              disabled={!selectedOption}
+              onClick={() => onCheckAnswer(answerObj)}
+            >
+              Check
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
-export const MemoizedCompleteSentenceExercise = memo(CompleteSentenceExercise);

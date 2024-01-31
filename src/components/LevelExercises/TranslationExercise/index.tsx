@@ -1,36 +1,67 @@
 "use client";
 
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { RepeatIcon } from "src/components/Icons";
+import { areArraysEqual } from "src/shared/helpers";
 import { ExercisesProps } from "src/types";
+import { IChoice } from "src/types/apiTypes";
+import TTSButtons from "../TTSButtons";
+
+const useMultiAudio = (urls: string[]) => {
+  const [tts, setTts] = useState<string[]>([]);
+  const [audios, setAudios] = useState<HTMLAudioElement[]>([]);
+
+  function toggle(index: number) {
+    audios[index].play();
+  }
+
+  useEffect(() => {
+    if (!areArraysEqual(urls, tts)) {
+      setAudios(urls.map((url) => new Audio(url)));
+      setTts(urls);
+    }
+  }, [urls]);
+
+  return [toggle];
+};
 
 export function TranslationExercise(props: ExercisesProps) {
-  const { data, onCheckAnswer } = props;
+  const { data, onCheckAnswer, onExerciseFail, isMessageActive } = props;
   const {
-    sentences,
-    options,
+    choices,
+    compactTranslations,
+    correctAnswers,
+    correctSolutions,
+    prompt,
     type,
-    correct_answers,
-    answer_by_order,
+    correctIndices,
+    tts,
     hasPreviousError,
   } = data;
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  const [unusedOptions, setUnusedOptions] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<IChoice[]>([]);
+  const [unusedOptions, setUnusedOptions] = useState<IChoice[]>([]);
   const answerObj = {
-    correct_answers,
-    answer_by_order,
+    correctAnswers,
+    correctSolutions,
+    compactTranslations,
+    correctIndices,
     type,
-    selectedOption: selectedOptions,
+    selectedOption: selectedOptions.map((option) => option.text),
   };
+  const [toggle] = useMultiAudio(
+    [...choices!].map((choice) => choice.tts as string)
+  );
+  const [ttsAudio, setTtsAudio] = useState<HTMLAudioElement | undefined>();
 
-  const onAddOption = (str: string) => {
+  const onAddOption = (str: IChoice) => {
+    toggle(choices.findIndex((choice) => choice.text === str.text));
     const optionsclone = [...selectedOptions];
     optionsclone.push(str);
     setUnusedOptions(unusedOptions.filter((opt) => opt !== str));
     setSelectedOptions(optionsclone);
   };
 
-  const onRemoveOption = (str: string) => {
+  const onRemoveOption = (str: IChoice) => {
     const optionsclone = [...unusedOptions];
     optionsclone.push(str);
     setUnusedOptions(optionsclone);
@@ -38,13 +69,15 @@ export function TranslationExercise(props: ExercisesProps) {
   };
 
   useEffect(() => {
-    if (unusedOptions.length === 0) {
-      setUnusedOptions(data.options);
+    if (choices) {
+      setUnusedOptions(choices);
+      setSelectedOptions([]);
+      setTtsAudio(new Audio(tts));
     }
-  }, []);
+  }, [data]);
 
   return (
-    <div className="flex flex-col justify-center items-center h-full gap-10">
+    <div className="flex flex-col justify-center items-start h-full gap-10">
       <div className="mt-auto">
         {hasPreviousError && (
           <div className="inline-flex items-center gap-2">
@@ -58,54 +91,61 @@ export function TranslationExercise(props: ExercisesProps) {
           Escoge el significado correcto
         </h3>
       </div>
-      <div className="flex flex-col gap-4 text-xl justify-center">
-        <div className="text-center items-center inline-flex gap-1 justify-center">
-          <div className="badge badge-primary badge-sm"></div>
-          {sentences[0]}
+      <div className="flex flex-col gap-10 text-xl w-full">
+        <div className="inline-flex items-center gap-4">
+          <TTSButtons ttsAudio={ttsAudio} />
+          <span>{prompt}</span>
         </div>
-        <div className="inline-flex border text-center border-dashed min-h-[52px] min-w-[70px] border-t-0 border-l-0 border-r-0 border-b-2 gap-2">
+        <div className="inline-flex border text-center border-dashed min-h-[52px] border-t-0 border-l-0 border-r-0 border-b-2 gap-2 min-w-[70px]">
           {selectedOptions.map((opt) => (
             <button
               type="button"
-              key={opt}
-              className="btn rounded-2xl btn-primary"
+              key={opt.text}
+              className="btn rounded-2xl"
               onClick={() => onRemoveOption(opt)}
             >
-              {opt}
+              {opt.text}
             </button>
           ))}
         </div>
       </div>
       <div className="inline-flex gap-3">
-        {unusedOptions.map((opt) => (
+        {unusedOptions.map((opt, i) => (
           <button
             type="button"
-            className={"btn rounded-2xl btn-accent"}
+            className={"btn rounded-2xl btn-success"}
             onClick={() => onAddOption(opt)}
-            key={opt}
+            key={opt.text}
           >
-            {opt}
+            {opt.text}
           </button>
         ))}
       </div>
-      <div className="inline-flex justify-between w-full p-10 mt-auto">
-        <div className="w-2/12 flex justify-center">
-          <button className="btn">Skip</button>
+      <div className="inline-flex justify-between w-full h-20 mt-auto">
+        <div className="w-[13%] flex justify-center">
+          {!isMessageActive && (
+            <button
+              className="btn"
+              onClick={() => onExerciseFail(correctAnswers[0])}
+            >
+              Skip
+            </button>
+          )}
         </div>
-        <div className="w-2/3"></div>
-        <div className="w-2/12 flex justify-center">
-          <button
-            type="button"
-            className="btn btn-success"
-            disabled={selectedOptions.length === 0}
-            onClick={() => onCheckAnswer(answerObj)}
-          >
-            Check
-          </button>
+        <div className="w-full"></div>
+        <div className="w-[13%] flex justify-center">
+          {!isMessageActive && (
+            <button
+              type="button"
+              className="btn btn-success"
+              disabled={selectedOptions.length === 0}
+              onClick={() => onCheckAnswer(answerObj)}
+            >
+              Check
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
-export const MemoizedTranslationExercise = memo(TranslationExercise);

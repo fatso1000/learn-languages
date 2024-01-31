@@ -52,20 +52,20 @@ export default function CompletedLevelSection({
           </p>
         </div>
         <div className="inline-flex gap-5 w-full justify-center">
-          <div className="flex flex-col items-center border rounded-3xl border-emerald-500">
-            <div className="font-bold text-base-100 bg-emerald-500 p-5 rounded-3xl">
+          <div className="flex flex-col items-center border-2 rounded-3xl border-success">
+            <div className="font-bold text-base-100 bg-success p-5 rounded-2xl">
               {missesStatus}
             </div>
-            <div className="font-bold p-2 text-center text-emerald-500 inline-flex justify-center items-center">
+            <div className="font-bold p-2 text-center text-success inline-flex justify-center items-center">
               <AccuracyIcon />
-              {percentaje}%
+              {percentaje.toFixed(0)}%
             </div>
           </div>
-          <div className="flex flex-col items-center border rounded-3xl border-yellow-500">
-            <div className="font-bold text-base-100 bg-yellow-500 p-5 rounded-3xl">
+          <div className="flex flex-col items-center border-2 rounded-3xl border-accent">
+            <div className="font-bold text-base-100 bg-accent p-5 rounded-2xl">
               Tiempo
             </div>
-            <div className="font-bold p-2 text-yellow-500 inline-flex justify-center items-center">
+            <div className="font-bold p-2 text-accent inline-flex justify-center items-center">
               <ClockIcon />
               {parseTimeLevelCompleted(`${minutes}:${seconds}`)}
             </div>

@@ -1,5 +1,7 @@
 import { StaticImageData } from "next/image";
-import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { InputHTMLAttributes, RefObject, TextareaHTMLAttributes } from "react";
+import { IChoice } from "./apiTypes";
+import { ExerciseDifficulty } from "@prisma/client";
 
 export enum Languages {
   spanish = "spanish",
@@ -11,13 +13,11 @@ export enum Languages {
 }
 
 export interface ModalProps {
-  props: {
-    title: string;
-    content: any;
-    onSuccess?: () => void;
-    onClose?: () => void;
-    ref: React.MutableRefObject<any>;
-  };
+  title: string;
+  children: JSX.Element;
+  onSuccess?: () => void;
+  onClose?: () => void;
+  modalRef: RefObject<HTMLDialogElement>;
 }
 
 export interface IFlags {
@@ -201,20 +201,52 @@ export interface ILevel {
   description: string | null;
   unitId: number;
   userCoursesId: number | null;
-  difficulty: "easy" | "medium" | "hard";
+  difficulty: ExerciseDifficulty;
 }
 
 export interface IExercise {
   id: number;
-  difficulty: string;
+  difficulty: ExerciseDifficulty;
   type: string;
-  sentences: string[];
-  correct_answers: string[];
-  audio_url: string | null;
-  answer_by_order: boolean;
-  options: string[];
-  levelId: number;
+  prompt: null | string;
+  choices: IChoice[];
+  compactTranslations: string[];
+  solutionTranslation: null | string;
+  correctSolutions: string[];
+  correctAnswers: string[];
+  displayTokens: DisplayToken[];
+  correctIndices: number[];
+  correctIndex: number | null;
+  tts: string;
+  sourceLanguage: Languages;
+  targetLanguage: Languages;
+  unit_id: number;
   hasPreviousError?: boolean;
+}
+
+export interface DisplayToken {
+  text: string;
+  isBlank: boolean;
+}
+
+export enum ExercisesType {
+  TRANSLATION = "Translation",
+  CHOOSE_CORRECT = "ChooseCorrect",
+  COMPLETE_SENTENCE = "CompleteSentence",
+  WRITE_DOWN = "WriteDown",
+  MULTIPLE_CHOICE = "MultipleChoice",
+  LISTENING = "Listening",
+}
+
+export interface onCheckAnswerProps {
+  type: string;
+  correctAnswers: string[];
+  selectedOption: any;
+  compactTranslations?: string[];
+  solutionTranslation?: string;
+  correctSolutions?: string[];
+  prompt?: string;
+  correctIndices?: number[];
 }
 
 export interface ICourse {
@@ -249,11 +281,7 @@ export interface IUnit {
 
 export interface ExercisesProps {
   data: IExercise;
-  onCheckAnswer: (values: {
-    type: string;
-    correct_answers: string[];
-    answer_by_order: boolean;
-    selectedOption: any;
-  }) => void;
+  onCheckAnswer: (values: onCheckAnswerProps) => void;
   isMessageActive: boolean;
+  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
 }
