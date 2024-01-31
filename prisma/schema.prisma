@@ -25,8 +25,8 @@ enum Types {
 }
 
 model User {
-    id     Int      @id @default(autoincrement())
-    active Boolean?
+    id           Int           @id @default(autoincrement())
+    active       Boolean?
     created_at   DateTime      @default(now())
     email        String        @unique
     password     String
@@ -61,6 +61,7 @@ model UserLanguages {
 model Languages {
     id            Int             @id @default(autoincrement())
     name          String          @unique
+    shortName     String
     Content       Content[]
     UserLanguages UserLanguages[]
     Courses       Courses?
@@ -120,16 +121,23 @@ model Level {
 }
 
 model Exercise {
-    id              Int                @id @default(autoincrement())
-    difficulty      ExerciseDifficulty
-    type            ExerciseType
-    sentences       String[]
-    correct_answers String[]
-    audio_url       String?
-    answer_by_order Boolean
-    options         String[]
-    unit            Unit               @relation(fields: [unit_id], references: [id])
-    unit_id         Int
+    id                   Int                @id @default(autoincrement())
+    difficulty           ExerciseDifficulty
+    type                 ExerciseType
+    prompt               String?
+    choices              Json[]
+    compactTranslations  String[]
+    solutionTranslations String?
+    correctSolutions     String[]
+    correctAnswers       String[]
+    displayTokens        Json[]
+    correctIndices       Int[]
+    correctIndex         Int?
+    tts                  String
+    sourceLanguages      String
+    targetLanguages      String
+    unit                 Unit               @relation(fields: [unit_id], references: [id])
+    unit_id              Int
 }
 
 enum ExerciseType {

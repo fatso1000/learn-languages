@@ -1,109 +1,96 @@
 import Link from "next/link";
 import { HeartIconSolid, XIcon } from "src/components/Icons";
 import {
-  MemoizedChooseCorrectExercise,
-  MemoizedTranslationExercise,
-  MemoizedCompleteSentenceExercise,
-  MemoizedWriteDownExercise,
-  MemoizedMessageModal,
+  ChooseCorrectExercise,
+  CompleteSentenceExercise,
+  MessageModal,
+  TranslationExercise,
+  WriteDownExercise,
 } from "../..";
-import { IExercise } from "src/types";
-import { memo } from "react";
+import { IExercise, onCheckAnswerProps } from "src/types";
 
 interface Props {
   queueFailedExercises: IExercise[];
   currentExercise: number;
   data: IExercise[];
-  onCheckAnswer: (values: {
-    type: string;
-    correct_answers: string[];
-    answer_by_order: boolean;
-    selectedOption: any;
-  }) => void;
+  onCheckAnswer: (values: onCheckAnswerProps) => void;
   progressIndex: number;
   lifes: number;
   message: any;
   onNextExercise: () => void;
   setIsLevelCompleted: (value: boolean) => void;
   sectionId: number;
+  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
 }
 
-const MemoizedCurrentExerciseComponent = memo(
-  function CurrentExerciseComponent({
-    currentExercise,
-    data,
-    queueFailedExercises,
-    onCheckAnswer,
-    message,
-  }: {
-    queueFailedExercises: IExercise[];
-    currentExercise: number;
-    data: IExercise[];
-    onCheckAnswer: (values: {
-      type: string;
-      correct_answers: string[];
-      answer_by_order: boolean;
-      selectedOption: any;
-    }) => void;
-    message: any;
-  }) {
-    let current: any = {};
-    if (queueFailedExercises.length > 0 && currentExercise >= data.length) {
-      const index = Math.abs(data.length - currentExercise);
-      current = queueFailedExercises[index];
-    } else {
-      current = data[currentExercise];
-    }
-
-    switch (current.type) {
-      case "Translation":
-        return (
-          <MemoizedTranslationExercise
-            data={current}
-            isMessageActive={message.active}
-            onCheckAnswer={onCheckAnswer}
-            key="translation"
-          />
-        );
-      case "ChooseCorrect":
-        return (
-          <MemoizedChooseCorrectExercise
-            data={current}
-            isMessageActive={message.active}
-            onCheckAnswer={onCheckAnswer}
-            key="choose-correct"
-          />
-        );
-      case "CompleteSentence":
-        return (
-          <MemoizedCompleteSentenceExercise
-            data={current}
-            isMessageActive={message.active}
-            onCheckAnswer={onCheckAnswer}
-            key="complete-sentence"
-          />
-        );
-      case "WriteDown":
-        return (
-          <MemoizedWriteDownExercise
-            data={current}
-            isMessageActive={message.active}
-            onCheckAnswer={onCheckAnswer}
-            key="write-down"
-          />
-        );
-      case "MultipleChoice":
-        return <div></div>;
-      case "Listening":
-        return <div></div>;
-      default:
-        return <div></div>;
-    }
-  },
-  (prevProps, nextProps) => {
-    return prevProps.currentExercise === nextProps.currentExercise;
+const CurrentExerciseComponent = ({
+  currentExercise,
+  data,
+  queueFailedExercises,
+  onCheckAnswer,
+  message,
+  onExerciseFail,
+}: {
+  queueFailedExercises: IExercise[];
+  currentExercise: number;
+  data: IExercise[];
+  onCheckAnswer: (values: onCheckAnswerProps) => void;
+  message: any;
+  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+}) => {
+  let current: any = {};
+  if (queueFailedExercises.length > 0 && currentExercise >= data.length) {
+    const index = Math.abs(data.length - currentExercise);
+    current = queueFailedExercises[index];
+  } else {
+    current = data[currentExercise];
   }
-);
+
+  switch (current.type) {
+    case "Translation":
+      return (
+        <TranslationExercise
+          data={current}
+          isMessageActive={message.active}
+          onCheckAnswer={onCheckAnswer}
+          onExerciseFail={onExerciseFail}
+        />
+      );
+    case "ChooseCorrect":
+      return (
+        <ChooseCorrectExercise
+          data={current}
+          isMessageActive={message.active}
+          onCheckAnswer={onCheckAnswer}
+          onExerciseFail={onExerciseFail}
+        />
+      );
+    case "CompleteSentence":
+      return (
+        <CompleteSentenceExercise
+          data={current}
+          isMessageActive={message.active}
+          onCheckAnswer={onCheckAnswer}
+          onExerciseFail={onExerciseFail}
+        />
+      );
+    case "WriteDown":
+      return (
+        <WriteDownExercise
+          data={current}
+          isMessageActive={message.active}
+          onCheckAnswer={onCheckAnswer}
+          onExerciseFail={onExerciseFail}
+        />
+      );
+    case "MultipleChoice":
+      return <div></div>;
+    case "Listening":
+      return <div></div>;
+    default:
+      return <div></div>;
+  }
+};
 
 export function ExercisesSection({
   queueFailedExercises,
@@ -116,35 +103,37 @@ export function ExercisesSection({
   onNextExercise,
   setIsLevelCompleted,
   sectionId,
+  onExerciseFail,
 }: Props) {
   return (
     <>
-      <div className="inline-flex justify-between items-center w-full h-20">
-        <div className="w-2/12 flex justify-center">
-          <Link href={"/section?id=" + sectionId} className="btn btn-ghost">
+      <div className="max-w-[90ch] inline-flex justify-between items-center w-full h-20">
+        <div className="w-[13%] flex justify-center">
+          <Link href={"/section?id=" + sectionId} className="link">
             <XIcon />
           </Link>
         </div>
-        <div className="w-2/3">
+        <div className="w-full">
           <progress
-            className="w-full progress progress-secondary h-3"
+            className="w-full progress progress-error h-3"
             value={progressIndex}
             max={data.length}
           ></progress>
         </div>
-        <div className="w-2/12 flex justify-center items-center gap-1">
-          <HeartIconSolid fill="red" className="w-8 h-8" />
+        <div className="w-[13%] flex justify-center items-center gap-1">
+          <HeartIconSolid fill="#F87272" className="w-6 h-6" />
           <span className="font-extrabold text-lg">{lifes}</span>
         </div>
       </div>
-      <MemoizedCurrentExerciseComponent
+      <CurrentExerciseComponent
         message={message}
         currentExercise={currentExercise}
         data={data}
         onCheckAnswer={onCheckAnswer}
         queueFailedExercises={queueFailedExercises}
+        onExerciseFail={onExerciseFail}
       />
-      <MemoizedMessageModal
+      <MessageModal
         message={message}
         onNextExercise={onNextExercise}
         onLevelFinish={() => {
@@ -154,5 +143,3 @@ export function ExercisesSection({
     </>
   );
 }
-
-export const MemoizedExercisesSection = memo(ExercisesSection);

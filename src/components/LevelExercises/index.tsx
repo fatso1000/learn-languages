@@ -1,18 +1,6 @@
-export {
-  TranslationExercise,
-  MemoizedTranslationExercise,
-} from "./TranslationExercise";
-export {
-  ChooseCorrectExercise,
-  MemoizedChooseCorrectExercise,
-} from "./ChooseCorrectExercise";
+export { TranslationExercise } from "./TranslationExercise";
+export { ChooseCorrectExercise } from "./ChooseCorrectExercise";
 export { default as LevelManager } from "./LevelManager";
-export {
-  WriteDownExercise,
-  MemoizedWriteDownExercise,
-} from "./WriteDownExercise";
-export {
-  CompleteSentenceExercise,
-  MemoizedCompleteSentenceExercise,
-} from "./CompleteSentenceExercise";
-export { MemoizedMessageModal, MessageModal } from "./MessageModal";
+export { WriteDownExercise } from "./WriteDownExercise";
+export { CompleteSentenceExercise } from "./CompleteSentenceExercise";
+export { MessageModal } from "./MessageModal";

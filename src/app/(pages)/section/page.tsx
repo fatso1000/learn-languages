@@ -40,7 +40,9 @@ export default async function Section(props: any) {
                               "&unit_id=" +
                               unit.id +
                               "&section_id=" +
-                              props.searchParams.id
+                              props.searchParams.id +
+                              "&lang=" +
+                              "es"
                             }
                             className="bg-red-500 rounded-full h-10 w-10"
                           ></Link>
@@ -55,7 +57,9 @@ export default async function Section(props: any) {
                             "&unit_id=" +
                             unit.id +
                             "&section_id=" +
-                            props.searchParams.id
+                            props.searchParams.id +
+                            "&lang=" +
+                            "es"
                           }
                           className="bg-lime-500 rounded-full h-10 w-10"
                         ></Link>

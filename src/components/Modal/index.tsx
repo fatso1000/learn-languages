@@ -1,11 +1,11 @@
 "use client";
-import React, { memo } from "react";
 import { ModalProps } from "src/types";
+import { XIcon } from "../Icons";
 
-const Modal = memo(function Modal(props: ModalProps) {
-  const { title, content, onSuccess, onClose, ref } = props.props;
+export default function Modal(props: ModalProps) {
+  const { title, children, onClose, modalRef } = props;
   return (
-    <dialog id="generic_modal" className="modal" ref={ref}>
+    <dialog id="generic_modal" className={"modal"} ref={modalRef}>
       <div className="modal-box ">
         <div className="flex justify-end w-full">
           <form
@@ -15,15 +15,13 @@ const Modal = memo(function Modal(props: ModalProps) {
             <div className="w-2/5">
               <h3 className="font-bold text-lg">{title}</h3>
             </div>
-            <button className="btn" onClick={onClose}>
-              X
+            <button className="btn btn-ghost" onClick={onClose}>
+              <XIcon />
             </button>
           </form>
         </div>
-        <p className="py-4">{content}</p>
+        <div className="py-4">{children}</div>
       </div>
     </dialog>
   );
-});
-
-export default Modal;
+}

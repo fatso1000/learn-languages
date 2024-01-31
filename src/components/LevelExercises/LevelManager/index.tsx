@@ -2,27 +2,34 @@
 // @ts-ignore
 import useSound from "use-sound";
 import { useEffect, useRef, useState } from "react";
-import { IExercise } from "src/types";
+import { IExercise, onCheckAnswerProps } from "src/types";
 import { areArraysEqual } from "src/shared/helpers";
-import { MemoizedExercisesSection } from "./ExercisesSection";
+import { ExercisesSection } from "./ExercisesSection";
 import CompletedLevelSection from "./CompletedLevelSection";
+import LifesModal from "./LifesModal";
 
 export default function LevelManager({
   data,
   sectionId,
+  lang,
 }: {
   data: IExercise[];
   sectionId: number;
+  lang: string;
 }) {
   const [playSuccess] = useSound("sounds/success_sfx.mp3", {
-    volume: 1,
-  });
-  const [playFail] = useSound("sounds/success_2_sfx.mp3", {
-    volume: 1,
-  });
-  const [playWin] = useSound("sounds/win_sfx.mp3", {
-    volume: 1,
-  });
+      volume: 1,
+    }),
+    [playFail] = useSound("sounds/success_2_sfx.mp3", {
+      volume: 1,
+    }),
+    [playWin] = useSound("sounds/win_sfx.mp3", {
+      volume: 1,
+    }),
+    [playLose] = useSound("sounds/lose_sfx.mp3", {
+      volume: 1,
+    });
+
   // Agregar vidas a esquema de usuario y actualizar su valor en los fallos
   const [lifes, setLifes] = useState(5);
   const [currentExercise, setCurrentExercise] = useState(0);
@@ -37,6 +44,22 @@ export default function LevelManager({
     []
   );
   const totalSecondsRef = useRef(0);
+  const minutes = Math.floor(totalSecondsRef.current / 60);
+  const seconds = totalSecondsRef.current % 60;
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: any) => {
+      const message = "Are you sure you want to leave?";
+      event.returnValue = message;
+      return message;
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -46,49 +69,61 @@ export default function LevelManager({
     return () => clearInterval(timer);
   }, []);
 
-  const minutes = Math.floor(totalSecondsRef.current / 60);
-  const seconds = totalSecondsRef.current % 60;
-
   const onCheckAnswer = ({
-    answer_by_order,
-    correct_answers,
+    correctAnswers,
     selectedOption,
     type,
-  }: {
-    type: string;
-    correct_answers: string[];
-    answer_by_order: boolean;
-    selectedOption: any;
-  }) => {
+    compactTranslations,
+    solutionTranslation,
+  }: onCheckAnswerProps) => {
     switch (type) {
       case "Translation":
-        if (areArraysEqual(correct_answers, selectedOption)) {
+        if (areArraysEqual(correctAnswers, selectedOption)) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correct_answers.join(" "));
+          onExerciseFail(correctAnswers.join(" "));
         }
         break;
       case "ChooseCorrect":
-        if (correct_answers[0] === selectedOption) {
+        if (correctAnswers[0] === selectedOption) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correct_answers[0]);
+          onExerciseFail(correctAnswers[1]);
         }
         break;
       case "CompleteSentence":
         // AGREGAR LOGICA PARA QUE PUEDA TOMAR MAS DE UNA OPCION CORRECTA
-        console.log(correct_answers, type, answer_by_order, selectedOption);
-        if (correct_answers[0] === selectedOption) {
+        if (correctAnswers[0] === selectedOption) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correct_answers[0]);
+          onExerciseFail(correctAnswers[1]);
         }
         break;
       case "WriteDown":
-        if (areArraysEqual(correct_answers, selectedOption)) {
+        const lowerCaseTranslations = [...compactTranslations!].map(
+            (translation) => {
+              return translation
+                .toLowerCase()
+                .replace(/[^\w\s]|_/g, "")
+                .split(/([ ,.!]+)/)
+                .join("")
+                .replace(/\s/g, "")
+                .trim();
+            }
+          ),
+          userInput = selectedOption
+            .join(" ")
+            .toLowerCase()
+            .replace(/[^\w\s]|_/g, "")
+            .split(/([ ,.!]+)/)
+            .join("")
+            .replace(/\s/g, "")
+            .trim();
+
+        if (lowerCaseTranslations.includes(userInput)) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correct_answers.join(" "));
+          onExerciseFail(correctAnswers.join(" "), solutionTranslation);
         }
         break;
       case "MultipleChoice":
@@ -108,17 +143,25 @@ export default function LevelManager({
   };
 
   const onNextExercise = () => {
-    setMessage({ ...message, active: false });
+    setMessage({ active: false, text: "", type: "success" });
     setCurrentExercise(currentExercise + 1);
   };
 
-  const onExerciseFail = (correct_answer = "") => {
+  const onExerciseFail = (
+    correct_answer?: string,
+    translationText?: string
+  ) => {
+    setLifes(lifes - 1);
     if (lifes - 1 === 0) {
-      return onLevelFail();
+      return onRunOutHearts();
     }
     addQueue(data[currentExercise]);
-    setLifes(lifes - 1);
-    setMessage({ active: true, text: correct_answer, type: "error" });
+    setMessage({
+      active: true,
+      translationText,
+      text: correct_answer,
+      type: "error",
+    });
     playFail();
   };
 
@@ -136,8 +179,9 @@ export default function LevelManager({
     setMessage({ active: true, text: "", type: "finished_success" });
   };
 
-  const onLevelFail = () => {
-    setMessage({ active: true, text: "", type: "finished_fail" });
+  const onRunOutHearts = () => {
+    playLose();
+    setMessage({ active: false, text: "", type: "finished_fail" });
   };
 
   // AGREGAR ANIMACIONES DE FADE IN/OUT CUANDO SE CAMBIE DE PANTALLA
@@ -155,7 +199,7 @@ export default function LevelManager({
                 sectionId={sectionId}
               />
             ) : (
-              <MemoizedExercisesSection
+              <ExercisesSection
                 currentExercise={currentExercise}
                 data={data}
                 lifes={lifes}
@@ -168,9 +212,11 @@ export default function LevelManager({
                   setIsLevelCompleted(value);
                   playWin();
                 }}
+                onExerciseFail={onExerciseFail}
                 sectionId={sectionId}
               />
             )}
+            <LifesModal isLifesOver={lifes === 0} sectionId={sectionId} />
           </div>
         </div>
       </div>

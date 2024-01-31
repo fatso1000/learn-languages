@@ -1,5 +1,6 @@
 import { IsBoolean, IsEmail, IsOptional, Length } from "class-validator";
 import { HttpStatusCode } from "./httpStatusCode";
+import { ExerciseType } from "@prisma/client";
 
 export class BlogPOST {
   @Length(1)
@@ -269,6 +270,51 @@ export interface IUserLoginResponse {
   };
   randomKey: string;
 }
+
+export interface ILevelBody {
+  id: number;
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: string[];
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+}
+
+export interface ILevelReturn {
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: IChoice[];
+  correctIndices?: number[];
+  correctIndex?: number;
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+  tts: string;
+  displayTokens?: IDisplayToken[];
+}
+
+export interface IChoice {
+  text: string;
+  tts?: string;
+}
+
+export interface IDisplayToken {
+  text: string;
+  isBlank: boolean;
+}
+
+// ERROR ----------------------
 
 export class CustomError extends Error {
   private httpStatusCode: HttpStatusCode;
