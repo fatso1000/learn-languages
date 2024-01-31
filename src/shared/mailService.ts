@@ -7,7 +7,7 @@ export async function sendMail(
   toEmail: string,
   token: string
 ) {
-  var transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
       type: "OAuth2",
@@ -22,7 +22,7 @@ export async function sendMail(
     EmailTemplate({ username, uri: `/auth/verified?token=${token}` })
   );
 
-  var mailOptions = {
+  const mailOptions = {
     from: process.env.NODEMAILER_EMAIL,
     to: toEmail,
     subject: "E-Learning",
@@ -33,7 +33,6 @@ export async function sendMail(
   await new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
-        console.log(err);
         reject(err);
       } else {
         resolve(response);

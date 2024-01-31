@@ -28,7 +28,6 @@ export async function GET(req: NextRequest) {
       });
 
     const request = await prisma.userCourses.findFirst({
-      // where: { course: { id: +course_id } },
       where: { course: { sections: { some: { id: +section_id } } } },
       include: {
         completed_levels: true,
@@ -46,7 +45,12 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if (!request) return new Error();
+    if (!request)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.NOT_FOUND,
+        msg: "request doesn't exist.",
+      });
 
     const groupedData = groupBy(request.completed_levels, "unitId");
     request.course.sections = [...request.course.sections].filter(
@@ -54,7 +58,11 @@ export async function GET(req: NextRequest) {
     );
 
     if (request.course.sections.length === 0) {
-      return {};
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.NOT_FOUND,
+        msg: "Content not found.",
+      });
     }
 
     const section = request.course.sections[0];

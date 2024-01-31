@@ -68,6 +68,9 @@ export async function POST(req: NextRequest) {
             updated_at: new Date(),
           },
         },
+        user_courses: {
+          create: { course: { connect: { language_id: +body.language + 1 } } },
+        },
       },
     });
 
