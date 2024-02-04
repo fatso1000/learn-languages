@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
     authHeader = req.headers.get("Authorization");
   const pathname = req.nextUrl.pathname;
 
-  if (!token && current_user) {
+  if (!token || !current_user) {
     if (
       ["/languages", "/user", "/dashboard"].includes(pathname) ||
       languagesList.includes(pathname)
@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
   }
 
   if ((current_user && token) || authHeader) {
-    if (pathname.includes("/auth")) {
+    if (pathname.includes("/auth") && !pathname.includes("/profile")) {
       return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
     }
     if (pathname.endsWith("/")) {
@@ -35,5 +35,6 @@ export async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL("/", req.nextUrl));
     }
   }
+
   return NextResponse.next();
 }

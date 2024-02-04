@@ -16,6 +16,7 @@ export default async function Header(props: {
   selectedLanguage: SelectedLanguageElement;
 }) {
   const { data, userName, selectedLanguage } = props;
+
   return (
     <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
       <div className="relative">
@@ -40,11 +41,14 @@ export default async function Header(props: {
               >
                 Languages <LanguageIcon />
               </Link>
-              <Link href={""} className="btn btn-accent font-black bg-base-100">
+              <Link
+                href={"/listening"}
+                className="btn btn-accent font-black bg-base-100"
+              >
                 Listenings <ListeningIcon />
               </Link>
               <Link
-                href={""}
+                href={"/exercises"}
                 className="btn btn-success font-black bg-base-100"
               >
                 Excercises <ActivitiesIcon />

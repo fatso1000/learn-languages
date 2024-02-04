@@ -62,13 +62,13 @@ export async function PATCH(
         msg: "User not found.",
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
-
     return onSuccessRequest({
       httpStatusCode: HttpStatusCode.OK,
       data: { user: request },
       message: "User logged in successfully.",
     });
   } catch (error: any) {
+    console.log(error);
     return onThrowError(error);
   }
 }
