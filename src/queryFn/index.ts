@@ -31,13 +31,19 @@ const getSectionUnits = async (section_id: string) => {
   );
 };
 
-const getExercises = async (difficulty: string, unit_id: string) => {
+const getExercises = async (
+  difficulty: string,
+  unit_id: string,
+  lang: string
+) => {
   return await handleCustomApiRequest<IExercise[]>(
     getUrl +
       "/api/course/level?difficulty=" +
       difficulty +
       "&unit_id=" +
-      unit_id,
+      unit_id +
+      "&lang=" +
+      lang,
     "GET"
   );
 };

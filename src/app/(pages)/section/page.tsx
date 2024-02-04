@@ -1,6 +1,4 @@
-import Link from "next/link";
 import Navbar from "src/components/Navbar";
-import Level from "src/components/Section/Level";
 import Unit from "src/components/Section/Unit";
 import { getSectionUnits } from "src/queryFn";
 
