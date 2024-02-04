@@ -74,13 +74,13 @@ export default async function Header(props: {
                 Languages <LanguageIcon />
               </Link>
               <Link
-                href={""}
+                href={"/listening"}
                 className="btn btn-warning max-md:flex-auto h-full btn-outline font-black gap-y-0"
               >
                 Listenings <ListeningIcon />
               </Link>
               <Link
-                href={""}
+                href={"/exercises"}
                 className="btn btn-success max-md:flex-auto h-full btn-outline font-black gap-y-0"
               >
                 Excercises <ActivitiesIcon />
