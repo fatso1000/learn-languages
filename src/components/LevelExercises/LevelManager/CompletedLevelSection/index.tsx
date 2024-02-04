@@ -44,7 +44,7 @@ export default function CompletedLevelSection({
           </div>
         </div>
         <div>
-          <h1 className="font-extrabold text-4xl text-center text-success">
+          <h1 className="font-black text-4xl text-center text-success">
             Nivel completado exitosamente!
           </h1>
           <p className="text-center text-lg">
@@ -53,7 +53,7 @@ export default function CompletedLevelSection({
         </div>
         <div className="inline-flex gap-5 w-full justify-center">
           <div className="flex flex-col items-center border-2 rounded-3xl border-success">
-            <div className="font-bold text-base-100 bg-success p-5 rounded-2xl">
+            <div className="font-black text-base-100 bg-success p-5 rounded-2xl">
               {missesStatus}
             </div>
             <div className="font-bold p-2 text-center text-success inline-flex justify-center items-center">
@@ -62,7 +62,7 @@ export default function CompletedLevelSection({
             </div>
           </div>
           <div className="flex flex-col items-center border-2 rounded-3xl border-accent">
-            <div className="font-bold text-base-100 bg-accent p-5 rounded-2xl">
+            <div className="font-black text-base-100 bg-accent p-5 rounded-2xl">
               Tiempo
             </div>
             <div className="font-bold p-2 text-accent inline-flex justify-center items-center">

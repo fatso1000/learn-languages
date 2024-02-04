@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import AnimalComponent from "src/components/Animal";
 import CarouselComponent from "src/components/Carousel";
 import {
   ActivitiesIcon,
@@ -8,56 +8,92 @@ import {
   ListeningIcon,
   ReadingIcon,
 } from "src/components/Icons";
-import { DashboardProps, SelectedLanguageElement } from "src/types";
+import { rankFrameColors } from "src/shared/helpers";
+import { DashboardProps, IUser, SelectedLanguageElement } from "src/types";
 
 export default async function Header(props: {
   data: DashboardProps;
   userName: string;
   selectedLanguage: SelectedLanguageElement;
+  currentUser: IUser;
 }) {
-  const { data, userName, selectedLanguage } = props;
+  const { data, userName, selectedLanguage, currentUser } = props;
   return (
-    <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
+    <header className="mb-4 min-h-[100vh] overflow-hidden py-8">
       <div className="relative">
         <div className="relative flex flex-col">
-          <h1 className="text-6xl font-black inline-flex items-center">
-            Welcome back, {userName}!
-          </h1>
-          <p className="mt-6 text-xl text-base-content/60 font-light">
-            Let&apos;s continue with your learning ;)
-          </p>
-          <div className="flex flex-col mt-6">
-            <div className="inline-flex gap-1">
+          <div className="inline-flex items-center gap-3 mb-6 max-md:flex max-md:flex-col max-md:items-start">
+            <div
+              className="relative rounded-full user-frame w-[8.8rem] h-[8.8rem] flex items-center justify-center"
+              style={{
+                aspectRatio: 1,
+                backgroundColor: `${
+                  rankFrameColors[currentUser.rank.rank_id - 1]
+                }`,
+              }}
+            >
+              <div
+                style={{
+                  height: 128,
+                  width: 128,
+                }}
+                className="absolute rounded-full z-10 shadow-inner"
+              >
+                <AnimalComponent
+                  color={currentUser.profile.color}
+                  animalName={currentUser.profile.animal_name}
+                  size="8rem"
+                />
+              </div>
+            </div>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-black leading-tight">
+                Welcome back, <br />
+                <span className="text-5xl md:text-6xl text-info inline-block">
+                  {userName}!
+                </span>
+              </h1>
+              <p className="text-sm md:text-xl text-base-content/60 font-light">
+                Let&apos;s continue with your learning ;)
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col mt-1">
+            <div className="w-full gap-2 inline-flex max-md:flex-wrap">
               <Link
                 href={`/${selectedLanguage.details.name}/reading`}
-                className="btn btn-primary font-black bg-base-100"
+                className="btn btn-primary max-md:flex-auto h-full font-black btn-outline gap-y-0"
               >
                 Readings <ReadingIcon />
               </Link>
               <Link
                 href={"/languages"}
-                className="btn btn-secondary font-black bg-base-100"
+                className="btn btn-secondary max-md:flex-auto h-full btn-outline font-black gap-y-0"
               >
                 Languages <LanguageIcon />
               </Link>
-              <Link href={""} className="btn btn-accent font-black bg-base-100">
+              <Link
+                href={""}
+                className="btn btn-warning max-md:flex-auto h-full btn-outline font-black gap-y-0"
+              >
                 Listenings <ListeningIcon />
               </Link>
               <Link
                 href={""}
-                className="btn btn-success font-black bg-base-100"
+                className="btn btn-success max-md:flex-auto h-full btn-outline font-black gap-y-0"
               >
                 Excercises <ActivitiesIcon />
               </Link>
               <Link
                 href={"course"}
-                className="btn btn-info font-black bg-base-100"
+                className="btn btn-accent max-md:flex-auto h-full btn-outline font-black gap-y-0"
               >
                 Course <CourseIcon />
               </Link>
             </div>
           </div>
-          <div className="mt-6 flex w-full flex-col gap-2 px-4 xl:px-0">
+          <div className="mt-8 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 Last contents watched 🦁
@@ -70,7 +106,7 @@ export default async function Header(props: {
               <div></div>
             )}
           </div>
-          <div className="mt-6 flex w-full flex-col gap-2 px-4 xl:px-0">
+          <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 Not finished content 🦆
@@ -83,7 +119,7 @@ export default async function Header(props: {
               <div></div>
             )}
           </div>
-          <div className="mt-6 flex w-full flex-col gap-2 px-4 xl:px-0">
+          <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 Saved content 🐈

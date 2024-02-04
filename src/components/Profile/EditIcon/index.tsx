@@ -30,7 +30,8 @@ export default function EditIcon(props: {
   };
 
   return (
-    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden">
+    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden px-4 md:px-8 mt-8">
+      <div className="divider"></div>
       <IconColors selectedIcon={selectedIcon} handleColor={handleColor} />
       <IconAnimals selectedIcon={selectedIcon} handleAnimal={handleAnimal} />
     </section>

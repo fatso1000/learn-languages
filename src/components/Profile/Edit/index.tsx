@@ -24,7 +24,7 @@ export default function Edit({
           />
           <button
             type="button"
-            className="w-8 h-8 bg-base-100 absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
+            className="w-8 h-8 bg-base-100 shadow absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
             onClick={() => handleEditIconMode()}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
@@ -34,7 +34,7 @@ export default function Edit({
           </button>
         </div>
       </div>
-      <div className="h-full overflow-y-auto flex flex-col gap-2 my-4 px-2">
+      <div className="h-full overflow-y-auto flex flex-col gap-2 my-4">
         <FormInput
           label="Name"
           name="name"
@@ -63,7 +63,7 @@ export default function Edit({
       </div>
       <div className="flex gap-2 w-full justify-between">
         <button
-          className="btn btn-error hover:bg-[#dc6262] w-[45%]"
+          className="btn btn-error font-black w-[45%]"
           onClick={() => {
             handleEditMode(false);
             handleEditIconMode(false);
@@ -71,7 +71,7 @@ export default function Edit({
         >
           Cancel
         </button>
-        <SubmitButton className="btn btn-success hover:brightness-95 border-0 w-[45%]">
+        <SubmitButton className="btn btn-success font-black w-[45%]">
           Save
         </SubmitButton>
       </div>

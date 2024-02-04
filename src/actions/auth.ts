@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+import { logoutUserAction } from "src/app/actions";
 import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
 import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
 import { handleCustomApiRequest } from "src/shared/clientShared";
@@ -133,11 +135,15 @@ export async function selectUserLanguageFormValidation(
       user_profile_id: currentState.user_profile_id,
     };
   } catch (error) {
-    console.error(error);
     return {
       errors: [{ message: "Unknown error" }],
       success: false,
       user_profile_id: currentState.user_profile_id,
     };
   }
+}
+
+export async function logoutUserFormAction() {
+  await logoutUserAction();
+  redirect("/");
 }
