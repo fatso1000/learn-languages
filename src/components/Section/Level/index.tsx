@@ -1,5 +1,5 @@
 "use client";
-import { ILevel, IUnit } from "src/types";
+import { LevelProps } from "src/types";
 import StudyingBubble from "../StudyingBubble";
 import LevelIcon from "../LevelIcon";
 import LevelBubble from "../LevelBubble";
@@ -14,11 +14,10 @@ const levelStyles = {
       "studying border-success border-4 rounded-3xl bg-accent active:border-success-content",
     borderStyle:
       "bg-success-content text-success active:bg-success active:text-success-content",
-
     gradientProgress: (progressPorcent: number) =>
       `conic-gradient(#489380 ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
   },
-  "first-blocked": {
+  first_blocked: {
     style: "first-blocked blocked",
     borderStyle: "bg-base-300 text-base-content active:bg-[#A1A1A1]",
   },
@@ -28,16 +27,8 @@ const levelStyles = {
   },
 };
 
-interface Level {
-  level?: ILevel;
-  section: { id: string };
-  unit?: IUnit;
-  row: number;
-  state: "completed" | "studying" | "first-blocked" | "blocked";
-}
-
-export default function Level(props: Level) {
-  const { level, section, unit, row, state } = props;
+export default function LevelComponent(props: LevelProps) {
+  const { level, sectionId, unitId, row, state } = props;
   let progressPorcent = 0;
 
   let progress = 3;
@@ -52,23 +43,22 @@ export default function Level(props: Level) {
 
   const href =
     "/level?difficulty=" +
-    "" +
+    level.difficulty +
     "&unit_id=" +
-    "" +
+    unitId +
     "&section_id=" +
-    section.id +
+    sectionId +
     "&lang=" +
     "es";
 
   return (
-    <div
+    <button
       style={{
         background: gradientProgress,
         gridRow: row + 1 + "/" + (row + 2),
       }}
       className={`${levelStyles[state].style} h-[7.25rem] w-[7.25rem] flex flex-col justify-center items-center level dropdown relative`}
       tabIndex={0}
-      role="button"
     >
       {state === "studying" && <StudyingBubble />}
       <div
@@ -76,7 +66,7 @@ export default function Level(props: Level) {
       >
         <LevelIcon state={state} />
       </div>
-      <LevelBubble state={state} />
-    </div>
+      <LevelBubble state={state} href={href} difficulty={level.difficulty} />
+    </button>
   );
 }

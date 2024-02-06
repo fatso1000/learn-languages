@@ -202,6 +202,8 @@ export interface ILevel {
   unitId: number;
   userCoursesId: number | null;
   difficulty: ExerciseDifficulty;
+  color: string;
+  state: LevelState;
 }
 
 export interface IExercise {
@@ -284,4 +286,34 @@ export interface ExercisesProps {
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   isMessageActive: boolean;
   onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+}
+
+export enum LevelState {
+  COMPLETED = "completed",
+  STUDYING = "studying",
+  FIRST_BLOCKED = "first_blocked",
+  BLOCKED = "blocked",
+}
+
+export interface LevelIconProps {
+  state: LevelState;
+}
+
+export interface LevelProps {
+  level: ILevel;
+  sectionId: string;
+  unitId: number;
+  row: number;
+  state: LevelState;
+}
+
+export interface UnitProps {
+  sectionId: string;
+  unit: IUnit;
+}
+
+export interface LevelBubbleProps {
+  state: LevelState;
+  href: string;
+  difficulty?: ExerciseDifficulty;
 }
