@@ -4,6 +4,9 @@ import { getSearchQuery } from "src/shared/apiShared";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import prisma from "src/app/config/db";
+import { ILevel, LevelState } from "src/types";
+
+const colors = ["success", "accent", "primary", "info", "secondary", "error"];
 
 function groupBy(array: any[], key: string) {
   return array.reduce((grouped, item) => {
@@ -36,7 +39,7 @@ export async function GET(req: NextRequest) {
             sections: {
               include: {
                 units: {
-                  include: { levels: true },
+                  include: { levels: { orderBy: { id: "asc" } } },
                 },
               },
             },
@@ -64,16 +67,57 @@ export async function GET(req: NextRequest) {
         msg: "Content not found.",
       });
     }
-
     const section = request.course.sections[0];
 
     section.units = section.units.map((unit) => {
       if (groupedData[unit.id]) {
+        const levelsGrouped: ILevel[] = groupedData[unit.id];
+        const startIndex = Math.floor(Math.random() * (colors.length - 0)) + 0;
+
         if (groupedData[unit.id].length === unit.levels.length) {
-          return { ...unit, completed: true, completed_levels: 3 };
+          return {
+            ...unit,
+            levels: [
+              ...unit.levels.map((level, i) => {
+                const currentIndex = (startIndex + i) % colors.length;
+                const currentColor = colors[currentIndex];
+                return {
+                  ...level,
+                  color: currentColor,
+                  state: LevelState.COMPLETED,
+                };
+              }),
+            ],
+            completed: true,
+            completed_levels: unit.levels.length,
+          };
         } else {
           return {
             ...unit,
+            levels: [
+              ...unit.levels.map((level, i, array) => {
+                const currentIndex = (startIndex + i) % colors.length;
+                const currentColor = colors[currentIndex];
+                const isLevelCompleted = levelsGrouped.some(
+                    (lvl) => lvl.id === level.id
+                  ),
+                  isNextBlocked =
+                    array[i + 1] &&
+                    levelsGrouped.some((lvl) => lvl.id === array[i + 1].id),
+                  isPreviousBlocked =
+                    array[i - 1] &&
+                    levelsGrouped.some((lvl) => lvl.id === array[i - 1].id);
+                return {
+                  ...level,
+                  color: currentColor,
+                  state: isLevelCompleted
+                    ? LevelState.COMPLETED
+                    : !isNextBlocked && !isPreviousBlocked
+                    ? LevelState.BLOCKED
+                    : LevelState.STUDYING,
+                };
+              }),
+            ],
             completed: false,
             completed_levels: groupedData[unit.id].length,
           };
