@@ -69,18 +69,18 @@ export async function GET(req: NextRequest) {
     }
     const section = request.course.sections[0];
 
-    section.units = section.units.map((unit) => {
+    section.units = section.units.map((unit, index, arr) => {
+      const startIndex = Math.floor(Math.random() * (colors.length - 0)) + 0;
+      const currentIndex = (startIndex + index) % colors.length;
+      const currentColor = colors[currentIndex];
       if (groupedData[unit.id]) {
         const levelsGrouped: ILevel[] = groupedData[unit.id];
-        const startIndex = Math.floor(Math.random() * (colors.length - 0)) + 0;
-
         if (groupedData[unit.id].length === unit.levels.length) {
           return {
             ...unit,
+            color: currentColor,
             levels: [
               ...unit.levels.map((level, i) => {
-                const currentIndex = (startIndex + i) % colors.length;
-                const currentColor = colors[currentIndex];
                 return {
                   ...level,
                   color: currentColor,
@@ -94,10 +94,9 @@ export async function GET(req: NextRequest) {
         } else {
           return {
             ...unit,
+            color: currentColor,
             levels: [
               ...unit.levels.map((level, i, array) => {
-                const currentIndex = (startIndex + i) % colors.length;
-                const currentColor = colors[currentIndex];
                 const isLevelCompleted = levelsGrouped.some(
                     (lvl) => lvl.id === level.id
                   ),
@@ -123,7 +122,40 @@ export async function GET(req: NextRequest) {
           };
         }
       }
-      return unit;
+
+      const previousUnitId = arr[index - 1].id;
+      if (previousUnitId !== unit.id && groupedData[previousUnitId]) {
+        return {
+          ...unit,
+          color: currentColor,
+          levels: [
+            ...unit.levels.map((level, j) => {
+              return {
+                ...level,
+                color: currentColor,
+                state: j === 0 ? LevelState.STUDYING : LevelState.BLOCKED,
+              };
+            }),
+          ],
+          completed: false,
+          completed_levels: 0,
+        };
+      }
+
+      return {
+        ...unit,
+        levels: [
+          ...unit.levels.map((level) => {
+            return {
+              ...level,
+              color: currentColor,
+              state: LevelState.BLOCKED,
+            };
+          }),
+        ],
+        completed: false,
+        completed_levels: 0,
+      };
     });
 
     return onSuccessRequest({

@@ -49,24 +49,21 @@ export default function LanguageSelect(props: LanguageSelectProps) {
   }, [state.success]);
 
   return (
-    <div className="dropdown dropdown-end">
-      <label
-        tabIndex={0}
-        className="h-[28px] w-[48px] btn min-h-[28px] p-0 hover:brightness-90"
-      >
+    <div className="btn max-md:btn-sm btn-ghost dropdown dropdown-bottom dropdown-left dropdown-mobile md:dropdown-end">
+      <label tabIndex={0} className="flex cursor-pointer h-full p-0">
         {selectedLanguage && (
           <Image
             src={languagesList[selectedLanguage.details.name].flagUrl.src}
             alt=""
             width={48}
             height={28}
-            className="h-[28px] w-[48px] rounded"
+            className="w-10 my-auto rounded-md"
           />
         )}
       </label>
       <ul
         tabIndex={0}
-        className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-[280px] mt-3"
+        className="p-2 shadow menu dropdown-content z-20 bg-base-100 rounded-box w-[280px] mt-3"
       >
         <form
           action={formAction}

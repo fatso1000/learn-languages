@@ -121,7 +121,11 @@ export default function LevelManager({
             .trim();
 
         if (lowerCaseTranslations.includes(userInput)) {
-          onExerciseSuccess();
+          onExerciseSuccess(
+            !compactTranslations!.includes(userInput)
+              ? compactTranslations![0]
+              : undefined
+          );
         } else {
           onExerciseFail(correctAnswers.join(" "), solutionTranslation);
         }
@@ -165,13 +169,13 @@ export default function LevelManager({
     playFail();
   };
 
-  const onExerciseSuccess = () => {
+  const onExerciseSuccess = (correct_answer?: string) => {
     setProgressIndex(progressIndex + 1);
     if (currentExercise + 1 === data.length + queueFailedExercises.length) {
       playSuccess();
       return onLevelFinished();
     }
-    setMessage({ active: true, text: "", type: "success" });
+    setMessage({ active: true, text: correct_answer, type: "success" });
     playSuccess();
   };
 
@@ -186,7 +190,7 @@ export default function LevelManager({
 
   // AGREGAR ANIMACIONES DE FADE IN/OUT CUANDO SE CAMBIE DE PANTALLA
   return (
-    <main className="px-4">
+    <main className="md:px-4">
       <div className="max-w-[70ch] m-auto">
         <div className="h-[100vh] overflow-hidden flex justify-center flex-col">
           <div className="flex min-h-[100vh] flex-col justify-center">

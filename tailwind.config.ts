@@ -42,7 +42,15 @@ const config: Config = {
     },
   },
   daisyui: {
-    themes: ["autumn"],
+    themes: [
+      {
+        autumn: {
+          ...require("daisyui/src/theming/themes")["[data-theme=autumn]"],
+          info: "#41ACBA",
+          accent: "#DBBBFF",
+        },
+      },
+    ],
   },
   plugins: [
     require("daisyui"),
