@@ -32,11 +32,11 @@ model User {
     password     String
     name         String
     biography    String?
-    ubication    String?
+    location     String?
     profile      UserProfile   @relation(fields: [profile_id], references: [id])
     profile_id   Int           @unique
-    UserContent  UserContent[]
-    Historical   Historical[]
+    user_content UserContent[]
+    historical   Historical[]
     rank         UserRank?
     user_courses UserCourses[]
 }
@@ -59,12 +59,12 @@ model UserLanguages {
 }
 
 model Languages {
-    id            Int             @id @default(autoincrement())
-    name          String          @unique
-    shortName     String
-    Content       Content[]
-    UserLanguages UserLanguages[]
-    Courses       Courses?
+    id             Int             @id @default(autoincrement())
+    name           String          @unique
+    short_name     String
+    content        Content[]
+    user_languages UserLanguages[]
+    courses        Courses?
 }
 
 // **************
@@ -79,20 +79,22 @@ model UserCourses {
 }
 
 model Courses {
-    id           Int           @id @default(autoincrement())
-    title        String
-    description  String?
-    language     Languages     @relation(fields: [language_id], references: [id])
-    language_id  Int           @unique
-    sections     Section[]
-    user_courses UserCourses[]
+    id                 Int           @id @default(autoincrement())
+    language_id        Int           @unique
+    target_language_id Int
+    title              String
+    description        String?
+    language           Languages     @relation(fields: [language_id], references: [id])
+    target_language    Json
+    sections           Section[]
+    user_courses       UserCourses[]
 }
 
 model Section {
     id          Int     @id @default(autoincrement())
     title       String
     description String?
-    bg_color    String?
+    color       String?
     img_src     String?
     course      Courses @relation(fields: [courseId], references: [id])
     courseId    Int
@@ -105,39 +107,40 @@ model Unit {
     description String?
     section     Section    @relation(fields: [sectionId], references: [id])
     sectionId   Int
+    color       String
     levels      Level[]
-    Exercise    Exercise[]
+    exercise    Exercise[]
 }
 
 model Level {
-    id            Int                @id @default(autoincrement())
-    title         String
-    description   String?
-    difficulty    ExerciseDifficulty
-    unit          Unit               @relation(fields: [unitId], references: [id])
-    unitId        Int
-    UserCourses   UserCourses?       @relation(fields: [userCoursesId], references: [id])
-    userCoursesId Int?
+    id              Int                @id @default(autoincrement())
+    title           String
+    description     String?
+    difficulty      ExerciseDifficulty
+    unit            Unit               @relation(fields: [unit_id], references: [id])
+    unit_id         Int
+    user_courses    UserCourses?       @relation(fields: [user_courses_id], references: [id])
+    user_courses_id Int?
 }
 
 model Exercise {
-    id                   Int                @id @default(autoincrement())
-    difficulty           ExerciseDifficulty
-    type                 ExerciseType
-    prompt               String?
-    choices              Json[]
-    compactTranslations  String[]
-    solutionTranslations String?
-    correctSolutions     String[]
-    correctAnswers       String[]
-    displayTokens        Json[]
-    correctIndices       Int[]
-    correctIndex         Int?
-    tts                  String
-    sourceLanguages      String
-    targetLanguages      String
-    unit                 Unit               @relation(fields: [unit_id], references: [id])
-    unit_id              Int
+    id                    Int                @id @default(autoincrement())
+    difficulty            ExerciseDifficulty
+    type                  ExerciseType
+    prompt                String?
+    choices               Json[]
+    compact_translations  String[]
+    solution_translations String?
+    correct_solutions     String[]
+    correct_answers       String[]
+    display_tokens        Json[]
+    correct_indices       Int[]
+    correct_index         Int?
+    tts                   String
+    source_languages      String
+    target_languages      String
+    unit                  Unit               @relation(fields: [unit_id], references: [id])
+    unit_id               Int
 }
 
 enum ExerciseType {
@@ -209,7 +212,8 @@ model ContentDetails {
     content             Content             @relation(fields: [content_id], references: [id])
     content_id          Int
     question_and_answer QuestionAndAnswer[]
-    PendingContent      PendingContent[]
+    pending_content     PendingContent[]
+    tts                 String?
 }
 
 model UserContent {

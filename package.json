@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma db push && next build",
+    "build": "prisma generate && prisma db push && npm run db:seed && next build",
     "start": "next start",
     "lint": "next lint",
     "build:test": "npm run build && npm start",
     "migrate:dev": "npx prisma migrate dev --name dev",
     "db:push": "npx prisma db push",
     "db:reset": "npx prisma migrate reset",
+    "db:seed": "sh prisma/seed.sh",
     "prisma:studio": "npx prisma studio",
     "postinstall": "prisma generate"
   },

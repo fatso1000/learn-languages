@@ -11,18 +11,20 @@ export function WriteDownExercise(props: ExercisesProps) {
   const {
     type,
     prompt,
-    compactTranslations,
-    solutionTranslation,
+    compact_translations,
+    solution_translation,
     tts,
     hasPreviousError,
   } = data;
   const [selectedOptions, setSelectedOptions] = useState<string>("");
   const answerObj: any = {
-    correctAnswers: [compactTranslations[0]],
+    correctAnswers: [compact_translations[0]],
     type,
-    compactTranslations,
-    solutionTranslation: solutionTranslation ? solutionTranslation : undefined,
-    selectedOption: selectedOptions ? selectedOptions.split(" ") : null,
+    compact_translations,
+    solutionTranslation: solution_translation
+      ? solution_translation
+      : undefined,
+    selected_option: selectedOptions ? selectedOptions.split(" ") : null,
   };
   const [ttsAudio, setTtsAudio] = useState<HTMLAudioElement | undefined>();
   const [slowTtsAudio, setSlowTtsAudio] = useState<
@@ -81,8 +83,8 @@ export function WriteDownExercise(props: ExercisesProps) {
               className="btn"
               onClick={() =>
                 onExerciseFail(
-                  compactTranslations[0],
-                  solutionTranslation ? solutionTranslation : undefined
+                  compact_translations[0],
+                  solution_translation ? solution_translation : undefined
                 )
               }
             >

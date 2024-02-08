@@ -24,6 +24,7 @@ export async function POST(req: NextRequest) {
     const request = await prisma.languages.create({
       data: {
         name: body.name,
+        short_name: body.short_name,
       },
     });
     if (!request)
