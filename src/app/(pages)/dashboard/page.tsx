@@ -36,6 +36,7 @@ export default function Dashboard(props: any) {
           userId={currentUser!.id}
           userName={currentUser!.name}
           selectedLanguage={selectedLanguage!}
+          currentUser={currentUser!}
         />
       </div>
     </>

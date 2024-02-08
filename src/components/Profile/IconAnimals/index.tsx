@@ -8,7 +8,7 @@ export default function IconAnimals(props: {
 }) {
   const { selectedIcon, handleAnimal } = props;
   return (
-    <div className="grid grid-cols-4 w-full justify-items-center overflow-y-scroll mt-5">
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full justify-items-center overflow-y-scroll max-h-[90vh] my-5 border-2 p-4 rounded-md">
       {animalsList.map((animal: string) => {
         return (
           <label
@@ -23,11 +23,13 @@ export default function IconAnimals(props: {
               checked={selectedIcon.animal === animal.toLocaleLowerCase()}
               onChange={handleAnimal}
             />
-            <AnimalComponent
-              color={selectedIcon.color[0]}
-              animalName={animal}
-              size="65px"
-            />
+            <div className="border-2 rounded-full">
+              <AnimalComponent
+                color={selectedIcon.color[0]}
+                animalName={animal}
+                size="65px"
+              />
+            </div>
             <span className="text-[0.7rem] font-bold p-2">
               {animal.toUpperCase()}
             </span>

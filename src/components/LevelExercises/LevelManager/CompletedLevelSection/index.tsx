@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { AccuracyIcon, ClockIcon } from "src/components/Icons";
+import { AccuracyIcon, ClockIcon, CourseIcon } from "src/components/Icons";
 import { parseTimeLevelCompleted } from "src/shared/helpers";
-import CatGif from "public/gif/giphy.gif";
 import Image from "next/image";
 
 interface Props {
@@ -31,38 +30,38 @@ export default function CompletedLevelSection({
 
   return (
     <>
-      <div className="flex flex-col justify-between items-center w-full mt-auto gap-10">
+      <div className="flex flex-col justify-between items-center w-full max-md:px-3 mt-auto gap-14">
         <div>
           <div>
             <Image
-              src={CatGif.src}
+              src={"https://www.katywang.co.uk/img/misc/stickers/panda.gif"}
               height={20}
               width={20}
               alt="cat"
-              className="h-auto w-full border-2 border-dashed border-zinc-600"
+              className="h-auto w-full"
             />
           </div>
         </div>
         <div>
-          <h1 className="font-extrabold text-4xl text-center text-success">
+          <h1 className="font-black text-3xl md:text-4xl text-center text-success">
             Nivel completado exitosamente!
           </h1>
-          <p className="text-center text-lg">
+          <p className="text-center text-base">
             Has acertado en la mayoria de ejercicios
           </p>
         </div>
         <div className="inline-flex gap-5 w-full justify-center">
-          <div className="flex flex-col items-center border-2 rounded-3xl border-success">
-            <div className="font-bold text-base-100 bg-success p-5 rounded-2xl">
+          <div className="flex flex-col min-w-[90px] items-center border-2 rounded-3xl border-success">
+            <div className="font-black text-base-100 bg-success p-4 rounded-2xl">
               {missesStatus}
             </div>
-            <div className="font-bold p-2 text-center text-success inline-flex justify-center items-center">
+            <div className="font-bold p-2 max-md:text-sm text-center text-success w-full inline-flex justify-center items-center">
               <AccuracyIcon />
               {percentaje.toFixed(0)}%
             </div>
           </div>
-          <div className="flex flex-col items-center border-2 rounded-3xl border-accent">
-            <div className="font-bold text-base-100 bg-accent p-5 rounded-2xl">
+          <div className="flex flex-col min-w-[90px] items-center border-2 rounded-3xl border-accent">
+            <div className="font-black text-base-100 bg-accent p-4 rounded-2xl w-full text-center">
               Tiempo
             </div>
             <div className="font-bold p-2 text-accent inline-flex justify-center items-center">
@@ -70,20 +69,29 @@ export default function CompletedLevelSection({
               {parseTimeLevelCompleted(`${minutes}:${seconds}`)}
             </div>
           </div>
+          <div className="flex flex-col min-w-[90px] items-center border-2 rounded-3xl border-primary">
+            <div className="font-black text-primary-content bg-primary w-full text-center p-4 rounded-2xl">
+              XP
+            </div>
+            <div className="font-bold p-2 text-primary inline-flex justify-center items-center">
+              <CourseIcon />
+              15
+            </div>
+          </div>
         </div>
       </div>
-      <div className="inline-flex justify-between w-full mt-auto p-10">
-        <div className="w-2/12 flex justify-center">
+      <div className="inline-flex max-md:px-3 justify-between w-full mt-auto p-10">
+        <div className="hidden md:w-[13%] md:flex justify-center">
           <Link href="" className="btn">
             Repeat Lesson
           </Link>
         </div>
-        <div className="w-2/3"></div>
-        <div className="w-2/12 flex justify-center">
+        <div className="hidden md:w-full md:block"></div>
+        <div className="w-full md:w-[13%] flex justify-center">
           <Link
             href={"/section?id=" + sectionId}
             type="button"
-            className="btn btn-success"
+            className="btn btn-success max-md:w-full"
           >
             Continue
           </Link>

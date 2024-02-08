@@ -2,19 +2,7 @@ import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
 import EditProfile from "../Edit";
 import { rankFrameColors } from "src/shared/helpers";
-
-const ButtonComponent = ({
-  handleEditMode,
-}: {
-  handleEditMode: () => void;
-}) => (
-  <button
-    className="btn btn-info hover:brightness-95 w-full"
-    onClick={handleEditMode}
-  >
-    Edit Profile
-  </button>
-);
+import { ClockIcon } from "src/components/Icons";
 
 export default function Aside({
   currentUser,
@@ -28,53 +16,48 @@ export default function Aside({
   isEditMode: boolean;
 }) {
   return (
-    <aside className="flex flex-col gap-5 w-[30em] h-full bg-base-300 p-[2em]">
+    <aside className="flex flex-col gap-5 w-full h-full px-4 md:px-8 mt-8 flex-1">
       {!isEditMode ? (
         <>
-          <header className="flex flex-col items-center gap-4">
+          <header className="flex flex-row gap-4 max-md:flex-col">
             <div
-              className="relative rounded-full user-frame w-[6.8rem] h-[6.8rem] flex items-center justify-center"
+              className="relative rounded-full user-frame md:w-[6.8rem] md:h-[6.8rem] flex items-center justify-center w-[170px] h-auto aspect-square"
               style={{
-                aspectRatio: 1,
                 backgroundColor: `${
                   rankFrameColors[currentUser.rank.rank_id - 1]
                 }`,
               }}
             >
-              <div
-                style={{
-                  height: 96,
-                  width: 96,
-                }}
-                className="absolute rounded-full z-10"
-              >
+              <div className="absolute rounded-full z-10 h-[150px] w-[150px] md:w-[96px] md:h-[96px]">
                 <AnimalComponent
                   color={currentUser.profile.color}
                   animalName={currentUser.profile.animal_name}
-                  size="6rem"
+                  size="100%"
                 />
               </div>
             </div>
-            <h2 className="text-[1.5em] font-extrabold">{currentUser.name}</h2>
+            <div className="ml-2 mb-auto">
+              <h2 className="text-3xl font-black leading-none">
+                {currentUser.name}
+              </h2>
+              <span className="leading-none text-neutral-400">
+                {currentUser.email}
+              </span>
+              <span className="mt-3 inline-flex w-full gap-2 text-neutral-400 items-center">
+                <ClockIcon />
+                <span className="text-neutral-800">
+                  Cuenta creada en mayo del 2021
+                </span>
+              </span>
+            </div>
           </header>
-          <ul className="flex flex-col h-full gap-5">
-            <li className="flex flex-col">
-              <span className="font-bold">Email</span> {currentUser.email}
-            </li>
-            {currentUser.biography && (
-              <li className="flex flex-col">
-                <span className="font-bold">Biography</span>
-                {currentUser.biography}
-              </li>
-            )}
-            {currentUser.ubication && (
-              <li className="flex flex-col">
-                <span className="font-bold">Ubication</span>
-                {currentUser.ubication}
-              </li>
-            )}
-          </ul>
-          <ButtonComponent handleEditMode={handleEditMode} />
+          <button
+            className="btn btn-success font-black w-full"
+            onClick={() => handleEditMode()}
+          >
+            Edit Profile
+          </button>
+          <div className="divider"></div>
         </>
       ) : (
         <EditProfile

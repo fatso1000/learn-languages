@@ -127,13 +127,13 @@ const animalsList = [
 ];
 
 const colorsList = [
-  "red",
-  "blue",
-  "orange",
-  "yellow",
-  "green",
-  "purple",
-  "teal",
+  "#FF5861",
+  "#FFBE00",
+  "#00A96E",
+  "#00B5FF",
+  "#6D0076",
+  "#41ACBA",
+  "#DBBBFF",
 ];
 
 const languagesList = [

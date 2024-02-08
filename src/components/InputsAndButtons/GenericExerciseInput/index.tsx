@@ -24,12 +24,12 @@ export default function GenericExerciseInput({
   return (
     <label
       htmlFor="token-12"
-      className="py-2 px-3 border-2 h-44 bg-base-200 rounded-xl block grow cursor-pointer text-left"
+      className="py-2 px-3 w-full border-2 h-44 bg-base-200 rounded-xl block cursor-pointer text-left"
     >
       {!displayTokens ? (
         <textarea
           value={selectedOption}
-          className="bg-transparent border-0 p-0 grow resize-none appearance-none w-full"
+          className="bg-transparent border-0 p-0 resize-none appearance-none w-full"
           style={{ boxShadow: "none" }}
           autoComplete="off"
           autoCapitalize="off"

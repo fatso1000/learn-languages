@@ -108,19 +108,19 @@ export function ExercisesSection({
   return (
     <>
       <div className="max-w-[90ch] inline-flex justify-between items-center w-full h-20">
-        <div className="w-[13%] flex justify-center">
+        <div className="w-[20%] md:w-[13%] flex justify-center">
           <Link href={"/section?id=" + sectionId} className="link">
             <XIcon />
           </Link>
         </div>
-        <div className="w-full">
+        <div className="w-[60%] md:w-full md:block">
           <progress
             className="w-full progress progress-error h-3"
             value={progressIndex}
             max={data.length}
           ></progress>
         </div>
-        <div className="w-[13%] flex justify-center items-center gap-1">
+        <div className="w-[20%] md:w-[13%] flex justify-center items-center gap-1">
           <HeartIconSolid fill="#F87272" className="w-6 h-6" />
           <span className="font-extrabold text-lg">{lifes}</span>
         </div>

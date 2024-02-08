@@ -8,10 +8,10 @@ export default function IconColors(props: {
   const { selectedIcon, handleColor } = props;
 
   return (
-    <div className="flex justify-between">
-      <h2 className="text-[2rem] font-extrabold">Edit Icon</h2>
+    <div className="flex justify-between mt-8">
+      <h2 className="text-3xl font-black leading-[2]">Edit Icon</h2>
       <div className="flex gap-2 justify-center items-center">
-        <h2 className="text-[1.2rem] font-extrabold">Color</h2>
+        <h2 className="text-3xl font-black leading-none">Color</h2>
         <div className="dropdown dropdown-end">
           <label
             tabIndex={0}

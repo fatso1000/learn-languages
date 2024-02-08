@@ -38,7 +38,7 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
   }, [data]);
 
   return (
-    <div className="flex flex-col w-full justify-center items-start h-full gap-10">
+    <div className="flex flex-col justify-center items-start h-full max-md:mx-3 gap-10">
       <div className="mt-auto">
         {hasPreviousError && (
           <div className="inline-flex items-center gap-2">
@@ -66,7 +66,7 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
         </div>
       </div>
       <div className="inline-flex justify-between w-full h-20 mt-auto">
-        <div className="w-[13%] flex justify-center">
+        <div className="hidden md:w-[13%] md:flex justify-center">
           {!isMessageActive && (
             <button
               className="btn"
@@ -80,12 +80,12 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
             </button>
           )}
         </div>
-        <div className="w-2/3"></div>
-        <div className="w-[13%] flex justify-center">
+        <div className="hidden md:w-full md:block"></div>
+        <div className="w-full md:w-[13%] flex justify-center">
           {!isMessageActive && (
             <button
               type="button"
-              className="btn btn-success"
+              className="btn btn-success max-md:w-full"
               disabled={!selectedOption}
               onClick={() => onCheckAnswer(answerObj)}
             >
