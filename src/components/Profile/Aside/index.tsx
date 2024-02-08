@@ -19,27 +19,20 @@ export default function Aside({
     <aside className="flex flex-col gap-5 w-full h-full px-4 md:px-8 mt-8 flex-1">
       {!isEditMode ? (
         <>
-          <header className="flex flex-row items-center gap-4">
+          <header className="flex flex-row gap-4 max-md:flex-col">
             <div
-              className="relative rounded-full user-frame w-[6.8rem] h-[6.8rem] flex items-center justify-center"
+              className="relative rounded-full user-frame md:w-[6.8rem] md:h-[6.8rem] flex items-center justify-center w-[170px] h-auto aspect-square"
               style={{
-                aspectRatio: 1,
                 backgroundColor: `${
                   rankFrameColors[currentUser.rank.rank_id - 1]
                 }`,
               }}
             >
-              <div
-                style={{
-                  height: 96,
-                  width: 96,
-                }}
-                className="absolute rounded-full z-10"
-              >
+              <div className="absolute rounded-full z-10 h-[150px] w-[150px] md:w-[96px] md:h-[96px]">
                 <AnimalComponent
                   color={currentUser.profile.color}
                   animalName={currentUser.profile.animal_name}
-                  size="6rem"
+                  size="100%"
                 />
               </div>
             </div>
@@ -59,7 +52,7 @@ export default function Aside({
             </div>
           </header>
           <button
-            className="btn btn-ghost btn-wide font-black"
+            className="btn btn-success font-black w-full"
             onClick={() => handleEditMode()}
           >
             Edit Profile

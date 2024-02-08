@@ -41,7 +41,6 @@ export default function Edit({
           type="text"
           defaultValue={user.name}
         />
-
         <FormTextarea
           label="Biography"
           name="biography"
@@ -61,9 +60,9 @@ export default function Edit({
           className="invisible h-0 w-0 radio-input p-0 m-0"
         />
       </div>
-      <div className="flex gap-2 w-full justify-between">
+      <div className="flex max-md:flex-col-reverse gap-2 w-full justify-between">
         <button
-          className="btn btn-error font-black w-[45%]"
+          className="btn btn-error font-black flex-1"
           onClick={() => {
             handleEditMode(false);
             handleEditIconMode(false);
@@ -71,7 +70,7 @@ export default function Edit({
         >
           Cancel
         </button>
-        <SubmitButton className="btn btn-success font-black w-[45%]">
+        <SubmitButton className="btn btn-success font-black flex-1">
           Save
         </SubmitButton>
       </div>

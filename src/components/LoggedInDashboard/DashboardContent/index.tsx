@@ -60,7 +60,7 @@ export default async function Header(props: {
           </div>
 
           <div className="flex flex-col mt-1">
-            <div className="w-full gap-2 inline-flex max-md:flex-wrap">
+            <div className="w-full gap-2 inline-flex flex-wrap">
               <Link
                 href={`/${selectedLanguage.details.name}/reading`}
                 className="btn btn-primary max-md:flex-auto h-full font-black btn-outline gap-y-0"
@@ -96,7 +96,7 @@ export default async function Header(props: {
           <div className="mt-8 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Last contents watched 🦁
+                Last contents watched
               </h2>
               <button className="btn">More</button>
             </div>
@@ -109,7 +109,7 @@ export default async function Header(props: {
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Not finished content 🦆
+                Not finished content
               </h2>
               <button className="btn">More</button>
             </div>
@@ -122,7 +122,7 @@ export default async function Header(props: {
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Saved content 🐈
+                Saved content
               </h2>
               <button className="btn">More</button>
             </div>

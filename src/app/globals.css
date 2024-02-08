@@ -13,6 +13,26 @@
   }
 }
 
+h1.title-dashboard span {
+  position: relative;
+  opacity: 0;
+  animation: move-text 0.75s forwards;
+}
+
+@keyframes move-text {
+  0% {
+    bottom: -0.2em;
+    opacity: 1;
+  }
+  50% {
+    bottom: 0.2em;
+  }
+  100% {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
 html {
   scroll-padding-top: 5rem;
   scroll-behavior: smooth;

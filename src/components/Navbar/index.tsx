@@ -60,12 +60,12 @@ export default async function Navbar(props: any) {
         ) : (
           <>
             <div>
-              <Link className="btn btn-success" href="/auth/signup">
+              <Link className="btn btn-success normal-case" href="/auth/signup">
                 Sign Up
               </Link>
             </div>
-            <div>
-              <Link className="btn" href="/auth/signin">
+            <div className="ml-4">
+              <Link className="btn normal-case" href="/auth/signin">
                 Log In
               </Link>
             </div>

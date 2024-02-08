@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import Unit from "src/components/Section/Unit";
@@ -17,9 +18,12 @@ export default async function Section(props: any) {
       >
         <div className="w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 flex flex-col items-center">
           <div className="py-4 w-full inline-flex items-center justify-between border-b-2">
-            <button className="btn btn-ghost self-start rounded-full text-base-content opacity-40">
+            <Link
+              href={"/course"}
+              className="btn btn-ghost self-start rounded-full text-base-content opacity-40"
+            >
               <ArrowLeftShort />
-            </button>
+            </Link>
             <h1 className="font-black text-xl m-auto z-0 text-base-content opacity-40">
               {request.data.title}: {request.data.description}
             </h1>

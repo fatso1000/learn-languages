@@ -47,7 +47,7 @@ export default function ProfileForm(props: any) {
   if (!currentUser) return <div></div>;
 
   return (
-    <form action={formAction} className="flex flex-col items-center w-full">
+    <form action={formAction} className="flex flex-col items-center w-full py-8">
       <AsideProfile
         currentUser={currentUser}
         handleEditIconMode={handleEditIconMode}
