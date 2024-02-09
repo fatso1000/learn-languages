@@ -25,8 +25,8 @@ export default async function ReadingPageById({
 }) {
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
   const readingText = await getContentById<PendingContentContent>(id!);
-
-  if (readingText.error || !readingText.data) return <div>ERROR</div>;
+  if (readingText.errors.length > 0 || !readingText.data)
+    return <div>ERROR</div>;
 
   return (
     <main className="mt-4 max-w-[1100px] m-auto px-4 sm:px-4 md:px-16 grid grid-cols-2 gap-x-4">

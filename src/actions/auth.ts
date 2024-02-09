@@ -1,7 +1,11 @@
 "use server";
 
-import { editUserProfile, signinUser, signupUser } from "src/queryFn";
+import { redirect } from "next/navigation";
+import { logoutUserAction } from "src/app/actions";
+import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
 import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
+import { handleCustomApiRequest } from "src/shared/clientShared";
+import { SelectedLanguageElement } from "src/types";
 
 export async function signUpFormValidation(
   currentState: any,
@@ -42,11 +46,17 @@ export async function signInFormValidation(
     const user = await signinUser({ email, password });
 
     if (!user.errors || user.errors.length === 0) {
-      setLoginCookies(JSON.stringify(user.data.user), user.data.token);
+      const userStringify = JSON.stringify(user.data.user),
+        languageStringify = JSON.stringify(
+          user.data.user.profile.languages.find(
+            (language: SelectedLanguageElement) => language.active
+          )
+        );
+      setLoginCookies(userStringify, languageStringify, user.data.token);
       return { success: true, errors: [] };
     }
 
-    return { errors: user.errors };
+    return { errors: user.errors, success: false };
   } catch (error) {
     return { errors: [{ message: "Unknown error" }], success: false };
   }
@@ -63,7 +73,6 @@ export async function editProfileFormValidation(
       Object.entries({
         color: formData.get("color"),
         animal_name: formData.get("animal"),
-        language: formData.get("language"),
       }).filter((value) => value[1])
     );
 
@@ -87,4 +96,54 @@ export async function editProfileFormValidation(
   } catch (error) {
     return { errors: [{ message: "Unknown error" }], success: false };
   }
+}
+
+export async function selectUserLanguageFormValidation(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const body = JSON.stringify({
+      language_id: +formData.get("language_id")!,
+      user_profile_id: currentState.hasOwnProperty("user_profile_id")
+        ? +currentState.user_profile_id
+        : +formData.get("user_profile_id")!,
+      refresh: true,
+    });
+
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/userLanguage",
+      "POST",
+      body,
+      true
+    );
+
+    if (request && request.data) {
+      const userStringify = JSON.stringify(request.data[2]),
+        languageStringify = JSON.stringify(request.data[1]);
+      setLoginCookies(userStringify, languageStringify);
+      return {
+        errors: [],
+        success: true,
+        user_profile_id: currentState.user_profile_id,
+      };
+    }
+
+    return {
+      errors: [],
+      success: false,
+      user_profile_id: currentState.user_profile_id,
+    };
+  } catch (error) {
+    return {
+      errors: [{ message: "Unknown error" }],
+      success: false,
+      user_profile_id: currentState.user_profile_id,
+    };
+  }
+}
+
+export async function logoutUserFormAction() {
+  await logoutUserAction();
+  redirect("/");
 }

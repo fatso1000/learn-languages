@@ -16,7 +16,7 @@ export default function SignInForm() {
   const [state, formAction] = useFormState(signInFormValidation, initialState);
 
   useEffect(() => {
-    if (state.success) redirect("/");
+    if (state.success) redirect("/dashboard");
   }, [state.success]);
 
   return (
@@ -65,7 +65,7 @@ export default function SignInForm() {
         name="password"
         required
       />
-      <SubmitButton className="btn btn-primary">Sign In</SubmitButton>
+      <SubmitButton className="btn btn-success w-full">Sign In</SubmitButton>
     </form>
   );
 }

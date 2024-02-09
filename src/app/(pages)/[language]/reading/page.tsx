@@ -36,7 +36,8 @@ export default async function ReadingsPage({
 
   if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
   const readingTexts = await getContentByLanguageAndType(language, "Reading");
-  if (!readingTexts.data || readingTexts.error) return <div>ERROR</div>;
+  if (!readingTexts.data || readingTexts.errors.length > 0)
+    return <div>ERROR</div>;
 
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">

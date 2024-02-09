@@ -1,116 +1,81 @@
-"use client";
-import React, { useRef } from "react";
-import Modal from "../Modal";
-import { IFlags, Languages, LanguagesSelectionProps } from "src/types";
-
-import ukFlag from "public/images/flags/english_flag.png";
-import spainFlag from "public/images/flags/spanish_flag.png";
-import franceFlag from "public/images/flags/french_flag.png";
-import italianFlag from "public/images/flags/italian_flag.png";
-import germanFlag from "public/images/flags/german_flag.png";
-import japaneseFlag from "public/images/flags/japanese_flag.png";
-import flagsDisplayGif from "public/images/flags/flags_display.gif";
 import Link from "next/link";
-
-const LanguagesSelection = (props: LanguagesSelectionProps) => (
-  <div className="grid grid-cols-2 gap-4">
-    {props.props.flags.map((v) => (
-      <button
-        onClick={() => props.props.onClick(v)}
-        key={v.language}
-        className="inline-flex mx-auto items-center justify-start"
-      >
-        <div data-tip={v.displayName} className="tooltip">
-          <img src={v.flagUrl.src} alt={""} className="w-32 h-16" />
-        </div>
-      </button>
-    ))}
-  </div>
-);
-
-const flags: IFlags[] = [
-  {
-    language: Languages.english,
-    flagUrl: ukFlag,
-    displayName: "English",
-  },
-  {
-    language: Languages.spanish,
-    flagUrl: spainFlag,
-    displayName: "Spanish",
-  },
-  { language: Languages.german, flagUrl: germanFlag, displayName: "German" },
-  { language: Languages.italian, flagUrl: italianFlag, displayName: "Italian" },
-  {
-    language: Languages.japanese,
-    flagUrl: japaneseFlag,
-    displayName: "Japanese",
-  },
-  { language: Languages.french, flagUrl: franceFlag, displayName: "French" },
-];
-
-const FlagRandomDisplay = () => (
-  <img className="w-20 h-10 ml-3 shadow-sm" src={flagsDisplayGif.src} alt="" />
-);
+import Image from "next/image";
+import { CSSProperties } from "react";
 
 export default function HomeHeader() {
-  const modalRef = useRef<any>(null);
-
-  const onShowModal = () => {
-    modalRef.current!.showModal();
-  };
-
-  const onLanguageSelect = (v: any) => {
-    console.log(v);
-  };
-
   return (
     <>
-      <header className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-32">
-        <div className="relative">
-          <div className="relative mx-auto flex items-center flex-col">
-            <h1 className="text-6xl leading-6 font-black text-center inline-flex items-center">
-              Learn Languages Online <FlagRandomDisplay />
-            </h1>
-            <p className="mt-6 text-xl text-base-content/60 font-light">
-              Learn the desired language you want with online tools and content,
-              all for free!
-            </p>
-            <div className="mt-6 inline-flex items-center w-full flex-col justify-center gap-2 px-4 md:flex-row xl:px-0">
-              <button
-                className="btn md:btn-lg md:btn-wide group px-12 normal-case"
-                onClick={onShowModal}
-              >
-                Select Language
-              </button>
-              <Link
-                className="btn btn-neutral md:btn-lg md:btn-wide group px-12 normal-case"
-                href={"/auth/signin"}
-              >
-                Login
-              </Link>
-            </div>
-            <section className="flex flex-col gap-y-5">
-              <div>
-                <h2>READING</h2>
-                <p>lorem ipsum</p>
-                <a className="link" href="/english/reading">
-                  Go to Reading
-                </a>
-              </div>
-            </section>
+      <div className="relative max-w-[1182px] flex m-auto items-center justify-center flex-row gap-7">
+        <div className="md:w-2/5">
+          <h1 className="text-6xl leading-none font-black title-dashboard">
+            <span className="text-success">
+              {"Learn".split("").map(function (char, index) {
+                const style = {
+                  animationDelay: 0.5 + index / 10 + "s",
+                } as CSSProperties;
+                return (
+                  <span aria-hidden="true" key={index} style={style}>
+                    {char}
+                  </span>
+                );
+              })}
+            </span>
+            <br />
+            <span className="text-info">
+              {"Languages".split("").map(function (char, index) {
+                const style = {
+                  animationDelay: 0.5 + index / 10 + "s",
+                } as CSSProperties;
+                return (
+                  <span aria-hidden="true" key={index} style={style}>
+                    {char}
+                  </span>
+                );
+              })}
+            </span>
+            <br />
+            <span className="text-secondary">
+              {"Online".split("").map(function (char, index) {
+                const style = {
+                  animationDelay: 0.5 + index / 10 + "s",
+                } as CSSProperties;
+                return (
+                  <span aria-hidden="true" key={index} style={style}>
+                    {char}
+                  </span>
+                );
+              })}
+            </span>
+          </h1>
+          <p className="mt-6 text-xl text-base/60 font-light">
+            Learn the desired language you want with online tools and content,
+            all for free!
+          </p>
+          <div className="mt-6 inline-flex items-center w-full gap-2 ">
+            <Link
+              className="btn btn-success flex-1 px-12 normal-case"
+              href="/auth/signup"
+            >
+              Sign Up
+            </Link>
+            <Link
+              className="btn md:btn-wide flex-1 px-12 normal-case"
+              href="/auth/signin"
+            >
+              Sign In
+            </Link>
           </div>
         </div>
-      </header>
-      <Modal
-        props={{
-          ref: modalRef,
-          title: "Select Language",
-          content: (
-            <LanguagesSelection props={{ flags, onClick: onLanguageSelect }} />
-          ),
-        }}
-      />
+        <div className="max-md:hidden md:flex md:w-2/5">
+          <Image
+            src="https://www.katywang.co.uk/img/misc/stickers/lion.gif"
+            alt=""
+            width={80}
+            height={80}
+            className="w-full mask mask-squircle bg-gradient-to-r from-info to-info"
+          />
+        </div>
+      </div>
     </>
   );
 }

@@ -13,6 +13,49 @@ function getRandomColor() {
   return getRandomItemFromArray<string>(colorsList);
 }
 
+function areArraysEqual(arr1: any[], arr2: any[]) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  for (let i = 0; i < arr1.length; i++) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function areArraysEqualUnordered(arr1: any[], arr2: any[]) {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+
+  const sortedArr1 = arr1.slice().sort();
+  const sortedArr2 = arr2.slice().sort();
+
+  for (let i = 0; i < sortedArr1.length; i++) {
+    if (sortedArr1[i] !== sortedArr2[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function parseTimeLevelCompleted(inputTime: string) {
+  // Split the input string into minutes and seconds
+  const [minutes, seconds] = inputTime.split(":").map(Number);
+
+  // Use conditional (ternary) operators to ensure leading zeros
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+  const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+
+  // Return the formatted time
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
+
 const animalsList = [
   "Alligator",
   "Anteater",
@@ -84,13 +127,13 @@ const animalsList = [
 ];
 
 const colorsList = [
-  "red",
-  "blue",
-  "orange",
-  "yellow",
-  "green",
-  "purple",
-  "teal",
+  "#FF5861",
+  "#FFBE00",
+  "#00A96E",
+  "#00B5FF",
+  "#6D0076",
+  "#41ACBA",
+  "#DBBBFF",
 ];
 
 const languagesList = [
@@ -102,6 +145,8 @@ const languagesList = [
   "french",
 ];
 
+const MAX_EXPERIENCE = 250;
+
 const colorsObject: IColorsObject = {
   red: "#FF0044",
   blue: "#006CFE",
@@ -112,6 +157,16 @@ const colorsObject: IColorsObject = {
   teal: "#00D7BF",
 };
 
+const rankFrameColors = [
+  "#5F544E",
+  "#816F40",
+  "#878684",
+  "#D0A940",
+  "#7EC9C9",
+  "#49D983",
+  "#6EA5D8",
+];
+
 export {
   getRandomAnimalName,
   animalsList,
@@ -120,4 +175,9 @@ export {
   getRandomColor,
   colorsObject,
   languagesList,
+  MAX_EXPERIENCE,
+  rankFrameColors,
+  areArraysEqual,
+  areArraysEqualUnordered,
+  parseTimeLevelCompleted,
 };

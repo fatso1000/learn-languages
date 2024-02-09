@@ -17,7 +17,7 @@ export default function SignUpForm() {
   const [state, formAction] = useFormState(signUpFormValidation, initialState);
 
   useEffect(() => {
-    if (state.success) redirect("/auth/signin");
+    if (state.success) redirect("/auth/verify");
   }, [state.success]);
 
   return (
@@ -81,7 +81,7 @@ export default function SignUpForm() {
           required
         />
         <LanguageInput />
-        <SubmitButton className="btn btn-primary">Sign Up</SubmitButton>
+        <SubmitButton className="btn btn-success w-full">Sign Up</SubmitButton>
       </>
     </form>
   );

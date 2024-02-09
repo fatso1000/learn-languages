@@ -1,19 +1,21 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { CustomError, IUser, UserPATCH } from "types/apiTypes";
 import {
-  generateSuccessMessage,
+  onSuccessRequest,
   onThrowError,
   onValidationError,
 } from "../../../apiService";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: number } }
 ) {
   try {
+    verifyUserAuth(req);
     const id = Number(params.id);
     const body: IUser = await req.json();
     const bodyType = new UserPATCH(body);
@@ -30,18 +32,6 @@ export async function PATCH(
       throw onValidationError(validation);
     }
 
-    /* const fullBody = {
-      name: body.name,
-      biography: body.biography,
-      ubication: body.ubication,
-      profile: {
-        update: {
-          animal_name: body.profile?.animal_name,
-          color: body.profile?.color,
-        },
-      },
-    }; */
-
     const request = await prisma.user.update({
       data: {
         name: body.name,
@@ -52,13 +42,6 @@ export async function PATCH(
             create: {
               animal_name: body.profile?.animal_name || "",
               color: body.profile?.color || "",
-              language: {
-                connect: {
-                  id: body.profile?.language
-                    ? Number(body.profile.language)
-                    : 1,
-                },
-              },
             },
             update: {
               animal_name: body.profile?.animal_name,
@@ -68,14 +51,9 @@ export async function PATCH(
         },
       },
       where: { id: id },
-      select: {
-        name: true,
-        email: true,
-        biography: true,
-        ubication: true,
-        profile: true,
-        id: true,
-        password: true,
+      include: {
+        profile: { include: { languages: { include: { details: true } } } },
+        rank: { include: { rank: true } },
       },
     });
     if (!request)
@@ -84,15 +62,11 @@ export async function PATCH(
         msg: "User not found.",
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
-
-    return NextResponse.json(
-      generateSuccessMessage({
-        httpStatusCode: HttpStatusCode.OK,
-        data: { user: request },
-        message: "User logged in successfully.",
-      }),
-      { status: HttpStatusCode.OK }
-    );
+    return onSuccessRequest({
+      httpStatusCode: HttpStatusCode.OK,
+      data: { user: request },
+      message: "User logged in successfully.",
+    });
   } catch (error: any) {
     console.log(error);
     return onThrowError(error);

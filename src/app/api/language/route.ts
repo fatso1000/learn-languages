@@ -4,10 +4,11 @@ import prisma from "src/app/config/db";
 import { CustomError, ILanguage, LanguagePOST } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import { onThrowError } from "../apiService";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function POST(req: NextRequest) {
   try {
-    // verifyUserAuth(req);
+    verifyUserAuth(req);
     let body: ILanguage = await req.json();
     const bodyType = new LanguagePOST(body);
 
@@ -33,6 +34,15 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(request);
   } catch (error: any) {
+    return onThrowError(error);
+  }
+}
+
+export async function GET() {
+  try {
+    const request = await prisma.languages.findMany();
+    return NextResponse.json({ request });
+  } catch (error) {
     return onThrowError(error);
   }
 }

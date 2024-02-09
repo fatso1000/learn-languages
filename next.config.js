@@ -2,9 +2,13 @@
 const nextConfig = {
   experimental: {
     serverActions: true,
+    serverComponentsExternalPackages: [
+      "@react-email/components",
+      "@react-email/render",
+    ],
   },
   images: {
-    domains: ["lolg-cdn.porofessor.gg"],
+    domains: ["drive.google.com", "www.katywang.co.uk"],
   },
 };
 

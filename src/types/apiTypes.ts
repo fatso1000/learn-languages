@@ -1,5 +1,6 @@
 import { IsBoolean, IsEmail, IsOptional, Length } from "class-validator";
 import { HttpStatusCode } from "./httpStatusCode";
+import { ExerciseType } from "@prisma/client";
 
 export class BlogPOST {
   @Length(1)
@@ -76,6 +77,21 @@ export class LanguagePOST {
 
 export interface ILanguage {
   name: string;
+}
+// RANK
+export class RankPOST {
+  public name: string;
+  public distintive: string;
+
+  constructor({ name, distintive }: IRank) {
+    this.name = name;
+    this.distintive = distintive;
+  }
+}
+
+export interface IRank {
+  name: string;
+  distintive: string;
 }
 
 // READINGS
@@ -213,6 +229,16 @@ export interface IUserLogin {
   password: string;
 }
 
+export interface ITokenUser {
+  time: Date;
+  email: string;
+  password: string;
+  name: string;
+  language: string;
+  iat: number;
+  exp: number;
+}
+
 export interface IUserSignUp {
   email: string;
   password: string;
@@ -244,6 +270,51 @@ export interface IUserLoginResponse {
   };
   randomKey: string;
 }
+
+export interface ILevelBody {
+  id: number;
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: string[];
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+}
+
+export interface ILevelReturn {
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: IChoice[];
+  correctIndices?: number[];
+  correctIndex?: number;
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+  tts: string;
+  displayTokens?: IDisplayToken[];
+}
+
+export interface IChoice {
+  text: string;
+  tts?: string;
+}
+
+export interface IDisplayToken {
+  text: string;
+  isBlank: boolean;
+}
+
+// ERROR ----------------------
 
 export class CustomError extends Error {
   private httpStatusCode: HttpStatusCode;

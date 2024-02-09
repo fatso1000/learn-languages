@@ -1,8 +1,8 @@
 import { validate } from "class-validator";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { CustomError, IUserLogin, UserLoginPOST } from "types/apiTypes";
 import {
-  generateSuccessMessage,
+  onSuccessRequest,
   onThrowError,
   onValidationError,
 } from "../../apiService";
@@ -11,7 +11,7 @@ import prisma from "src/app/config/db";
 import { logInUser } from "shared/apiShared";
 import bcrypt from "bcrypt";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body: IUserLogin = await req.json();
     const bodyType = new UserLoginPOST(body);
@@ -23,22 +23,24 @@ export async function POST(req: Request, res: Response) {
 
     const request = await prisma.user.findFirst({
       where: { email: body.email },
-      select: {
-        name: true,
-        email: true,
-        biography: true,
-        ubication: true,
-        profile: true,
-        id: true,
-        password: true,
+      include: {
+        profile: { include: { languages: { include: { details: true } } } },
         rank: { include: { rank: true } },
       },
     });
+
     if (!request)
       throw new CustomError({
         errors: [],
         msg: "User not found.",
         httpStatusCode: HttpStatusCode.NOT_FOUND,
+      });
+
+    if (!request?.active)
+      throw new CustomError({
+        errors: [],
+        msg: "User not verified.",
+        httpStatusCode: HttpStatusCode.UNAUTHORIZED,
       });
 
     const isMatch = bcrypt.compareSync(body.password, request.password);
@@ -48,16 +50,13 @@ export async function POST(req: Request, res: Response) {
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
       });
 
-    const jwt = logInUser(body);
+    const { password, ...removePassword } = request;
+    const jwt = logInUser(removePassword);
 
-    return NextResponse.json(
-      generateSuccessMessage({
-        httpStatusCode: HttpStatusCode.OK,
-        data: { token: jwt, user: request },
-        message: "User logged in successfully.",
-      }),
-      { status: HttpStatusCode.OK }
-    );
+    return onSuccessRequest({
+      httpStatusCode: HttpStatusCode.CREATED,
+      data: { token: jwt, user: removePassword },
+    });
   } catch (error: any) {
     return onThrowError(error);
   }
