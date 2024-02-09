@@ -263,7 +263,7 @@ export interface ISection {
   id: number;
   title: string;
   description: string | null;
-  bg_color: string | null;
+  bg_color: "success" | "accent" | "primary" | "info" | "secondary" | "error";
   img_src: string | null;
   courseId: number;
   user_courses_id: null;

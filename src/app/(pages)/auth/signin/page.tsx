@@ -27,7 +27,7 @@ export default function SignIn() {
                 Forgot password?
               </Link>
               <div className="divider"></div>
-              <Link href="/signup" className="btn w-full">
+              <Link href="/auth/signup" className="btn w-full">
                 Sign Up
               </Link>
             </div>

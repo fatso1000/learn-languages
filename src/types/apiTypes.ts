@@ -218,7 +218,7 @@ export interface IUser {
   ubication?: string;
   profile?: {
     animal_name?: string;
-    color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    color?: string;
     language?: number;
   };
 }
@@ -244,15 +244,7 @@ export interface IUserSignUp {
   password: string;
   name?: string;
   language: number;
-  profile_color:
-    | string
-    | "red"
-    | "blue"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "purple"
-    | "teal";
+  profile_color: string;
 }
 
 export interface IUserLogout {
