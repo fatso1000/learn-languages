@@ -148,13 +148,13 @@ const languagesList = [
 const MAX_EXPERIENCE = 250;
 
 const colorsObject: IColorsObject = {
-  red: "#FF0044",
-  blue: "#006CFE",
-  yellow: "#FFCC41",
-  purple: "#B476FB",
-  orange: "#FE9D24",
-  green: "#29B278",
-  teal: "#00D7BF",
+  "#FF5861": "red",
+  "#00B5FF": "blue",
+  "#FFBE00": "yellow",
+  "#6D0076": "purple",
+  "#41ACBA": "teal",
+  "#00A96E": "green",
+  "#DBBBFF": "lavander",
 };
 
 const rankFrameColors = [
