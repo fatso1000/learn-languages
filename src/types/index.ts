@@ -184,7 +184,7 @@ export interface SelectedLanguageDetail {
 
 export interface IconProps {
   animal: string;
-  color: string[];
+  color: string;
 }
 
 export interface IUserCourse {
@@ -212,16 +212,16 @@ export interface IExercise {
   type: string;
   prompt: null | string;
   choices: IChoice[];
-  compactTranslations: string[];
-  solutionTranslation: null | string;
-  correctSolutions: string[];
-  correctAnswers: string[];
-  displayTokens: DisplayToken[];
-  correctIndices: number[];
-  correctIndex: number | null;
+  compact_translations: string[];
+  solution_translation: null | string;
+  correct_solutions: string[];
+  correct_answers: string[];
+  display_tokens: DisplayToken[];
+  correct_indices: number[];
+  correct_index: number | null;
   tts: string;
-  sourceLanguage: Languages;
-  targetLanguage: Languages;
+  source_language: Languages;
+  target_language: Languages;
   unit_id: number;
   hasPreviousError?: boolean;
 }
@@ -242,13 +242,13 @@ export enum ExercisesType {
 
 export interface onCheckAnswerProps {
   type: string;
-  correctAnswers: string[];
-  selectedOption: any;
-  compactTranslations?: string[];
-  solutionTranslation?: string;
-  correctSolutions?: string[];
+  correct_answers: string[];
+  selected_option: any;
+  compact_translations?: string[];
+  solution_translation?: string;
+  correct_solutions?: string[];
   prompt?: string;
-  correctIndices?: number[];
+  correct_indices?: number[];
 }
 
 export interface ICourse {
@@ -263,7 +263,7 @@ export interface ISection {
   id: number;
   title: string;
   description: string | null;
-  bg_color: string | null;
+  bg_color: "success" | "accent" | "primary" | "info" | "secondary" | "error";
   img_src: string | null;
   courseId: number;
   user_courses_id: null;

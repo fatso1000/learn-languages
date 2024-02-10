@@ -69,14 +69,17 @@ export interface IReminderAPI {
 // LANGUAGE
 export class LanguagePOST {
   public name: string;
+  public short_name: string;
 
-  constructor({ name }: ILanguage) {
+  constructor({ name, short_name }: ILanguage) {
     this.name = name;
+    this.short_name = short_name;
   }
 }
 
 export interface ILanguage {
   name: string;
+  short_name: string;
 }
 // RANK
 export class RankPOST {
@@ -218,7 +221,7 @@ export interface IUser {
   ubication?: string;
   profile?: {
     animal_name?: string;
-    color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    color?: string;
     language?: number;
   };
 }
@@ -244,15 +247,7 @@ export interface IUserSignUp {
   password: string;
   name?: string;
   language: number;
-  profile_color:
-    | string
-    | "red"
-    | "blue"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "purple"
-    | "teal";
+  profile_color: string;
 }
 
 export interface IUserLogout {

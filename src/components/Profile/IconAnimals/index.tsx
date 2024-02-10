@@ -25,7 +25,7 @@ export default function IconAnimals(props: {
             />
             <div className="border-2 rounded-full">
               <AnimalComponent
-                color={selectedIcon.color[0]}
+                color={selectedIcon.color}
                 animalName={animal}
                 size="65px"
               />

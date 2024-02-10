@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         email: body.email,
         password: body.password,
         name,
-        UserContent: { create: { content: { connect: [] } } },
+        user_content: { create: { content: { connect: [] } } },
         profile: {
           create: {
             color: randomColor,
@@ -69,7 +69,15 @@ export async function POST(req: NextRequest) {
           },
         },
         user_courses: {
-          create: { course: { connect: { language_id: +body.language + 1 } } },
+          create: {
+            course: {
+              connect: {
+                language_id: +body.language + 1,
+                // CAMBIAR EN SIGUIENTE UPDATE
+                target_language_id: 2,
+              },
+            },
+          },
         },
       },
     });

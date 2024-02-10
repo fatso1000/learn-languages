@@ -70,37 +70,37 @@ export default function LevelManager({
   }, []);
 
   const onCheckAnswer = ({
-    correctAnswers,
-    selectedOption,
+    correct_answers,
+    selected_option,
     type,
-    compactTranslations,
-    solutionTranslation,
+    compact_translations,
+    solution_translation,
   }: onCheckAnswerProps) => {
     switch (type) {
       case "Translation":
-        if (areArraysEqual(correctAnswers, selectedOption)) {
+        if (areArraysEqual(correct_answers, selected_option)) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correctAnswers.join(" "));
+          onExerciseFail(correct_answers.join(" "));
         }
         break;
       case "ChooseCorrect":
-        if (correctAnswers[0] === selectedOption) {
+        if (correct_answers[0] === selected_option) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correctAnswers[1]);
+          onExerciseFail(correct_answers[1]);
         }
         break;
       case "CompleteSentence":
         // AGREGAR LOGICA PARA QUE PUEDA TOMAR MAS DE UNA OPCION CORRECTA
-        if (correctAnswers[0] === selectedOption) {
+        if (correct_answers[0] === selected_option) {
           onExerciseSuccess();
         } else {
-          onExerciseFail(correctAnswers[1]);
+          onExerciseFail(correct_answers[1]);
         }
         break;
       case "WriteDown":
-        const lowerCaseTranslations = [...compactTranslations!].map(
+        const lowerCaseTranslations = [...compact_translations!].map(
             (translation) => {
               return translation
                 .toLowerCase()
@@ -111,7 +111,7 @@ export default function LevelManager({
                 .trim();
             }
           ),
-          userInput = selectedOption
+          userInput = selected_option
             .join(" ")
             .toLowerCase()
             .replace(/[^\w\s]|_/g, "")
@@ -122,12 +122,12 @@ export default function LevelManager({
 
         if (lowerCaseTranslations.includes(userInput)) {
           onExerciseSuccess(
-            !compactTranslations!.includes(userInput)
-              ? compactTranslations![0]
+            !compact_translations!.includes(userInput)
+              ? compact_translations![0]
               : undefined
           );
         } else {
-          onExerciseFail(correctAnswers.join(" "), solutionTranslation);
+          onExerciseFail(correct_answers.join(" "), solution_translation);
         }
         break;
       case "MultipleChoice":

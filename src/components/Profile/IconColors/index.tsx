@@ -17,7 +17,7 @@ export default function IconColors(props: {
             tabIndex={0}
             className="btn btn-ghost btn-circle avatar rounded-[50%] h-[40px] w-[40px] min-h-[40px] p-0"
             style={{
-              backgroundColor: `${selectedIcon.color[1]}`,
+              backgroundColor: `${selectedIcon.color}`,
             }}
           ></label>
 
@@ -36,17 +36,15 @@ export default function IconColors(props: {
                     name="color"
                     value={color}
                     className="invisible h-0 w-0 radio-input color-select"
-                    checked={
-                      selectedIcon.color[0] === color.toLocaleLowerCase()
-                    }
+                    checked={selectedIcon.color === color}
                     onChange={handleColor}
                   />
                   <div
-                    style={{ backgroundColor: `${colorsObject[color]}` }}
+                    style={{ backgroundColor: color }}
                     className="rounded-[50%] h-6 w-6 p-0 cursor-pointer"
                   />
                   <span className="text-[0.7rem] font-bold">
-                    {color.toUpperCase()}
+                    {colorsObject[color].toUpperCase()}
                   </span>
                 </label>
               );

@@ -27,15 +27,15 @@ const useMultiAudio = (urls: string[]) => {
 
 export function ChooseCorrectExercise(props: ExercisesProps) {
   const { data, onCheckAnswer, isMessageActive, onExerciseFail } = props;
-  const { type, prompt, choices, tts, correctIndex, hasPreviousError } = data;
+  const { type, prompt, choices, tts, correct_index, hasPreviousError } = data;
   const [selectedOption, setSelectedOption] = useState<undefined | string>(
     undefined
   );
   const answerObj = {
-    correctAnswers: [choices[correctIndex!].text, prompt!],
+    correct_answers: [choices[correct_index!].text, prompt!],
     prompt: prompt!,
     type,
-    selectedOption,
+    selected_option: selectedOption,
   };
   const [toggle] = useMultiAudio(
     [...choices!].map((choice) => choice.tts as string)

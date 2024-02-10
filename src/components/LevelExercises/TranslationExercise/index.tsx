@@ -29,24 +29,24 @@ export function TranslationExercise(props: ExercisesProps) {
   const { data, onCheckAnswer, onExerciseFail, isMessageActive } = props;
   const {
     choices,
-    compactTranslations,
-    correctAnswers,
-    correctSolutions,
+    compact_translations,
+    correct_answers,
+    correct_solutions,
     prompt,
     type,
-    correctIndices,
+    correct_indices,
     tts,
     hasPreviousError,
   } = data;
   const [selectedOptions, setSelectedOptions] = useState<IChoice[]>([]);
   const [unusedOptions, setUnusedOptions] = useState<IChoice[]>([]);
   const answerObj = {
-    correctAnswers,
-    correctSolutions,
-    compactTranslations,
-    correctIndices,
+    correct_answers,
+    correct_solutions,
+    compact_translations,
+    correct_indices,
     type,
-    selectedOption: selectedOptions.map((option) => option.text),
+    selected_option: selectedOptions.map((option) => option.text),
   };
   const [toggle] = useMultiAudio(
     [...choices!].map((choice) => choice.tts as string)
@@ -126,7 +126,7 @@ export function TranslationExercise(props: ExercisesProps) {
           {!isMessageActive && (
             <button
               className="btn"
-              onClick={() => onExerciseFail(correctAnswers[0])}
+              onClick={() => onExerciseFail(correct_answers[0])}
             >
               Skip
             </button>
