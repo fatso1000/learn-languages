@@ -36,8 +36,13 @@ export async function GET(req: NextRequest) {
         },
       },
     });
-    
-    if (!request) return new Error();
+
+    if (!request)
+      throw new CustomError({
+        errors: [],
+        msg: "Course not found",
+        httpStatusCode: HttpStatusCode.NOT_FOUND,
+      });
 
     const groupedData = groupBy(request.completed_levels, "unitId");
     request.course.sections = [...request.course.sections].map((section) => {
@@ -62,16 +67,6 @@ export async function GET(req: NextRequest) {
       httpStatusCode: 200,
       data: request,
     });
-  } catch (error) {
-    return onThrowError(error);
-  }
-}
-
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    // const request = await prisma.courses.create({ data: {} });
-    return onSuccessRequest({ httpStatusCode: 200, data: {} });
   } catch (error) {
     return onThrowError(error);
   }
