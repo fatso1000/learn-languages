@@ -1,5 +1,7 @@
 import { StaticImageData } from "next/image";
-import { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import { InputHTMLAttributes, RefObject, TextareaHTMLAttributes } from "react";
+import { IChoice } from "./apiTypes";
+import { ExerciseDifficulty } from "@prisma/client";
 
 export enum Languages {
   spanish = "spanish",
@@ -11,13 +13,11 @@ export enum Languages {
 }
 
 export interface ModalProps {
-  props: {
-    title: string;
-    content: any;
-    onSuccess?: () => void;
-    onClose?: () => void;
-    ref: React.MutableRefObject<any>;
-  };
+  title: string;
+  children: JSX.Element;
+  onSuccess?: () => void;
+  onClose?: () => void;
+  modalRef: RefObject<HTMLDialogElement>;
 }
 
 export interface IFlags {
@@ -184,5 +184,136 @@ export interface SelectedLanguageDetail {
 
 export interface IconProps {
   animal: string;
-  color: string[];
+  color: string;
+}
+
+export interface IUserCourse {
+  id: number;
+  course_id: number;
+  user_id: number;
+  completed_levels: ILevel[];
+  course: ICourse;
+}
+
+export interface ILevel {
+  id: number;
+  title: string;
+  description: string | null;
+  unitId: number;
+  userCoursesId: number | null;
+  difficulty: ExerciseDifficulty;
+  color: string;
+  state: LevelState;
+}
+
+export interface IExercise {
+  id: number;
+  difficulty: ExerciseDifficulty;
+  type: string;
+  prompt: null | string;
+  choices: IChoice[];
+  compact_translations: string[];
+  solution_translation: null | string;
+  correct_solutions: string[];
+  correct_answers: string[];
+  display_tokens: DisplayToken[];
+  correct_indices: number[];
+  correct_index: number | null;
+  tts: string;
+  source_language: Languages;
+  target_language: Languages;
+  unit_id: number;
+  hasPreviousError?: boolean;
+}
+
+export interface DisplayToken {
+  text: string;
+  isBlank: boolean;
+}
+
+export enum ExercisesType {
+  TRANSLATION = "Translation",
+  CHOOSE_CORRECT = "ChooseCorrect",
+  COMPLETE_SENTENCE = "CompleteSentence",
+  WRITE_DOWN = "WriteDown",
+  MULTIPLE_CHOICE = "MultipleChoice",
+  LISTENING = "Listening",
+}
+
+export interface onCheckAnswerProps {
+  type: string;
+  correct_answers: string[];
+  selected_option: any;
+  compact_translations?: string[];
+  solution_translation?: string;
+  correct_solutions?: string[];
+  prompt?: string;
+  correct_indices?: number[];
+}
+
+export interface ICourse {
+  id: number;
+  title: string;
+  description: string;
+  language_id: number;
+  sections: ISection[];
+}
+
+export interface ISection {
+  id: number;
+  title: string;
+  description: string | null;
+  bg_color: "success" | "accent" | "primary" | "info" | "secondary" | "error";
+  img_src: string | null;
+  courseId: number;
+  user_courses_id: null;
+  units: IUnit[];
+}
+
+export interface IUnit {
+  id: number;
+  title: string;
+  description: string | null;
+  sectionId: number;
+  user_courses_id: number | null;
+  levels: ILevel[];
+  completed: boolean;
+  completed_levels: number;
+}
+
+export interface ExercisesProps {
+  data: IExercise;
+  onCheckAnswer: (values: onCheckAnswerProps) => void;
+  isMessageActive: boolean;
+  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+}
+
+export enum LevelState {
+  COMPLETED = "completed",
+  STUDYING = "studying",
+  FIRST_BLOCKED = "first_blocked",
+  BLOCKED = "blocked",
+}
+
+export interface LevelIconProps {
+  state: LevelState;
+}
+
+export interface LevelProps {
+  level: ILevel;
+  sectionId: string;
+  unitId: number;
+  row: number;
+  state: LevelState;
+}
+
+export interface UnitProps {
+  sectionId: string;
+  unit: IUnit;
+}
+
+export interface LevelBubbleProps {
+  state: LevelState;
+  href: string;
+  difficulty?: ExerciseDifficulty;
 }

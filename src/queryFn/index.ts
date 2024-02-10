@@ -1,4 +1,5 @@
 import { handleCustomApiRequest } from "src/shared/clientShared";
+import { IExercise, ILevel, ISection, IUserCourse } from "src/types";
 
 const getUrl =
   process.env.NODE_ENV === "production"
@@ -12,6 +13,37 @@ const getContentById = async <T>(id: string) => {
 const getContentByLanguageAndType = async (name: string, type: string) => {
   return await handleCustomApiRequest(
     getUrl + "/api/content?language=" + name + "&type=" + type,
+    "GET"
+  );
+};
+
+const getCourses = async () => {
+  return await handleCustomApiRequest<IUserCourse>(
+    getUrl + "/api/course",
+    "GET"
+  );
+};
+
+const getSectionUnits = async (section_id: string) => {
+  return await handleCustomApiRequest<ISection>(
+    getUrl + "/api/course/section?id=" + section_id,
+    "GET"
+  );
+};
+
+const getExercises = async (
+  difficulty: string,
+  unit_id: string,
+  lang: string
+) => {
+  return await handleCustomApiRequest<IExercise[]>(
+    getUrl +
+      "/api/course/level?difficulty=" +
+      difficulty +
+      "&unit_id=" +
+      unit_id +
+      "&lang=" +
+      lang,
     "GET"
   );
 };
@@ -75,5 +107,8 @@ export {
   signupUser,
   editUserProfile,
   getDashboardData,
+  getCourses,
+  getSectionUnits,
+  getExercises,
   authorizeUser,
 };

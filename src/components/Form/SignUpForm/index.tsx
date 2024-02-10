@@ -81,7 +81,7 @@ export default function SignUpForm() {
           required
         />
         <LanguageInput />
-        <SubmitButton className="btn btn-primary">Sign Up</SubmitButton>
+        <SubmitButton className="btn btn-success w-full">Sign Up</SubmitButton>
       </>
     </form>
   );

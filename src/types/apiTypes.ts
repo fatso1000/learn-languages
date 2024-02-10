@@ -1,5 +1,6 @@
 import { IsBoolean, IsEmail, IsOptional, Length } from "class-validator";
 import { HttpStatusCode } from "./httpStatusCode";
+import { ExerciseType } from "@prisma/client";
 
 export class BlogPOST {
   @Length(1)
@@ -68,14 +69,17 @@ export interface IReminderAPI {
 // LANGUAGE
 export class LanguagePOST {
   public name: string;
+  public short_name: string;
 
-  constructor({ name }: ILanguage) {
+  constructor({ name, short_name }: ILanguage) {
     this.name = name;
+    this.short_name = short_name;
   }
 }
 
 export interface ILanguage {
   name: string;
+  short_name: string;
 }
 // RANK
 export class RankPOST {
@@ -217,7 +221,7 @@ export interface IUser {
   ubication?: string;
   profile?: {
     animal_name?: string;
-    color?: "red" | "blue" | "orange" | "yellow" | "green" | "purple" | "teal";
+    color?: string;
     language?: number;
   };
 }
@@ -243,15 +247,7 @@ export interface IUserSignUp {
   password: string;
   name?: string;
   language: number;
-  profile_color:
-    | string
-    | "red"
-    | "blue"
-    | "orange"
-    | "yellow"
-    | "green"
-    | "purple"
-    | "teal";
+  profile_color: string;
 }
 
 export interface IUserLogout {
@@ -269,6 +265,51 @@ export interface IUserLoginResponse {
   };
   randomKey: string;
 }
+
+export interface ILevelBody {
+  id: number;
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: string[];
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+}
+
+export interface ILevelReturn {
+  difficulty: string;
+  type: ExerciseType;
+  unitId: number;
+  prompt?: string;
+  correctSolutions?: string[];
+  correctAnswers?: string[];
+  compactTranslations?: string[];
+  choices?: IChoice[];
+  correctIndices?: number[];
+  correctIndex?: number;
+  sourceLanguage: string;
+  targetLanguage: string;
+  solutionTranslation?: string;
+  tts: string;
+  displayTokens?: IDisplayToken[];
+}
+
+export interface IChoice {
+  text: string;
+  tts?: string;
+}
+
+export interface IDisplayToken {
+  text: string;
+  isBlank: boolean;
+}
+
+// ERROR ----------------------
 
 export class CustomError extends Error {
   private httpStatusCode: HttpStatusCode;

@@ -12,13 +12,13 @@ export default function EditIcon(props: {
 
   const [selectedIcon, setSelectedIcon] = useState<IconProps>({
     animal: defaultAnimalName,
-    color: [defaultNameColor, colorsObject[defaultNameColor]],
+    color: defaultNameColor,
   });
 
   const handleColor = (event: { target: { value: string } }) => {
     setSelectedIcon({
       ...selectedIcon,
-      color: [event.target.value, colorsObject[event.target.value]],
+      color: event.target.value,
     });
   };
 
@@ -30,7 +30,8 @@ export default function EditIcon(props: {
   };
 
   return (
-    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden">
+    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden px-4 md:px-8 mt-8">
+      <div className="divider"></div>
       <IconColors selectedIcon={selectedIcon} handleColor={handleColor} />
       <IconAnimals selectedIcon={selectedIcon} handleAnimal={handleAnimal} />
     </section>
