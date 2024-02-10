@@ -13,7 +13,7 @@ export async function generateMetadata({
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
 
   return {
-    title: "Search Blog By Name - Matias Benitez Blog",
+    title: "English Reading: ",
     description: "",
   };
 }
@@ -29,19 +29,18 @@ export default async function ReadingPageById({
     return <div>ERROR</div>;
 
   return (
-    <main className="mt-4 max-w-[1100px] m-auto px-4 sm:px-4 md:px-16 grid grid-cols-2 gap-x-4">
-      <header className="mb-4">
+    <main className="mt-4 max-w-[1100px] m-auto px-4 md:px-8 grid grid-cols-1 xl:grid-cols-2 gap-x-4 xl:border-2">
+      <header className="mb-4 border-b-2 xl:border-0">
         <Link className="btn" href={"/english/reading"}>
           <IoArrowBack />
-          Go back
         </Link>
-        <h1 className="text-2xl mt-6 mb-3 leading-6 font-black">
+        <h1 className="text-5xl mt-6 mb-3 font-black">
           {readingText.data.title}
         </h1>
         {readingText.data.details &&
           readingText.data.details[0] &&
           readingText.data.details[0].text.map((v: string, i: number) => (
-            <p key={i} className="mb-6">
+            <p key={i} className="mb-4 font-medium">
               {v}
             </p>
           ))}
@@ -49,7 +48,7 @@ export default async function ReadingPageById({
       <section className="flex flex-col">
         <div className="h-12">
           <h2 className="text-2xl font-black">Answer this questions!</h2>
-          <p>Select the right answer :)</p>
+          <span>Select the right answer :)</span>
         </div>
         <QA
           values={

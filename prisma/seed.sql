@@ -17,23 +17,23 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+-- Name: public; Type: SCHEMA; Schema: -; Owner: "default"
 --
 
 -- *not* creating schema, since initdb creates it
 
 
-ALTER SCHEMA public OWNER TO postgres;
+ALTER SCHEMA public OWNER TO "default";
 
 --
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: "default"
 --
 
 COMMENT ON SCHEMA public IS '';
 
 
 --
--- Name: ExerciseDifficulty; Type: TYPE; Schema: public; Owner: postgres
+-- Name: ExerciseDifficulty; Type: TYPE; Schema: public; Owner: "default"
 --
 
 CREATE TYPE public."ExerciseDifficulty" AS ENUM (
@@ -43,10 +43,10 @@ CREATE TYPE public."ExerciseDifficulty" AS ENUM (
 );
 
 
-ALTER TYPE public."ExerciseDifficulty" OWNER TO postgres;
+ALTER TYPE public."ExerciseDifficulty" OWNER TO "default";
 
 --
--- Name: ExerciseType; Type: TYPE; Schema: public; Owner: postgres
+-- Name: ExerciseType; Type: TYPE; Schema: public; Owner: "default"
 --
 
 CREATE TYPE public."ExerciseType" AS ENUM (
@@ -59,10 +59,10 @@ CREATE TYPE public."ExerciseType" AS ENUM (
 );
 
 
-ALTER TYPE public."ExerciseType" OWNER TO postgres;
+ALTER TYPE public."ExerciseType" OWNER TO "default";
 
 --
--- Name: Levels; Type: TYPE; Schema: public; Owner: postgres
+-- Name: Levels; Type: TYPE; Schema: public; Owner: "default"
 --
 
 CREATE TYPE public."Levels" AS ENUM (
@@ -75,10 +75,10 @@ CREATE TYPE public."Levels" AS ENUM (
 );
 
 
-ALTER TYPE public."Levels" OWNER TO postgres;
+ALTER TYPE public."Levels" OWNER TO "default";
 
 --
--- Name: Types; Type: TYPE; Schema: public; Owner: postgres
+-- Name: Types; Type: TYPE; Schema: public; Owner: "default"
 --
 
 CREATE TYPE public."Types" AS ENUM (
@@ -88,14 +88,14 @@ CREATE TYPE public."Types" AS ENUM (
 );
 
 
-ALTER TYPE public."Types" OWNER TO postgres;
+ALTER TYPE public."Types" OWNER TO "default";
 
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: Content; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Content; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Content" (
@@ -107,10 +107,10 @@ CREATE TABLE public."Content" (
 );
 
 
-ALTER TABLE public."Content" OWNER TO postgres;
+ALTER TABLE public."Content" OWNER TO "default";
 
 --
--- Name: ContentDetails; Type: TABLE; Schema: public; Owner: postgres
+-- Name: ContentDetails; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."ContentDetails" (
@@ -125,10 +125,10 @@ CREATE TABLE public."ContentDetails" (
 );
 
 
-ALTER TABLE public."ContentDetails" OWNER TO postgres;
+ALTER TABLE public."ContentDetails" OWNER TO "default";
 
 --
--- Name: ContentDetails_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: ContentDetails_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."ContentDetails_id_seq"
@@ -140,17 +140,17 @@ CREATE SEQUENCE public."ContentDetails_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."ContentDetails_id_seq" OWNER TO postgres;
+ALTER TABLE public."ContentDetails_id_seq" OWNER TO "default";
 
 --
--- Name: ContentDetails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: ContentDetails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."ContentDetails_id_seq" OWNED BY public."ContentDetails".id;
 
 
 --
--- Name: Content_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Content_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Content_id_seq"
@@ -162,17 +162,17 @@ CREATE SEQUENCE public."Content_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Content_id_seq" OWNER TO postgres;
+ALTER TABLE public."Content_id_seq" OWNER TO "default";
 
 --
--- Name: Content_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Content_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Content_id_seq" OWNED BY public."Content".id;
 
 
 --
--- Name: Courses; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Courses; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Courses" (
@@ -185,10 +185,10 @@ CREATE TABLE public."Courses" (
 );
 
 
-ALTER TABLE public."Courses" OWNER TO postgres;
+ALTER TABLE public."Courses" OWNER TO "default";
 
 --
--- Name: Courses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Courses_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Courses_id_seq"
@@ -200,17 +200,17 @@ CREATE SEQUENCE public."Courses_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Courses_id_seq" OWNER TO postgres;
+ALTER TABLE public."Courses_id_seq" OWNER TO "default";
 
 --
--- Name: Courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Courses_id_seq" OWNED BY public."Courses".id;
 
 
 --
--- Name: Exercise; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Exercise; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Exercise" (
@@ -233,10 +233,10 @@ CREATE TABLE public."Exercise" (
 );
 
 
-ALTER TABLE public."Exercise" OWNER TO postgres;
+ALTER TABLE public."Exercise" OWNER TO "default";
 
 --
--- Name: Exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Exercise_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Exercise_id_seq"
@@ -248,17 +248,17 @@ CREATE SEQUENCE public."Exercise_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Exercise_id_seq" OWNER TO postgres;
+ALTER TABLE public."Exercise_id_seq" OWNER TO "default";
 
 --
--- Name: Exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Exercise_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Exercise_id_seq" OWNED BY public."Exercise".id;
 
 
 --
--- Name: Historical; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Historical; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Historical" (
@@ -269,10 +269,10 @@ CREATE TABLE public."Historical" (
 );
 
 
-ALTER TABLE public."Historical" OWNER TO postgres;
+ALTER TABLE public."Historical" OWNER TO "default";
 
 --
--- Name: Historical_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Historical_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Historical_id_seq"
@@ -284,17 +284,17 @@ CREATE SEQUENCE public."Historical_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Historical_id_seq" OWNER TO postgres;
+ALTER TABLE public."Historical_id_seq" OWNER TO "default";
 
 --
--- Name: Historical_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Historical_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Historical_id_seq" OWNED BY public."Historical".id;
 
 
 --
--- Name: Languages; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Languages; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Languages" (
@@ -304,10 +304,10 @@ CREATE TABLE public."Languages" (
 );
 
 
-ALTER TABLE public."Languages" OWNER TO postgres;
+ALTER TABLE public."Languages" OWNER TO "default";
 
 --
--- Name: Languages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Languages_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Languages_id_seq"
@@ -319,17 +319,17 @@ CREATE SEQUENCE public."Languages_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Languages_id_seq" OWNER TO postgres;
+ALTER TABLE public."Languages_id_seq" OWNER TO "default";
 
 --
--- Name: Languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Languages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Languages_id_seq" OWNED BY public."Languages".id;
 
 
 --
--- Name: Level; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Level; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Level" (
@@ -342,10 +342,10 @@ CREATE TABLE public."Level" (
 );
 
 
-ALTER TABLE public."Level" OWNER TO postgres;
+ALTER TABLE public."Level" OWNER TO "default";
 
 --
--- Name: Level_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Level_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Level_id_seq"
@@ -357,17 +357,17 @@ CREATE SEQUENCE public."Level_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Level_id_seq" OWNER TO postgres;
+ALTER TABLE public."Level_id_seq" OWNER TO "default";
 
 --
--- Name: Level_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Level_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Level_id_seq" OWNED BY public."Level".id;
 
 
 --
--- Name: PendingContent; Type: TABLE; Schema: public; Owner: postgres
+-- Name: PendingContent; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."PendingContent" (
@@ -379,10 +379,10 @@ CREATE TABLE public."PendingContent" (
 );
 
 
-ALTER TABLE public."PendingContent" OWNER TO postgres;
+ALTER TABLE public."PendingContent" OWNER TO "default";
 
 --
--- Name: PendingContent_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: PendingContent_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."PendingContent_id_seq"
@@ -394,17 +394,17 @@ CREATE SEQUENCE public."PendingContent_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."PendingContent_id_seq" OWNER TO postgres;
+ALTER TABLE public."PendingContent_id_seq" OWNER TO "default";
 
 --
--- Name: PendingContent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: PendingContent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."PendingContent_id_seq" OWNED BY public."PendingContent".id;
 
 
 --
--- Name: QuestionAndAnswer; Type: TABLE; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."QuestionAndAnswer" (
@@ -416,10 +416,10 @@ CREATE TABLE public."QuestionAndAnswer" (
 );
 
 
-ALTER TABLE public."QuestionAndAnswer" OWNER TO postgres;
+ALTER TABLE public."QuestionAndAnswer" OWNER TO "default";
 
 --
--- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."QuestionAndAnswer_id_seq"
@@ -431,17 +431,17 @@ CREATE SEQUENCE public."QuestionAndAnswer_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."QuestionAndAnswer_id_seq" OWNER TO postgres;
+ALTER TABLE public."QuestionAndAnswer_id_seq" OWNER TO "default";
 
 --
--- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."QuestionAndAnswer_id_seq" OWNED BY public."QuestionAndAnswer".id;
 
 
 --
--- Name: Ranks; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Ranks; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Ranks" (
@@ -451,10 +451,10 @@ CREATE TABLE public."Ranks" (
 );
 
 
-ALTER TABLE public."Ranks" OWNER TO postgres;
+ALTER TABLE public."Ranks" OWNER TO "default";
 
 --
--- Name: Ranks_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Ranks_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Ranks_id_seq"
@@ -466,17 +466,17 @@ CREATE SEQUENCE public."Ranks_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Ranks_id_seq" OWNER TO postgres;
+ALTER TABLE public."Ranks_id_seq" OWNER TO "default";
 
 --
--- Name: Ranks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Ranks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Ranks_id_seq" OWNED BY public."Ranks".id;
 
 
 --
--- Name: Section; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Section; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Section" (
@@ -489,10 +489,10 @@ CREATE TABLE public."Section" (
 );
 
 
-ALTER TABLE public."Section" OWNER TO postgres;
+ALTER TABLE public."Section" OWNER TO "default";
 
 --
--- Name: Section_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Section_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Section_id_seq"
@@ -504,17 +504,17 @@ CREATE SEQUENCE public."Section_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Section_id_seq" OWNER TO postgres;
+ALTER TABLE public."Section_id_seq" OWNER TO "default";
 
 --
--- Name: Section_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Section_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Section_id_seq" OWNED BY public."Section".id;
 
 
 --
--- Name: Unit; Type: TABLE; Schema: public; Owner: postgres
+-- Name: Unit; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."Unit" (
@@ -526,10 +526,10 @@ CREATE TABLE public."Unit" (
 );
 
 
-ALTER TABLE public."Unit" OWNER TO postgres;
+ALTER TABLE public."Unit" OWNER TO "default";
 
 --
--- Name: Unit_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: Unit_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."Unit_id_seq"
@@ -541,17 +541,17 @@ CREATE SEQUENCE public."Unit_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."Unit_id_seq" OWNER TO postgres;
+ALTER TABLE public."Unit_id_seq" OWNER TO "default";
 
 --
--- Name: Unit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: Unit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."Unit_id_seq" OWNED BY public."Unit".id;
 
 
 --
--- Name: User; Type: TABLE; Schema: public; Owner: postgres
+-- Name: User; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."User" (
@@ -567,10 +567,10 @@ CREATE TABLE public."User" (
 );
 
 
-ALTER TABLE public."User" OWNER TO postgres;
+ALTER TABLE public."User" OWNER TO "default";
 
 --
--- Name: UserContent; Type: TABLE; Schema: public; Owner: postgres
+-- Name: UserContent; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."UserContent" (
@@ -579,10 +579,10 @@ CREATE TABLE public."UserContent" (
 );
 
 
-ALTER TABLE public."UserContent" OWNER TO postgres;
+ALTER TABLE public."UserContent" OWNER TO "default";
 
 --
--- Name: UserContent_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: UserContent_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."UserContent_id_seq"
@@ -594,17 +594,17 @@ CREATE SEQUENCE public."UserContent_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."UserContent_id_seq" OWNER TO postgres;
+ALTER TABLE public."UserContent_id_seq" OWNER TO "default";
 
 --
--- Name: UserContent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: UserContent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."UserContent_id_seq" OWNED BY public."UserContent".id;
 
 
 --
--- Name: UserCourses; Type: TABLE; Schema: public; Owner: postgres
+-- Name: UserCourses; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."UserCourses" (
@@ -614,10 +614,10 @@ CREATE TABLE public."UserCourses" (
 );
 
 
-ALTER TABLE public."UserCourses" OWNER TO postgres;
+ALTER TABLE public."UserCourses" OWNER TO "default";
 
 --
--- Name: UserCourses_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: UserCourses_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."UserCourses_id_seq"
@@ -629,17 +629,17 @@ CREATE SEQUENCE public."UserCourses_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."UserCourses_id_seq" OWNER TO postgres;
+ALTER TABLE public."UserCourses_id_seq" OWNER TO "default";
 
 --
--- Name: UserCourses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: UserCourses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."UserCourses_id_seq" OWNED BY public."UserCourses".id;
 
 
 --
--- Name: UserLanguages; Type: TABLE; Schema: public; Owner: postgres
+-- Name: UserLanguages; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."UserLanguages" (
@@ -650,10 +650,10 @@ CREATE TABLE public."UserLanguages" (
 );
 
 
-ALTER TABLE public."UserLanguages" OWNER TO postgres;
+ALTER TABLE public."UserLanguages" OWNER TO "default";
 
 --
--- Name: UserLanguages_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: UserLanguages_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."UserLanguages_id_seq"
@@ -665,17 +665,17 @@ CREATE SEQUENCE public."UserLanguages_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."UserLanguages_id_seq" OWNER TO postgres;
+ALTER TABLE public."UserLanguages_id_seq" OWNER TO "default";
 
 --
--- Name: UserLanguages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: UserLanguages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."UserLanguages_id_seq" OWNED BY public."UserLanguages".id;
 
 
 --
--- Name: UserProfile; Type: TABLE; Schema: public; Owner: postgres
+-- Name: UserProfile; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."UserProfile" (
@@ -685,10 +685,10 @@ CREATE TABLE public."UserProfile" (
 );
 
 
-ALTER TABLE public."UserProfile" OWNER TO postgres;
+ALTER TABLE public."UserProfile" OWNER TO "default";
 
 --
--- Name: UserProfile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: UserProfile_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."UserProfile_id_seq"
@@ -700,17 +700,17 @@ CREATE SEQUENCE public."UserProfile_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."UserProfile_id_seq" OWNER TO postgres;
+ALTER TABLE public."UserProfile_id_seq" OWNER TO "default";
 
 --
--- Name: UserProfile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: UserProfile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."UserProfile_id_seq" OWNED BY public."UserProfile".id;
 
 
 --
--- Name: UserRank; Type: TABLE; Schema: public; Owner: postgres
+-- Name: UserRank; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public."UserRank" (
@@ -722,10 +722,10 @@ CREATE TABLE public."UserRank" (
 );
 
 
-ALTER TABLE public."UserRank" OWNER TO postgres;
+ALTER TABLE public."UserRank" OWNER TO "default";
 
 --
--- Name: User_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: User_id_seq; Type: SEQUENCE; Schema: public; Owner: "default"
 --
 
 CREATE SEQUENCE public."User_id_seq"
@@ -737,17 +737,17 @@ CREATE SEQUENCE public."User_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."User_id_seq" OWNER TO postgres;
+ALTER TABLE public."User_id_seq" OWNER TO "default";
 
 --
--- Name: User_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: User_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: "default"
 --
 
 ALTER SEQUENCE public."User_id_seq" OWNED BY public."User".id;
 
 
 --
--- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: postgres
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: "default"
 --
 
 CREATE TABLE public._prisma_migrations (
@@ -762,129 +762,129 @@ CREATE TABLE public._prisma_migrations (
 );
 
 
-ALTER TABLE public._prisma_migrations OWNER TO postgres;
+ALTER TABLE public._prisma_migrations OWNER TO "default";
 
 --
--- Name: Content id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Content id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Content" ALTER COLUMN id SET DEFAULT nextval('public."Content_id_seq"'::regclass);
 
 
 --
--- Name: ContentDetails id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: ContentDetails id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."ContentDetails" ALTER COLUMN id SET DEFAULT nextval('public."ContentDetails_id_seq"'::regclass);
 
 
 --
--- Name: Courses id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Courses id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Courses" ALTER COLUMN id SET DEFAULT nextval('public."Courses_id_seq"'::regclass);
 
 
 --
--- Name: Exercise id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Exercise id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Exercise" ALTER COLUMN id SET DEFAULT nextval('public."Exercise_id_seq"'::regclass);
 
 
 --
--- Name: Historical id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Historical id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Historical" ALTER COLUMN id SET DEFAULT nextval('public."Historical_id_seq"'::regclass);
 
 
 --
--- Name: Languages id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Languages id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Languages" ALTER COLUMN id SET DEFAULT nextval('public."Languages_id_seq"'::regclass);
 
 
 --
--- Name: Level id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Level id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Level" ALTER COLUMN id SET DEFAULT nextval('public."Level_id_seq"'::regclass);
 
 
 --
--- Name: PendingContent id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: PendingContent id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."PendingContent" ALTER COLUMN id SET DEFAULT nextval('public."PendingContent_id_seq"'::regclass);
 
 
 --
--- Name: QuestionAndAnswer id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."QuestionAndAnswer" ALTER COLUMN id SET DEFAULT nextval('public."QuestionAndAnswer_id_seq"'::regclass);
 
 
 --
--- Name: Ranks id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Ranks id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Ranks" ALTER COLUMN id SET DEFAULT nextval('public."Ranks_id_seq"'::regclass);
 
 
 --
--- Name: Section id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Section id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Section" ALTER COLUMN id SET DEFAULT nextval('public."Section_id_seq"'::regclass);
 
 
 --
--- Name: Unit id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: Unit id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Unit" ALTER COLUMN id SET DEFAULT nextval('public."Unit_id_seq"'::regclass);
 
 
 --
--- Name: User id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: User id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."User" ALTER COLUMN id SET DEFAULT nextval('public."User_id_seq"'::regclass);
 
 
 --
--- Name: UserContent id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: UserContent id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserContent" ALTER COLUMN id SET DEFAULT nextval('public."UserContent_id_seq"'::regclass);
 
 
 --
--- Name: UserCourses id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: UserCourses id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserCourses" ALTER COLUMN id SET DEFAULT nextval('public."UserCourses_id_seq"'::regclass);
 
 
 --
--- Name: UserLanguages id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: UserLanguages id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserLanguages" ALTER COLUMN id SET DEFAULT nextval('public."UserLanguages_id_seq"'::regclass);
 
 
 --
--- Name: UserProfile id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: UserProfile id; Type: DEFAULT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserProfile" ALTER COLUMN id SET DEFAULT nextval('public."UserProfile_id_seq"'::regclass);
 
 
 --
--- Data for Name: Content; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Content; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Content" (id, title, type, level, language_id) FROM stdin;
@@ -892,7 +892,7 @@ COPY public."Content" (id, title, type, level, language_id) FROM stdin;
 
 
 --
--- Data for Name: ContentDetails; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: ContentDetails; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."ContentDetails" (id, title, description, text, level, type, content_id, tts) FROM stdin;
@@ -900,7 +900,7 @@ COPY public."ContentDetails" (id, title, description, text, level, type, content
 
 
 --
--- Data for Name: Courses; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Courses; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Courses" (id, title, description, language_id, target_language, target_language_id) FROM stdin;
@@ -910,7 +910,7 @@ COPY public."Courses" (id, title, description, language_id, target_language, tar
 
 
 --
--- Data for Name: Exercise; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Exercise; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Exercise" (id, difficulty, type, prompt, choices, compact_translations, solution_translations, correct_solutions, correct_answers, display_tokens, correct_indices, correct_index, tts, source_languages, target_languages, unit_id) FROM stdin;
@@ -925,7 +925,7 @@ COPY public."Exercise" (id, difficulty, type, prompt, choices, compact_translati
 
 
 --
--- Data for Name: Historical; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Historical; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Historical" (id, user_id, last_watched, content_id) FROM stdin;
@@ -933,7 +933,7 @@ COPY public."Historical" (id, user_id, last_watched, content_id) FROM stdin;
 
 
 --
--- Data for Name: Languages; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Languages; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Languages" (id, name, short_name) FROM stdin;
@@ -947,7 +947,7 @@ COPY public."Languages" (id, name, short_name) FROM stdin;
 
 
 --
--- Data for Name: Level; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Level; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Level" (id, title, description, difficulty, unit_id, user_courses_id) FROM stdin;
@@ -959,7 +959,7 @@ COPY public."Level" (id, title, description, difficulty, unit_id, user_courses_i
 
 
 --
--- Data for Name: PendingContent; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: PendingContent; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."PendingContent" (id, marked_as_read, is_completed, user_content_id, pending_id) FROM stdin;
@@ -967,7 +967,7 @@ COPY public."PendingContent" (id, marked_as_read, is_completed, user_content_id,
 
 
 --
--- Data for Name: QuestionAndAnswer; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: QuestionAndAnswer; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."QuestionAndAnswer" (id, title, options, correct_answer, content_details_id) FROM stdin;
@@ -975,7 +975,7 @@ COPY public."QuestionAndAnswer" (id, title, options, correct_answer, content_det
 
 
 --
--- Data for Name: Ranks; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Ranks; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Ranks" (id, name, distintive) FROM stdin;
@@ -990,7 +990,7 @@ COPY public."Ranks" (id, name, distintive) FROM stdin;
 
 
 --
--- Data for Name: Section; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Section; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Section" (id, title, description, color, img_src, "courseId") FROM stdin;
@@ -1001,7 +1001,7 @@ COPY public."Section" (id, title, description, color, img_src, "courseId") FROM 
 
 
 --
--- Data for Name: Unit; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Unit; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."Unit" (id, title, description, "sectionId", color) FROM stdin;
@@ -1012,7 +1012,7 @@ COPY public."Unit" (id, title, description, "sectionId", color) FROM stdin;
 
 
 --
--- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."User" (id, created_at, email, password, name, active, biography, profile_id, location) FROM stdin;
@@ -1021,7 +1021,7 @@ COPY public."User" (id, created_at, email, password, name, active, biography, pr
 
 
 --
--- Data for Name: UserContent; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: UserContent; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."UserContent" (id, user_id) FROM stdin;
@@ -1030,7 +1030,7 @@ COPY public."UserContent" (id, user_id) FROM stdin;
 
 
 --
--- Data for Name: UserCourses; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: UserCourses; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."UserCourses" (id, course_id, user_id) FROM stdin;
@@ -1039,7 +1039,7 @@ COPY public."UserCourses" (id, course_id, user_id) FROM stdin;
 
 
 --
--- Data for Name: UserLanguages; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: UserLanguages; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."UserLanguages" (id, active, language_id, user_profile_id) FROM stdin;
@@ -1048,7 +1048,7 @@ COPY public."UserLanguages" (id, active, language_id, user_profile_id) FROM stdi
 
 
 --
--- Data for Name: UserProfile; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: UserProfile; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."UserProfile" (id, color, animal_name) FROM stdin;
@@ -1057,7 +1057,7 @@ COPY public."UserProfile" (id, color, animal_name) FROM stdin;
 
 
 --
--- Data for Name: UserRank; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: UserRank; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public."UserRank" (rank_id, user_id, created_at, updated_at, user_experience) FROM stdin;
@@ -1066,7 +1066,7 @@ COPY public."UserRank" (rank_id, user_id, created_at, updated_at, user_experienc
 
 
 --
--- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: "default"
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
@@ -1075,126 +1075,126 @@ COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs,
 
 
 --
--- Name: ContentDetails_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: ContentDetails_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."ContentDetails_id_seq"', 1, false);
 
 
 --
--- Name: Content_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Content_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Content_id_seq"', 1, false);
 
 
 --
--- Name: Courses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Courses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Courses_id_seq"', 2, true);
 
 
 --
--- Name: Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Exercise_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Exercise_id_seq"', 7, true);
 
 
 --
--- Name: Historical_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Historical_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Historical_id_seq"', 1, false);
 
 
 --
--- Name: Languages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Languages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Languages_id_seq"', 6, true);
 
 
 --
--- Name: Level_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Level_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Level_id_seq"', 4, true);
 
 
 --
--- Name: PendingContent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: PendingContent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."PendingContent_id_seq"', 1, false);
 
 
 --
--- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."QuestionAndAnswer_id_seq"', 1, false);
 
 
 --
--- Name: Ranks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Ranks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Ranks_id_seq"', 7, true);
 
 
 --
--- Name: Section_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Section_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Section_id_seq"', 3, true);
 
 
 --
--- Name: Unit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: Unit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."Unit_id_seq"', 3, true);
 
 
 --
--- Name: UserContent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: UserContent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."UserContent_id_seq"', 4, true);
 
 
 --
--- Name: UserCourses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: UserCourses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."UserCourses_id_seq"', 2, true);
 
 
 --
--- Name: UserLanguages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: UserLanguages_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."UserLanguages_id_seq"', 4, true);
 
 
 --
--- Name: UserProfile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: UserProfile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."UserProfile_id_seq"', 4, true);
 
 
 --
--- Name: User_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: User_id_seq; Type: SEQUENCE SET; Schema: public; Owner: "default"
 --
 
 SELECT pg_catalog.setval('public."User_id_seq"', 4, true);
 
 
 --
--- Name: ContentDetails ContentDetails_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ContentDetails ContentDetails_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."ContentDetails"
@@ -1202,7 +1202,7 @@ ALTER TABLE ONLY public."ContentDetails"
 
 
 --
--- Name: Content Content_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Content Content_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Content"
@@ -1210,7 +1210,7 @@ ALTER TABLE ONLY public."Content"
 
 
 --
--- Name: Courses Courses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Courses Courses_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Courses"
@@ -1218,7 +1218,7 @@ ALTER TABLE ONLY public."Courses"
 
 
 --
--- Name: Exercise Exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Exercise Exercise_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Exercise"
@@ -1226,7 +1226,7 @@ ALTER TABLE ONLY public."Exercise"
 
 
 --
--- Name: Historical Historical_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Historical Historical_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Historical"
@@ -1234,7 +1234,7 @@ ALTER TABLE ONLY public."Historical"
 
 
 --
--- Name: Languages Languages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Languages Languages_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Languages"
@@ -1242,7 +1242,7 @@ ALTER TABLE ONLY public."Languages"
 
 
 --
--- Name: Level Level_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Level Level_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Level"
@@ -1250,7 +1250,7 @@ ALTER TABLE ONLY public."Level"
 
 
 --
--- Name: PendingContent PendingContent_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: PendingContent PendingContent_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."PendingContent"
@@ -1258,7 +1258,7 @@ ALTER TABLE ONLY public."PendingContent"
 
 
 --
--- Name: QuestionAndAnswer QuestionAndAnswer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer QuestionAndAnswer_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."QuestionAndAnswer"
@@ -1266,7 +1266,7 @@ ALTER TABLE ONLY public."QuestionAndAnswer"
 
 
 --
--- Name: Ranks Ranks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Ranks Ranks_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Ranks"
@@ -1274,7 +1274,7 @@ ALTER TABLE ONLY public."Ranks"
 
 
 --
--- Name: Section Section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Section Section_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Section"
@@ -1282,7 +1282,7 @@ ALTER TABLE ONLY public."Section"
 
 
 --
--- Name: Unit Unit_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Unit Unit_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Unit"
@@ -1290,7 +1290,7 @@ ALTER TABLE ONLY public."Unit"
 
 
 --
--- Name: UserContent UserContent_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserContent UserContent_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserContent"
@@ -1298,7 +1298,7 @@ ALTER TABLE ONLY public."UserContent"
 
 
 --
--- Name: UserCourses UserCourses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserCourses UserCourses_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserCourses"
@@ -1306,7 +1306,7 @@ ALTER TABLE ONLY public."UserCourses"
 
 
 --
--- Name: UserLanguages UserLanguages_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserLanguages UserLanguages_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserLanguages"
@@ -1314,7 +1314,7 @@ ALTER TABLE ONLY public."UserLanguages"
 
 
 --
--- Name: UserProfile UserProfile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserProfile UserProfile_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserProfile"
@@ -1322,7 +1322,7 @@ ALTER TABLE ONLY public."UserProfile"
 
 
 --
--- Name: UserRank UserRank_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserRank UserRank_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserRank"
@@ -1330,7 +1330,7 @@ ALTER TABLE ONLY public."UserRank"
 
 
 --
--- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."User"
@@ -1338,7 +1338,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public._prisma_migrations
@@ -1346,42 +1346,42 @@ ALTER TABLE ONLY public._prisma_migrations
 
 
 --
--- Name: Courses_language_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: Courses_language_id_key; Type: INDEX; Schema: public; Owner: "default"
 --
 
 CREATE UNIQUE INDEX "Courses_language_id_key" ON public."Courses" USING btree (language_id);
 
 
 --
--- Name: Languages_name_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: Languages_name_key; Type: INDEX; Schema: public; Owner: "default"
 --
 
 CREATE UNIQUE INDEX "Languages_name_key" ON public."Languages" USING btree (name);
 
 
 --
--- Name: UserRank_user_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: UserRank_user_id_key; Type: INDEX; Schema: public; Owner: "default"
 --
 
 CREATE UNIQUE INDEX "UserRank_user_id_key" ON public."UserRank" USING btree (user_id);
 
 
 --
--- Name: User_email_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: User_email_key; Type: INDEX; Schema: public; Owner: "default"
 --
 
 CREATE UNIQUE INDEX "User_email_key" ON public."User" USING btree (email);
 
 
 --
--- Name: User_profile_id_key; Type: INDEX; Schema: public; Owner: postgres
+-- Name: User_profile_id_key; Type: INDEX; Schema: public; Owner: "default"
 --
 
 CREATE UNIQUE INDEX "User_profile_id_key" ON public."User" USING btree (profile_id);
 
 
 --
--- Name: ContentDetails ContentDetails_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: ContentDetails ContentDetails_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."ContentDetails"
@@ -1389,7 +1389,7 @@ ALTER TABLE ONLY public."ContentDetails"
 
 
 --
--- Name: Content Content_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Content Content_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Content"
@@ -1397,7 +1397,7 @@ ALTER TABLE ONLY public."Content"
 
 
 --
--- Name: Courses Courses_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Courses Courses_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Courses"
@@ -1405,7 +1405,7 @@ ALTER TABLE ONLY public."Courses"
 
 
 --
--- Name: Exercise Exercise_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Exercise Exercise_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Exercise"
@@ -1413,7 +1413,7 @@ ALTER TABLE ONLY public."Exercise"
 
 
 --
--- Name: Historical Historical_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Historical Historical_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Historical"
@@ -1421,7 +1421,7 @@ ALTER TABLE ONLY public."Historical"
 
 
 --
--- Name: Historical Historical_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Historical Historical_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Historical"
@@ -1429,7 +1429,7 @@ ALTER TABLE ONLY public."Historical"
 
 
 --
--- Name: Level Level_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Level Level_unit_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Level"
@@ -1437,7 +1437,7 @@ ALTER TABLE ONLY public."Level"
 
 
 --
--- Name: Level Level_user_courses_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Level Level_user_courses_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Level"
@@ -1445,7 +1445,7 @@ ALTER TABLE ONLY public."Level"
 
 
 --
--- Name: PendingContent PendingContent_pending_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: PendingContent PendingContent_pending_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."PendingContent"
@@ -1453,7 +1453,7 @@ ALTER TABLE ONLY public."PendingContent"
 
 
 --
--- Name: PendingContent PendingContent_user_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: PendingContent PendingContent_user_content_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."PendingContent"
@@ -1461,7 +1461,7 @@ ALTER TABLE ONLY public."PendingContent"
 
 
 --
--- Name: QuestionAndAnswer QuestionAndAnswer_content_details_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: QuestionAndAnswer QuestionAndAnswer_content_details_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."QuestionAndAnswer"
@@ -1469,7 +1469,7 @@ ALTER TABLE ONLY public."QuestionAndAnswer"
 
 
 --
--- Name: Section Section_courseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Section Section_courseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Section"
@@ -1477,7 +1477,7 @@ ALTER TABLE ONLY public."Section"
 
 
 --
--- Name: Unit Unit_sectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: Unit Unit_sectionId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."Unit"
@@ -1485,7 +1485,7 @@ ALTER TABLE ONLY public."Unit"
 
 
 --
--- Name: UserContent UserContent_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserContent UserContent_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserContent"
@@ -1493,7 +1493,7 @@ ALTER TABLE ONLY public."UserContent"
 
 
 --
--- Name: UserCourses UserCourses_course_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserCourses UserCourses_course_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserCourses"
@@ -1501,7 +1501,7 @@ ALTER TABLE ONLY public."UserCourses"
 
 
 --
--- Name: UserCourses UserCourses_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserCourses UserCourses_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserCourses"
@@ -1509,7 +1509,7 @@ ALTER TABLE ONLY public."UserCourses"
 
 
 --
--- Name: UserLanguages UserLanguages_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserLanguages UserLanguages_language_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserLanguages"
@@ -1517,7 +1517,7 @@ ALTER TABLE ONLY public."UserLanguages"
 
 
 --
--- Name: UserLanguages UserLanguages_user_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserLanguages UserLanguages_user_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserLanguages"
@@ -1525,7 +1525,7 @@ ALTER TABLE ONLY public."UserLanguages"
 
 
 --
--- Name: UserRank UserRank_rank_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserRank UserRank_rank_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserRank"
@@ -1533,7 +1533,7 @@ ALTER TABLE ONLY public."UserRank"
 
 
 --
--- Name: UserRank UserRank_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: UserRank UserRank_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."UserRank"
@@ -1541,7 +1541,7 @@ ALTER TABLE ONLY public."UserRank"
 
 
 --
--- Name: User User_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: User User_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: "default"
 --
 
 ALTER TABLE ONLY public."User"
@@ -1549,7 +1549,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: "default"
 --
 
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
