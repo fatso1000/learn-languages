@@ -58,7 +58,6 @@ export default async function Header(props: {
               </p>
             </div>
           </div>
-
           <div className="flex flex-col mt-1">
             <div className="w-full gap-2 inline-flex flex-wrap">
               <Link
@@ -103,7 +102,9 @@ export default async function Header(props: {
             {data && data.historical && data.historical[0] ? (
               <CarouselComponent items={data.historical[0].content || []} />
             ) : (
-              <div></div>
+              <div>
+                <h3>No content watched yet.</h3>
+              </div>
             )}
           </div>
           <div className="mt-6 flex w-full flex-col gap-2">
@@ -116,7 +117,9 @@ export default async function Header(props: {
             {data && data.pendingContent && data.pendingContent[0] ? (
               <CarouselComponent items={data.pendingContent[0].content || []} />
             ) : (
-              <div></div>
+              <div>
+                <h3>No unfinished content yet.</h3>
+              </div>
             )}
           </div>
           <div className="mt-6 flex w-full flex-col gap-2">
@@ -129,7 +132,9 @@ export default async function Header(props: {
             {data && data.savedContent && data.savedContent[0] ? (
               <CarouselComponent items={data.savedContent[0].content || []} />
             ) : (
-              <div></div>
+              <div>
+                <h3>No saved content yet.</h3>
+              </div>
             )}
           </div>
         </div>

@@ -7,13 +7,20 @@ const getUrl =
     : "http://localhost:3000";
 
 const getContentById = async <T>(id: string) => {
-  return await handleCustomApiRequest<T>(getUrl + "/api/content/" + id, "GET");
+  return await handleCustomApiRequest<T>(
+    getUrl + "/api/content/" + id,
+    "GET",
+    null,
+    true
+  );
 };
 
 const getContentByLanguageAndType = async (name: string, type: string) => {
   return await handleCustomApiRequest(
     getUrl + "/api/content?language=" + name + "&type=" + type,
-    "GET"
+    "GET",
+    null,
+    true
   );
 };
 

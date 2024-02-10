@@ -42,10 +42,10 @@ export default async function ReadingsPage({
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">
       <header className="mb-4">
-        <h1 className="text-2xl leading-6 font-black first-letter:uppercase">
+        <h1 className="text-4xl text-success font-black first-letter:uppercase">
           {language} texts for begginers
         </h1>
-        <p>
+        <p className="font-semibold text-neutral-500">
           This are some of the best text to learn and practice {language} online
           and for free.
         </p>
