@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { APIContent, CustomError, ReadingsPOST } from "types/apiTypes";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
-import { onThrowError } from "../apiService";
+import { onSuccessRequest, onThrowError } from "../apiService";
 import {
   getSearchQuery,
   groupByContentLevel,
@@ -46,7 +46,10 @@ export async function GET(req: NextRequest) {
 
     const groupedContentByLevel = groupByContentLevel(request as any[]);
 
-    return NextResponse.json({ data: groupedContentByLevel });
+    return onSuccessRequest({
+      httpStatusCode: 200,
+      data: groupedContentByLevel,
+    });
   } catch (error: any) {
     return onThrowError(error);
   }

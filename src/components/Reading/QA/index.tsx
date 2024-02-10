@@ -1,17 +1,9 @@
 "use client";
-import { Metadata } from "next";
 import { useEffect, useState } from "react";
 import { ErrorIconCircle, SuccessIconCircle } from "src/components/Icons";
 import { IQuestionAndAnswer } from "src/types";
 // @ts-expect-error
 import confetti from "canvas-confetti";
-
-export async function generateMetadata(props: any): Promise<Metadata> {
-  return {
-    title: "Search Blog By Name - Matias Benitez Blog",
-    description: "",
-  };
-}
 
 export default function QA(props: { values: IQuestionAndAnswer[] }) {
   const [questionAndAnswers, setQuestionAndAnswers] = useState<any[]>([]);
@@ -108,45 +100,41 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
 
   return (
     <div className="mt-6 flex flex-col gap-y-5">
-      {questionAndAnswers.map((v, i: number) => {
-        return (
-          <div key={v.id} className="flex flex-col gap-y-1">
-            <h3 className="badge badge-neutral badge-lg text-lg">
-              Question {i + 1}:
-            </h3>
-            <h5 className="ml-1">{v.title}</h5>
-            <div className="grid grid-cols-2 gap-2">
-              {v.options.map((x: any) => {
-                return (
-                  <button
-                    key={x.title}
-                    id={x.title}
-                    onClick={() => onAnswerClick(x, v.correct_answer, i)}
-                    className={`btn ${
-                      x.status === "completed"
-                        ? "btn-disabled text-neutral-50"
-                        : x.status !== "default"
-                        ? x.status === "correct"
-                          ? "btn-success text-neutral-50"
-                          : "btn-error text-neutral-50 opacity-70"
-                        : ""
-                    }`}
-                  >
-                    {x.status !== "default" ? (
-                      x.status === "correct" ? (
-                        <SuccessIconCircle />
-                      ) : (
-                        <ErrorIconCircle />
-                      )
-                    ) : null}
-                    {x.title}
-                  </button>
-                );
-              })}
-            </div>
+      {questionAndAnswers.map((v, i: number) => (
+        <div key={v.id} className="flex flex-col gap-y-2">
+          <h3 className="badge badge-success badge-lg text-lg font-semibold">
+            Question {i + 1}:
+          </h3>
+          <h5 className="ml-1">{v.title}</h5>
+          <div className="grid grid-cols-2 gap-2">
+            {v.options.map((x: any) => (
+              <button
+                key={x.title}
+                id={x.title}
+                onClick={() => onAnswerClick(x, v.correct_answer, i)}
+                className={`btn ${
+                  x.status === "completed"
+                    ? "btn-disabled text-neutral-50"
+                    : x.status !== "default"
+                    ? x.status === "correct"
+                      ? "btn-success text-neutral-50"
+                      : "btn-error text-neutral-50 opacity-70"
+                    : ""
+                }`}
+              >
+                {x.status !== "default" ? (
+                  x.status === "correct" ? (
+                    <SuccessIconCircle />
+                  ) : (
+                    <ErrorIconCircle />
+                  )
+                ) : null}
+                {x.title}
+              </button>
+            ))}
           </div>
-        );
-      })}
+        </div>
+      ))}
     </div>
   );
 }
