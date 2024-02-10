@@ -36,7 +36,7 @@ export async function PATCH(
       data: {
         name: body.name,
         biography: body.biography,
-        ubication: body.ubication,
+        location: body.ubication,
         profile: {
           upsert: {
             create: {
