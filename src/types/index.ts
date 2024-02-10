@@ -184,7 +184,7 @@ export interface SelectedLanguageDetail {
 
 export interface IconProps {
   animal: string;
-  color: string[];
+  color: string;
 }
 
 export interface IUserCourse {

@@ -12,13 +12,13 @@ export default function EditIcon(props: {
 
   const [selectedIcon, setSelectedIcon] = useState<IconProps>({
     animal: defaultAnimalName,
-    color: [defaultNameColor, colorsObject[defaultNameColor]],
+    color: defaultNameColor,
   });
 
   const handleColor = (event: { target: { value: string } }) => {
     setSelectedIcon({
       ...selectedIcon,
-      color: [event.target.value, colorsObject[event.target.value]],
+      color: event.target.value,
     });
   };
 
