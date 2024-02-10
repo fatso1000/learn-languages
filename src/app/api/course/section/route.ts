@@ -73,6 +73,7 @@ export async function GET(req: NextRequest) {
       const startIndex = Math.floor(Math.random() * (colors.length - 0)) + 0;
       const currentIndex = (startIndex + index) % colors.length;
       const currentColor = colors[currentIndex];
+
       if (groupedData[unit.id]) {
         const levelsGrouped: ILevel[] = groupedData[unit.id];
         if (groupedData[unit.id].length === unit.levels.length) {
@@ -123,8 +124,24 @@ export async function GET(req: NextRequest) {
         }
       }
 
-      const previousUnitId = arr[index - 1].id;
+      const previousUnitId = arr[index - 1] && arr[index - 1].id;
       if (previousUnitId !== unit.id && groupedData[previousUnitId]) {
+        return {
+          ...unit,
+          color: currentColor,
+          levels: [
+            ...unit.levels.map((level, j) => {
+              return {
+                ...level,
+                color: currentColor,
+                state: j === 0 ? LevelState.STUDYING : LevelState.BLOCKED,
+              };
+            }),
+          ],
+          completed: false,
+          completed_levels: 0,
+        };
+      } else if (!previousUnitId) {
         return {
           ...unit,
           color: currentColor,

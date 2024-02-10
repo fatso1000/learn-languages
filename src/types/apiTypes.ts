@@ -69,14 +69,17 @@ export interface IReminderAPI {
 // LANGUAGE
 export class LanguagePOST {
   public name: string;
+  public short_name: string;
 
-  constructor({ name }: ILanguage) {
+  constructor({ name, short_name }: ILanguage) {
     this.name = name;
+    this.short_name = short_name;
   }
 }
 
 export interface ILanguage {
   name: string;
+  short_name: string;
 }
 // RANK
 export class RankPOST {

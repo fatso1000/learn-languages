@@ -8,18 +8,24 @@ import TTSButtons from "../TTSButtons";
 
 export function CompleteSentenceExercise(props: ExercisesProps) {
   const { data, onCheckAnswer, isMessageActive, onExerciseFail } = props;
-  const { type, displayTokens, prompt, tts, targetLanguage, hasPreviousError } =
-    data;
+  const {
+    type,
+    display_tokens,
+    prompt,
+    tts,
+    target_language,
+    hasPreviousError,
+  } = data;
   const [selectedOption, setSelectedOption] = useState<undefined | string>(
     undefined
   );
   const answerObj = {
-    correctAnswers: [
-      displayTokens.find((answer) => answer.isBlank)!.text,
-      displayTokens.map((value) => value.text).join(" "),
+    correct_answers: [
+      display_tokens.find((answer) => answer.isBlank)!.text,
+      display_tokens.map((value) => value.text).join(" "),
     ],
     type,
-    selectedOption,
+    selected_option: selectedOption,
   };
   const [ttsAudio, setTtsAudio] = useState<HTMLAudioElement | undefined>();
 
@@ -57,8 +63,8 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
         </div>
         <div className="text-center min-w-[70px]">
           <GenericExerciseInput
-            targetLanguage={targetLanguage}
-            displayTokens={displayTokens}
+            targetLanguage={target_language}
+            displayTokens={display_tokens}
             onInputChange={onInputChange}
             selectedOption={selectedOption}
             onCheckAnswer={() => selectedOption && onCheckAnswer(answerObj)}
@@ -72,7 +78,7 @@ export function CompleteSentenceExercise(props: ExercisesProps) {
               className="btn"
               onClick={() =>
                 onExerciseFail(
-                  displayTokens.map((value) => value.text).join(" ")
+                  display_tokens.map((value) => value.text).join(" ")
                 )
               }
             >
