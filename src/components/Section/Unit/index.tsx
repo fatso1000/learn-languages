@@ -1,12 +1,33 @@
 import { UnitProps } from "src/types";
 import { Level } from "..";
 
+const colors = {
+  primary: {
+    base: "bg-primary text-primary-content",
+  },
+  secondary: {
+    base: "bg-secondary text-secondary-content",
+  },
+  accent: {
+    base: "bg-accent text-accent-content",
+  },
+  success: {
+    base: "bg-success text-success-content",
+  },
+  info: {
+    base: "bg-info text-info-content",
+  },
+  error: {
+    base: "bg-error text-error-content",
+  },
+};
+
 export default function UnitComponent(props: UnitProps) {
-  const { sectionId, unit } = props;
+  const { sectionId, unit, color } = props;
 
   return (
     <div className={`flex flex-col items-center justify-center rounded`}>
-      <div className="bg-success w-full md:rounded text-success-content p-3">
+      <div className={`${colors[color].base} w-full md:rounded p-3`}>
         <h3 className="font-bold text-2xl">{unit.title}</h3>
         <p className="text-lg">{unit.description}</p>
       </div>
@@ -19,6 +40,7 @@ export default function UnitComponent(props: UnitProps) {
             level={level}
             unitId={unit.id}
             state={level.state}
+            color={color}
           />
         ))}
       </div>

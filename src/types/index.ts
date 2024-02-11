@@ -305,11 +305,22 @@ export interface LevelProps {
   unitId: number;
   row: number;
   state: LevelState;
+  color: colors;
+}
+
+export enum colors {
+  PRIMARY = "primary",
+  SECONDARY = "secondary",
+  ACCENT = "accent",
+  SUCCESS = "success",
+  INFO = "info",
+  ERROR = "error",
 }
 
 export interface UnitProps {
   sectionId: string;
   unit: IUnit;
+  color: colors;
 }
 
 export interface LevelBubbleProps {
