@@ -9,7 +9,7 @@
     --light-gray: #919191;
     --value: 0;
 
-    --border-line-level: solid 10px red;
+    --border-line-level: solid 10px;
     --border-blocked: solid 10px #a1a1a1;
 
     --translate-top-right: translate(-4.15rem, -4.75rem);
@@ -277,6 +277,5 @@ progress[value]::-webkit-progress-value {
       border-top: var(--border-blocked);
       transform: var(--translate-top-right);
     }
-    color: hsl(219, 100%, 58%);
   }
 }

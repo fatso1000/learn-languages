@@ -1,34 +1,49 @@
 "use client";
-import { LevelProps } from "src/types";
+import { LevelProps, LevelState } from "src/types";
 import StudyingBubble from "../StudyingBubble";
 import LevelIcon from "../LevelIcon";
 import LevelBubble from "../LevelBubble";
+import { levelColors } from "src/shared/LevelsColors";
 
-const levelStyles = {
-  completed: {
-    style: "completed",
-    borderStyle: "bg-success text-success-content active:bg-[#2B6254]",
+const lineColors = {
+  primary: {
+    completed: "before:!border-primary after:!border-primary",
+    studying: "before:!border-primary",
   },
-  studying: {
-    style:
-      "studying border-success border-4 rounded-3xl bg-accent active:border-success-content",
-    borderStyle:
-      "bg-success-content text-success active:bg-success active:text-success-content",
-    gradientProgress: (progressPorcent: number) =>
-      `conic-gradient(#489380 ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+  secondary: {
+    completed: "before:!border-secondary after:!border-secondary",
+    studying: "before:!border-secondary",
   },
+  accent: {
+    completed: "before:!border-accent after:!border-accent",
+    studying: "before:!border-accent",
+  },
+  success: {
+    completed: "before:!border-success after:!border-success",
+    studying: "before:!border-success",
+  },
+  info: {
+    completed: "before:!border-info after:!border-info",
+    studying: "before:!border-info",
+  },
+  error: {
+    completed: "before:!border-error after:!border-error",
+    studying: "before:!border-error",
+  },
+};
+const levelBloquedStyle = {
   first_blocked: {
-    style: "first-blocked blocked",
-    borderStyle: "bg-base-300 text-base-content active:bg-[#A1A1A1]",
+    container: "first-blocked blocked",
+    content: "bg-base-300 text-base-content active:bg-[#A1A1A1]",
   },
   blocked: {
-    style: "blocked",
-    borderStyle: "bg-base-300 text-base-content active:bg-[#A1A1A1]",
+    container: "blocked",
+    content: "bg-base-300 text-base-content active:bg-[#A1A1A1]",
   },
 };
 
 export default function LevelComponent(props: LevelProps) {
-  const { level, sectionId, unitId, row, state } = props;
+  const { level, sectionId, unitId, row, state, color } = props;
   let progressPorcent = 0;
 
   let progress = 3;
@@ -37,9 +52,19 @@ export default function LevelComponent(props: LevelProps) {
   if (progress && exercices) progressPorcent = (progress * 100) / exercices;
 
   const gradientProgress =
-    state === "studying"
-      ? levelStyles[state].gradientProgress(progressPorcent)
+    state === LevelState.STUDYING
+      ? levelColors[color][state].gradientProgress(progressPorcent)
       : "";
+
+  const styleContainer =
+    state === LevelState.BLOCKED || state === LevelState.FIRST_BLOCKED
+      ? levelBloquedStyle[state].container
+      : levelColors[color][state].container;
+
+  const styleContent =
+    state === LevelState.BLOCKED || state === LevelState.FIRST_BLOCKED
+      ? levelBloquedStyle[state].content
+      : levelColors[color][state].content;
 
   const href =
     "/level?difficulty=" +
@@ -57,12 +82,15 @@ export default function LevelComponent(props: LevelProps) {
         background: gradientProgress,
         gridRow: row + 1 + "/" + (row + 2),
       }}
-      className={`${levelStyles[state].style} h-[7.25rem] w-[7.25rem] flex flex-col justify-center items-center level dropdown relative`}
+      className={`${styleContainer} ${
+        (state === LevelState.STUDYING || state === LevelState.COMPLETED) &&
+        lineColors[color][state]
+      } h-[7.25rem] w-[7.25rem] flex flex-col justify-center items-center level dropdown relative`}
       tabIndex={0}
     >
       {state === "studying" && <StudyingBubble />}
       <div
-        className={`${levelStyles[state].borderStyle} rounded-2xl h-24 w-24 flex justify-center z-10 cursor-pointer active:scale-90`}
+        className={`${styleContent} rounded-2xl h-24 w-24 flex justify-center z-10 cursor-pointer active:scale-90`}
       >
         <LevelIcon state={state} />
       </div>
