@@ -3,6 +3,16 @@ import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import Unit from "src/components/Section/Unit";
 import { getSectionUnits } from "src/queryFn";
+import { IUnit, colors } from "src/types";
+
+const colorsList = [
+  colors.SUCCESS,
+  colors.INFO,
+  colors.ACCENT,
+  colors.SECONDARY,
+  colors.ERROR,
+  colors.PRIMARY,
+];
 
 export default async function Section(props: any) {
   if (!props.searchParams || !props.searchParams.id) return <div></div>;
@@ -28,14 +38,18 @@ export default async function Section(props: any) {
               {request.data.title}: {request.data.description}
             </h1>
           </div>
-          <div className="w-full flex flex-col gap-10">
-            {request.data.units.map((unit) => (
-              <Unit
-                unit={unit}
-                sectionId={props.searchParams.id}
-                key={unit.id}
-              />
-            ))}
+          <div className="w-full flex flex-col gap-10 py-8">
+            {request.data.units.map((unit: IUnit, i) => {
+              const currentIndexColor = i % colorsList.length;
+              return (
+                <Unit
+                  unit={unit}
+                  sectionId={props.searchParams.id}
+                  key={unit.id}
+                  color={colorsList[currentIndexColor]}
+                />
+              );
+            })}
           </div>
         </div>
       </main>
