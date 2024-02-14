@@ -8,11 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     verifyUserAuth(req);
     let message = "Historical Saved successfully";
-    const { user_id, experience } = await req.json();
+    const { user_id, experience, content_id } = await req.json();
 
     const userRank = await prisma.userRank.findFirst({
       where: {
-        user_id,
+        user_id: +user_id,
       },
       select: {
         user_experience: true,
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       const current_date = new Date();
 
       await prisma.user.update({
-        where: { id: user_id },
+        where: { id: +user_id },
         data: {
           rank: {
             update: {
@@ -52,6 +52,29 @@ export async function POST(req: NextRequest) {
           },
         },
       });
+
+      const isPendingExist = await prisma.pendingContent.findFirst({
+        where: {
+          user_content_id: +user_id,
+          pending_id: +content_id,
+        },
+      });
+
+      if (isPendingExist) {
+        await prisma.pendingContent.update({
+          data: { is_completed: true },
+          where: { id: isPendingExist.id },
+        });
+      } else {
+        await prisma.pendingContent.create({
+          data: {
+            is_completed: true,
+            marked_as_read: false,
+            pending_content: { connect: { id: +content_id } },
+            user_content: { connect: { id: +user_id } },
+          },
+        });
+      }
 
       message = "Historical modified successfully.";
 

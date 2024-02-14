@@ -2,13 +2,13 @@ import Link from "next/link";
 import { ContentByLevel } from "src/types";
 
 export default function ReadingSection(props: ContentByLevel) {
-  const { level, data } = props;
+  const { level, data, userId } = props;
   return (
     <div className="border-b-2 pb-5">
       <div className="inline-flex justify-between items-center w-full">
         <h3 className="badge badge-success font-bold text-md">{level}</h3>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-1 md:gap-3">
+      <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 md:gap-3">
         {data &&
           data.length > 0 &&
           data.map((detail) => (
@@ -27,7 +27,12 @@ export default function ReadingSection(props: ContentByLevel) {
                     ""}
                 </span>
               </div>
-              <Link href={`reading/${detail.id}`} className="btn">
+              <Link
+                href={`reading/${detail.id}${
+                  userId ? "?userId=" + userId : ""
+                }`}
+                className="btn"
+              >
                 Read
               </Link>
             </div>

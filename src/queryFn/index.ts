@@ -1,16 +1,50 @@
 import { handleCustomApiRequest } from "src/shared/clientShared";
-import { IExercise, ILevel, ISection, IUserCourse } from "src/types";
+import { IExercise, ISection, IUserCourse } from "src/types";
 
 const getUrl =
   process.env.NODE_ENV === "production"
     ? "https://learn-languages-zeta.vercel.app"
     : "http://localhost:3000";
 
-const getContentById = async <T>(id: string) => {
+const getContentById = async <T>(id: string, userId?: string) => {
   return await handleCustomApiRequest<T>(
-    getUrl + "/api/content/" + id,
+    getUrl + `/api/content/${id}?userId=${userId}`,
     "GET",
     null,
+    true
+  );
+};
+
+const addOrRemoveUserContent = async <T>(id: string, user_id: string) => {
+  return await handleCustomApiRequest<T>(
+    getUrl + `/api/userContent`,
+    "POST",
+    { id, user_id },
+    true
+  );
+};
+
+const addOrUpdateHistorical = async <T>(
+  content_id: string,
+  user_id: string
+) => {
+  return await handleCustomApiRequest<T>(
+    getUrl + `/api/actions/historical`,
+    "POST",
+    { content_id, user_id },
+    true
+  );
+};
+
+const completeContent = async <T>(
+  user_id: string,
+  experience: string,
+  content_id: string
+) => {
+  return await handleCustomApiRequest<T>(
+    getUrl + `/api/actions/qa`,
+    "POST",
+    { user_id, experience, content_id },
     true
   );
 };
@@ -118,4 +152,7 @@ export {
   getSectionUnits,
   getExercises,
   authorizeUser,
+  completeContent,
+  addOrUpdateHistorical,
+  addOrRemoveUserContent,
 };
