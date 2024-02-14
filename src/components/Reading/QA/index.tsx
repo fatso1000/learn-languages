@@ -4,11 +4,17 @@ import { ErrorIconCircle, SuccessIconCircle } from "src/components/Icons";
 import { IQuestionAndAnswer } from "src/types";
 // @ts-expect-error
 import confetti from "canvas-confetti";
+import { completeContent } from "src/queryFn";
 
-export default function QA(props: { values: IQuestionAndAnswer[] }) {
+export default function QA(props: {
+  values: IQuestionAndAnswer[];
+  isCompleted: boolean;
+  userId?: string;
+  contentId: string;
+}) {
   const [questionAndAnswers, setQuestionAndAnswers] = useState<any[]>([]);
 
-  const { values } = props;
+  const { values, isCompleted } = props;
 
   // section = 52, perder = -13
 
@@ -86,7 +92,7 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
       (x: any) =>
         x.options.findIndex((v: any) => v.status === "completed") !== -1
     );
-    if (isQACompleted) {
+    if (isQACompleted && !isCompleted) {
       const points = questionAndAnswers.reduce((acc, answer) => {
         return (
           acc +
@@ -95,6 +101,8 @@ export default function QA(props: { values: IQuestionAndAnswer[] }) {
           }, 0)
         );
       }, 0);
+      (async () =>
+        await completeContent(props.userId!, points, props.contentId))();
     }
   }, [questionAndAnswers]);
 
