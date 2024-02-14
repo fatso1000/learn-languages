@@ -114,8 +114,8 @@ export default async function Header(props: {
               </h2>
               <button className="btn">More</button>
             </div>
-            {data && data.pendingContent && data.pendingContent[0] ? (
-              <CarouselComponent items={data.pendingContent[0].content || []} />
+            {data && data.pendingContent ? (
+              <CarouselComponent items={data.pendingContent || []} />
             ) : (
               <div>
                 <h3>No unfinished content yet.</h3>
@@ -129,8 +129,8 @@ export default async function Header(props: {
               </h2>
               <button className="btn">More</button>
             </div>
-            {data && data.savedContent && data.savedContent[0] ? (
-              <CarouselComponent items={data.savedContent[0].content || []} />
+            {data && data.savedContent ? (
+              <CarouselComponent items={data.savedContent || []} />
             ) : (
               <div>
                 <h3>No saved content yet.</h3>

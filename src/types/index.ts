@@ -102,19 +102,14 @@ export interface CarouselCardProps {
 
 export interface DashboardProps {
   historical: any[];
-  pendingContent: Content[];
-  savedContent: Content[];
-}
-
-export interface Content {
-  id: number;
-  user_id: number;
-  content: ContentElement[];
+  pendingContent: ContentElement[];
+  savedContent: ContentElement[];
 }
 
 export interface ContentElement {
   id: number;
   marked_as_read: boolean;
+  is_completed: boolean;
   user_content_id: number;
   pending_id: number;
   pending_content: PendingContent;
@@ -145,6 +140,7 @@ export interface PendingContentContent {
 export interface ContentByLevel {
   level: string;
   data: PendingContentContent[];
+  userId?: string;
 }
 
 export interface Language {

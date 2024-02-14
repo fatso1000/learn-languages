@@ -1,7 +1,9 @@
 import ReadingList from "src/components/Reading";
 import { Metadata } from "next";
-import { Languages } from "src/types";
+import { IUser, Languages } from "src/types";
 import { getContentByLanguageAndType } from "src/queryFn";
+import Navbar from "src/components/Navbar";
+import { cookies } from "next/headers";
 
 export async function generateMetadata({
   params,
@@ -34,25 +36,36 @@ export default async function ReadingsPage({
     ? params["language"]
     : undefined;
 
+  const cookieStore = cookies();
+  const current_user = cookieStore.get("current_user");
+
+  const currentUser: IUser | undefined =
+    current_user && current_user.value !== ""
+      ? JSON.parse(current_user.value)
+      : undefined;
+
   if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
   const readingTexts = await getContentByLanguageAndType(language, "Reading");
   if (!readingTexts.data || readingTexts.errors.length > 0)
     return <div>ERROR</div>;
 
   return (
-    <main className="mt-4 px-4 sm:px-4 md:px-16">
-      <header className="mb-4">
-        <h1 className="text-4xl text-success font-black first-letter:uppercase">
-          {language} texts for begginers
-        </h1>
-        <p className="font-semibold text-neutral-500">
-          This are some of the best text to learn and practice {language} online
-          and for free.
-        </p>
-      </header>
-      <section className="flex flex-col gap-y-5">
-        <ReadingList values={readingTexts.data} />
-      </section>
-    </main>
+    <>
+      <Navbar />
+      <main className="mt-4 px-4 sm:px-4 md:px-16">
+        <header className="mb-4">
+          <h1 className="text-4xl text-success font-black first-letter:uppercase">
+            {language} texts for begginers
+          </h1>
+          <p className="font-semibold text-neutral-500">
+            This are some of the best text to learn and practice {language}{" "}
+            online and for free.
+          </p>
+        </header>
+        <section className="flex flex-col gap-y-5">
+          <ReadingList values={readingTexts.data} userId={currentUser?.id} />
+        </section>
+      </main>
+    </>
   );
 }

@@ -22,32 +22,25 @@ export async function GET(req: NextRequest) {
           where: { user_id: +userId },
           include: { content: { include: { details: true } } },
         }),
-        prisma.userContent.findMany({
+        prisma.pendingContent.findMany({
           where: {
-            user_id: +userId,
-            content: { every: { marked_as_read: { equals: false } } },
+            user_content_id: +userId,
+            is_completed: true,
           },
           include: {
-            content: {
-              include: {
-                pending_content: {
-                  include: { content: { include: { language: true } } },
-                },
-              },
+            pending_content: {
+              include: { content: { include: { language: true } } },
             },
           },
         }),
-        prisma.userContent.findMany({
+        prisma.pendingContent.findMany({
           where: {
-            user_id: +userId,
+            user_content_id: +userId,
+            marked_as_read: true,
           },
           include: {
-            content: {
-              include: {
-                pending_content: {
-                  include: { content: { include: { language: true } } },
-                },
-              },
+            pending_content: {
+              include: { content: { include: { language: true } } },
             },
           },
         }),

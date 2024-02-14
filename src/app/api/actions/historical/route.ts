@@ -1,9 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "src/app/config/db";
-import { onThrowError } from "../../apiService";
+import { onSuccessRequest, onThrowError } from "../../apiService";
+import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function POST(req: NextRequest) {
   try {
+    verifyUserAuth(req);
     let message = "Historical Saved successfully";
     const { user_id, content_id } = await req.json();
 
@@ -27,7 +29,7 @@ export async function POST(req: NextRequest) {
       message = "Historical modified successfully.";
     }
 
-    return NextResponse.json({ message });
+    return onSuccessRequest({ data: {}, httpStatusCode: 200, message });
   } catch (error) {
     return onThrowError(error);
   }
