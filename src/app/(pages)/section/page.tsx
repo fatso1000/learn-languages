@@ -46,7 +46,7 @@ export default async function Section(props: any) {
                   unit={unit}
                   sectionId={props.searchParams.id}
                   key={unit.id}
-                  color={colorsList[currentIndexColor]}
+                  color={unit.color}
                 />
               );
             })}

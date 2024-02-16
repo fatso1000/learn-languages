@@ -28,7 +28,15 @@ const setCookie = (cookieKey: string, value: any) => {
   }
 };
 
-const setLoginCookies = (user: string, language: string, token?: string) => {
+const setLoginCookies = (
+  user: string,
+  language: string,
+  token?: string,
+  lives?: string,
+  strikes?: string
+) => {
+  setCookie("lives", lives);
+  setCookie("strikes", strikes);
   setCookie("current_user", user);
   setCookie("selected_language", language);
   token && setCookie("token", token);

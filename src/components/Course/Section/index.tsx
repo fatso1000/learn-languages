@@ -57,7 +57,7 @@ export default function Section({
 }) {
   return (
     <div
-      className={`${colors[section?.bg_color || "error"].base} ${
+      className={`${colors[section?.color || "error"].base} ${
         isBlocked ? "grayscale" : ""
       } flex items-center justify-between rounded-2xl w-full p-4 flex-col-reverse md:flex-row md:h-52`}
     >
@@ -75,13 +75,13 @@ export default function Section({
             <TrophyIconSolid className="h-10 w-10" />
             <div
               className={`w-full h-5 ${
-                colors[section?.bg_color || "error"].content
+                colors[section?.color || "error"].content
               }  border-2 brightness-125 rounded-full`}
             >
               <div
                 style={{ width: 33 + "%" }}
                 className={`h-full ${
-                  colors[section?.bg_color || "error"].base
+                  colors[section?.color || "error"].base
                 }  rounded-full`}
               />
             </div>
@@ -90,7 +90,7 @@ export default function Section({
           <Link
             href={"section?id=" + section?.id}
             className={`w-full md:w-unset h-12 btn ${
-              colors[section?.bg_color || "error"].button
+              colors[section?.color || "error"].button
             } ${isBlocked ? "btn-disabled !text-base-100" : ""}`}
           >
             {unitCompleted ? "Repasar" : isBlocked ? "Bloqueado" : "Continuar"}

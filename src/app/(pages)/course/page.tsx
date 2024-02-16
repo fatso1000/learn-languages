@@ -1,10 +1,6 @@
-import Link from "next/link";
-import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import { getCourses } from "src/queryFn";
-import { ISection, LevelState } from "src/types";
-import Image from "next/image";
-import { colorsObject } from "src/shared/helpers";
+import { ISection } from "src/types";
 import Section from "src/components/Course/Section";
 
 export default async function Course(props: any) {
@@ -25,7 +21,6 @@ export default async function Course(props: any) {
             </div>
             <div className="flex flex-col w-full gap-7 md:gap-20 my-7">
               {request.data.course.sections.map((section: ISection, i) => {
-                const unitCompleted = true;
                 return (
                   <Section section={section} etape={i + 1} key={section.id} />
                 );

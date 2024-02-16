@@ -68,7 +68,6 @@ export async function PATCH(
       message: "User logged in successfully.",
     });
   } catch (error: any) {
-    console.log(error);
     return onThrowError(error);
   }
 }
