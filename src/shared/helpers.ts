@@ -147,6 +147,8 @@ const languagesList = [
 
 const MAX_EXPERIENCE = 250;
 
+const MAX_LIVES = 5;
+
 const colorsObject: IColorsObject = {
   "#FF5861": "red",
   "#00B5FF": "blue",
@@ -176,6 +178,7 @@ export {
   colorsObject,
   languagesList,
   MAX_EXPERIENCE,
+  MAX_LIVES,
   rankFrameColors,
   areArraysEqual,
   areArraysEqualUnordered,

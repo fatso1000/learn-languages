@@ -139,6 +139,21 @@ const authorizeUser = async (token: any) => {
   );
 };
 
+const getUserLives = async (userId: number) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/lives/${userId}`,
+    "GET"
+  );
+};
+
+const addOrRemoveLives = async (userId: number, body: { lives: number }) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/lives/${userId}`,
+    "POST",
+    body
+  );
+};
+
 export {
   getContentByLanguageAndType,
   getContentById,
@@ -155,4 +170,6 @@ export {
   completeContent,
   addOrUpdateHistorical,
   addOrRemoveUserContent,
+  getUserLives,
+  addOrRemoveLives,
 };

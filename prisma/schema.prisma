@@ -39,7 +39,19 @@ model User {
     historical   Historical[]
     rank         UserRank?
     user_courses UserCourses[]
+    lives_and_strikes             LivesAndStrikes   @relation(fields:[lives_and_strikes_id], references: [id])
+    lives_and_strikes_id          Int               @unique
 }
+
+model LivesAndStrikes {
+    id               Int          @id @default(autoincrement())
+    user             User?
+    lives            Int          @default(5)
+    last_live_date   DateTime?
+    strikes_length   Int          @default(0)
+    last_strike_date DateTime?
+}
+
 
 model UserProfile {
     id          Int             @id @default(autoincrement())

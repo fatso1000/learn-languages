@@ -10,6 +10,7 @@ import {
 } from "src/components/Icons";
 import { rankFrameColors } from "src/shared/helpers";
 import { DashboardProps, IUser, SelectedLanguageElement } from "src/types";
+import { EmblaOptionsType } from "embla-carousel";
 
 export default async function Header(props: {
   data: DashboardProps;
@@ -18,6 +19,8 @@ export default async function Header(props: {
   currentUser: IUser;
 }) {
   const { data, userName, selectedLanguage, currentUser } = props;
+
+  const OPTIONS: EmblaOptionsType = { containScroll: "trimSnaps" };
   return (
     <header className="mb-4 min-h-[100vh] overflow-hidden py-8">
       <div className="relative">
@@ -99,28 +102,30 @@ export default async function Header(props: {
               </h2>
               <button className="btn">More</button>
             </div>
-            {data && data.historical && data.historical[0] ? (
-              <CarouselComponent items={data.historical[0].content || []} />
+            {/* {data && data.historical && data.historical[0] ? (
+              <CarouselComponent
+                items={data.historical[0].content.details || []}
+              />
             ) : (
               <div>
                 <h3>No content watched yet.</h3>
               </div>
-            )}
+            )} */}
           </div>
-          <div className="mt-6 flex w-full flex-col gap-2">
+          <div className="mt-6 flex w-full flex-col gap-2 relative">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 Not finished content
               </h2>
               <button className="btn">More</button>
             </div>
-            {data && data.pendingContent ? (
+            {/* {data && data.pendingContent ? (
               <CarouselComponent items={data.pendingContent || []} />
             ) : (
               <div>
                 <h3>No unfinished content yet.</h3>
               </div>
-            )}
+            )} */}
           </div>
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
@@ -130,7 +135,10 @@ export default async function Header(props: {
               <button className="btn">More</button>
             </div>
             {data && data.savedContent ? (
-              <CarouselComponent items={data.savedContent || []} />
+              <CarouselComponent
+                items={data.savedContent || []}
+                options={OPTIONS}
+              />
             ) : (
               <div>
                 <h3>No saved content yet.</h3>
