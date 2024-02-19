@@ -59,10 +59,10 @@ export default function Section({
     <div
       className={`${colors[section?.bg_color || "error"].base} ${
         isBlocked ? "grayscale" : ""
-      } flex items-center justify-between rounded-2xl w-full p-4 flex-col-reverse md:flex-row md:h-52`}
+      } flex items-center justify-between rounded-2xl w-full p-4 flex-col-reverse md:flex-row md:min-h-52 md:max-h-56`}
     >
-      <div className="h-full w-full flex flex-1 flex-col justify-between items-center md:items-start gap-3 ">
-        <h3 className="font-black text-3xl">
+      <div className="h-full w-full flex-1 items-start flex flex-col gap-3 ">
+        <h3 className="font-black text-3xl leading-none">
           <span className="text-2xl">Etape {etape}:</span> <br />
           {section?.title || "Ejemplo"}
         </h3>

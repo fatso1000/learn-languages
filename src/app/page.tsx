@@ -9,7 +9,7 @@ export default async function Home(props: any) {
       <Navbar props={props} />
       <main>
         <div className="m-auto">
-          <header className="h-[calc(100vh-68px)] px-4 border-b-2 m-auto overflow-hidden flex justify-center flex-col">
+          <header className="h-[calc(100svh-68px)] px-4 border-b-2 m-auto overflow-hidden flex justify-center flex-col">
             <HomeHeader />
           </header>
           <section className="flex flex-col gap-52">

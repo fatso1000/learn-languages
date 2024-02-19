@@ -1,7 +1,7 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { CustomError, IUserSignUp, UserSignUpPOST } from "types/apiTypes";
-import { onThrowError } from "../../apiService";
+import { onSuccessRequest, onThrowError } from "../../apiService";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import bcrypt from "bcrypt";
@@ -88,7 +88,10 @@ export async function POST(req: NextRequest) {
         msg: "Unexpected error during user registration.",
       });
 
-    return NextResponse.json(request);
+    return onSuccessRequest({
+      data: request,
+      httpStatusCode: HttpStatusCode.CREATED,
+    });
   } catch (error: any) {
     return onThrowError(error);
   }

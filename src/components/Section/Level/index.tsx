@@ -85,7 +85,7 @@ export default function LevelComponent(props: LevelProps) {
       className={`${styleContainer} ${
         (state === LevelState.STUDYING || state === LevelState.COMPLETED) &&
         lineColors[color][state]
-      } h-[7.25rem] w-[7.25rem] flex flex-col justify-center items-center level dropdown relative`}
+      } h-28 w-28 flex flex-col justify-center items-center level dropdown relative`}
       tabIndex={0}
     >
       {state === "studying" && <StudyingBubble />}
@@ -94,7 +94,12 @@ export default function LevelComponent(props: LevelProps) {
       >
         <LevelIcon state={state} />
       </div>
-      <LevelBubble state={state} href={href} difficulty={level.difficulty} />
+      <LevelBubble
+        level={level}
+        state={state}
+        href={href}
+        difficulty={level.difficulty}
+      />
     </button>
   );
 }

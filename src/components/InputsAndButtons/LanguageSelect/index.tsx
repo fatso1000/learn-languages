@@ -14,6 +14,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import { LanguageSelectProps } from "src/types";
+import Modal from "src/components/Modal";
 
 const languagesList: any = {
   english: {
@@ -42,15 +43,18 @@ export default function LanguageSelect(props: LanguageSelectProps) {
     ...initialState,
     user_profile_id: selectedLanguage.user_profile_id,
   });
-  const formRef = useRef<any>(null);
+  const formRef = useRef<any>(null),
+    modalRef = useRef<any>(null);
 
   useEffect(() => {
     if (state.success) router.push("/");
   }, [state.success]);
 
+  const onOpenModal = () => modalRef.current && modalRef.current.showModal();
+
   return (
-    <div className="btn max-md:btn-sm btn-ghost dropdown dropdown-bottom dropdown-left dropdown-mobile md:dropdown-end">
-      <label tabIndex={0} className="flex cursor-pointer h-full p-0">
+    <>
+      <button className="btn max-md:btn-sm btn-ghost" onClick={onOpenModal}>
         {selectedLanguage && (
           <Image
             src={languagesList[selectedLanguage.details.name].flagUrl.src}
@@ -60,11 +64,8 @@ export default function LanguageSelect(props: LanguageSelectProps) {
             className="w-10 my-auto rounded-md"
           />
         )}
-      </label>
-      <ul
-        tabIndex={0}
-        className="p-2 shadow menu dropdown-content z-20 bg-base-100 rounded-box w-[280px] mt-3"
-      >
+      </button>
+      <Modal modalRef={modalRef} title="Select Language">
         <form
           action={formAction}
           ref={formRef}
@@ -129,7 +130,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
             </Link>
           </label>
         </form>
-      </ul>
-    </div>
+      </Modal>
+    </>
   );
 }

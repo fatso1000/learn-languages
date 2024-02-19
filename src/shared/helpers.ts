@@ -1,4 +1,5 @@
 import { IColorsObject } from "src/types";
+import { colorsListObject } from "./LevelsColors";
 
 function getRandomItemFromArray<T>(array: T[]) {
   const randomIndex = Math.floor(Math.random() * array.length);
@@ -10,7 +11,7 @@ function getRandomAnimalName() {
 }
 
 function getRandomColor() {
-  return getRandomItemFromArray<string>(colorsList);
+  return getRandomItemFromArray<string>(Object.keys(colorsListObject));
 }
 
 function areArraysEqual(arr1: any[], arr2: any[]) {

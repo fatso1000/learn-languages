@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { colorsObject } from "src/shared/helpers";
 import IconColors from "../IconColors";
 import IconAnimals from "../IconAnimals";
 import { IconProps } from "src/types";
 
-export default function EditIcon(props: {
+export default function EditIconComponent(props: {
   defaultNameColor: string;
   defaultAnimalName: string;
 }) {
@@ -30,7 +29,7 @@ export default function EditIcon(props: {
   };
 
   return (
-    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden px-4 md:px-8 mt-8">
+    <section className="flex w-full justify-between flex-col h-full overflow-y-auto overflow-x-hidden">
       <div className="divider"></div>
       <IconColors selectedIcon={selectedIcon} handleColor={handleColor} />
       <IconAnimals selectedIcon={selectedIcon} handleAnimal={handleAnimal} />

@@ -16,7 +16,7 @@ export default async function Course(props: any) {
     <>
       <Navbar props={props} />
       <main className="mt-4 px-4 sm:px-4 md:px-16 flex items-center justify-center">
-        <div className="w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 flex flex-col items-center">
+        <div className="w-full flex max-w-[643px] flex-col items-center">
           <div className="w-full flex flex-col gap-5">
             <div className="py-4 w-full inline-flex items-center justify-between border-b-2">
               <h1 className="font-black text-xl m-auto z-0 text-base-content opacity-40">

@@ -3,6 +3,7 @@ import { IUser } from "src/types";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import FormTextarea from "src/components/InputsAndButtons/FormTextarea";
+import { colorsListObject } from "src/shared/LevelsColors";
 
 export default function Edit({
   user,
@@ -14,11 +15,11 @@ export default function Edit({
   handleEditMode: (stateDefault?: boolean) => void;
 }) {
   return (
-    <div className="flex flex-col h-full justify-around">
+    <div className="flex flex-col justify-around">
       <div className="flex flex-col items-center  gap-4 py-2">
         <div className="relative">
           <AnimalComponent
-            color={user.profile.color}
+            color={colorsListObject[user.profile.color]}
             animalName={user.profile.animal_name}
             size="6em"
           />
