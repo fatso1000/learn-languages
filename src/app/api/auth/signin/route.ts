@@ -26,6 +26,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       include: {
         profile: { include: { languages: { include: { details: true } } } },
         rank: { include: { rank: true } },
+        lives_and_strikes: true,
       },
     });
 

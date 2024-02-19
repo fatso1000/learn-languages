@@ -51,8 +51,18 @@ export async function signInFormValidation(
           user.data.user.profile.languages.find(
             (language: SelectedLanguageElement) => language.active
           )
+        ),
+        livesStringify = JSON.stringify(user.data.user.lives_and_strikes.lives),
+        strikesStringify = JSON.stringify(
+          user.data.user.lives_and_strikes.strikes_length
         );
-      setLoginCookies(userStringify, languageStringify, user.data.token);
+      setLoginCookies(
+        userStringify,
+        languageStringify,
+        user.data.token,
+        livesStringify,
+        strikesStringify
+      );
       return { success: true, errors: [] };
     }
 

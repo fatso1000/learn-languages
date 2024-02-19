@@ -79,6 +79,11 @@ export async function POST(req: NextRequest) {
             },
           },
         },
+        lives_and_strikes: {
+          create: {
+            lives: 5,
+          },
+        },
       },
     });
 
