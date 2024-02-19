@@ -19,7 +19,7 @@ export default async function Header(props: {
     <header className="mb-4 min-h-[100svh] overflow-hidden py-4">
       <div className="relative flex flex-col">
         <div className="inline-flex items-center gap-3 mb-6 max-md:flex max-md:flex-col max-md:items-start">
-          <div className="z-10 max-md:hidden w-full">
+          <div className="z-10 max-md:hidden max-md:w-full">
             <div className="rounded-full m-auto w-32 h-32">
               <AnimalComponent
                 color={colorsListObject[currentUser.profile.color]}

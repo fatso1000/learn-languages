@@ -50,7 +50,7 @@ export default function CarouselComponent(props: {
                   description={item.pending_content.description}
                   href={`${item.pending_content.content.language.name.toLowerCase()}/${item.pending_content.type.toLowerCase()}/${
                     item.id
-                  }`}
+                  }?userId=${item.user_content_id}`}
                   language={item.pending_content.content.language.name}
                   level={item.pending_content.level}
                   title={item.pending_content.title}
