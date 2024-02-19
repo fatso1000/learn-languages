@@ -6,7 +6,7 @@ export default function LanguagesPage(props: any) {
     <>
       <Navbar props={props} />{" "}
       <main className="mt-4 px-4 sm:px-4 md:px-16">
-        <div className="mb-4 min-h-[100vh] overflow-hidden pb-40 pt-20 md:pt-32">
+        <div className="mb-4 min-h-[100svh] overflow-hidden pb-40 pt-20 md:pt-32">
           <div className="relative">
             <div className="relative mx-auto flex items-center flex-col">
               <h1 className="text-6xl  font-black text-center inline-flex justify-center">

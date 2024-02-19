@@ -192,8 +192,8 @@ export default function LevelManager({
   return (
     <main className="md:px-4">
       <div className="max-w-[70ch] m-auto">
-        <div className="h-[100vh] overflow-hidden flex justify-center flex-col">
-          <div className="flex min-h-[100vh] flex-col justify-center">
+        <div className="h-[100svh] overflow-hidden flex justify-center flex-col">
+          <div className="flex min-h-[100svh] flex-col justify-center">
             {isLevelCompleted ? (
               <CompletedLevelSection
                 minutes={minutes}

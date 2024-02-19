@@ -23,8 +23,8 @@ const BottomNavigationButton = ({
     href={href}
     className={
       pathname === href || (pathname && href.includes(pathname))
-        ? "text-info border-2 border-info bg-info/10 rounded-lg"
-        : "text-neutral-700"
+        ? "text-info border-2 border-info bg-info/10 rounded-lg select-none"
+        : "text-neutral-600 select-none"
     }
   >
     {icon}
@@ -48,9 +48,9 @@ const LinkButton = ({
     <form className="h-full flex" action={logoutUserFormAction}>
       <button
         type="submit"
-        className="inline-flex h-full !gap-2 items-center max-md:justify-center"
+        className="inline-flex h-full !gap-2 items-center max-md:justify-center text-neutral-600"
       >
-        <LogoutUserSolidIcon stroke="#2E2E2E" />
+        <LogoutUserSolidIcon />
         <span className="font-black text-lg max-lg:hidden">Logout</span>
       </button>
     </form>
@@ -60,8 +60,8 @@ const LinkButton = ({
       className={`${
         pathname === href || (pathname && href.includes(pathname))
           ? "pointer-events-none border-2 border-info bg-info/10 text-info "
-          : "text-neutral-700 "
-      } h-full inline-flex !gap-2 items-center max-md:justify-center active:bg-current`}
+          : "text-neutral-600 "
+      } select-none h-full inline-flex !gap-2 items-center max-md:justify-center active:bg-current`}
     >
       {icon}
       <span className="font-black text-lg max-lg:hidden">{span}</span>
@@ -137,7 +137,7 @@ export default function LayoutComponent({
               href="/dashboard"
               pathname={pathname}
               span="Home"
-              icon={<HomeSolidIcon fill={"#2E2E2E"} />}
+              icon={<HomeSolidIcon />}
             />
           </li>
           <li className="h-14">
@@ -145,7 +145,7 @@ export default function LayoutComponent({
               href="/user/profile"
               span="Profile"
               pathname={pathname}
-              icon={<UserSolidBorderIcon fill={"#2E2E2E"} />}
+              icon={<UserSolidBorderIcon />}
             />
           </li>
           <li className="h-14">
@@ -153,7 +153,7 @@ export default function LayoutComponent({
               href="/user/settings"
               span="Settings"
               pathname={pathname}
-              icon={<SettingsSolidIcon fill={"#2E2E2E"} />}
+              icon={<SettingsSolidIcon />}
             />
           </li>
           <li className="h-14">

@@ -23,10 +23,10 @@ export default async function Section(props: any) {
     <>
       <Navbar props={props} />
       <main
-        style={{ minHeight: "calc(100vh - 64px)" }}
+        style={{ minHeight: "calc(100svh - 64px)" }}
         className="overflow-hidden flex flex-col items-center"
       >
-        <div className="w-full sm:w-4/5 lg:w-3/5 xl:w-2/5 flex flex-col items-center">
+        <div className="w-full flex flex-col items-center max-w-[643px]">
           <div className="py-4 w-full inline-flex items-center justify-between border-b-2">
             <Link
               href={"/course"}
@@ -38,7 +38,7 @@ export default async function Section(props: any) {
               {request.data.title}: {request.data.description}
             </h1>
           </div>
-          <div className="w-full flex flex-col gap-10 py-8">
+          <div className="w-full flex flex-col gap-10">
             {request.data.units.map((unit: IUnit, i) => {
               const currentIndexColor = i % colorsList.length;
               return (

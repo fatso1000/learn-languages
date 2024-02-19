@@ -324,4 +324,5 @@ export interface LevelBubbleProps {
   state: LevelState;
   href: string;
   difficulty?: ExerciseDifficulty;
+  level: ILevel;
 }

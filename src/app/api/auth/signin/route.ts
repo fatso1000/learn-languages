@@ -55,7 +55,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const jwt = logInUser(removePassword);
 
     return onSuccessRequest({
-      httpStatusCode: HttpStatusCode.CREATED,
+      httpStatusCode: 200,
       data: { token: jwt, user: removePassword },
     });
   } catch (error: any) {

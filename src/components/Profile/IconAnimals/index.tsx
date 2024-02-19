@@ -1,4 +1,5 @@
 import AnimalComponent from "src/components/Animal";
+import { colorsListObject } from "src/shared/LevelsColors";
 import { animalsList } from "src/shared/helpers";
 import { IconProps } from "src/types";
 
@@ -8,7 +9,7 @@ export default function IconAnimals(props: {
 }) {
   const { selectedIcon, handleAnimal } = props;
   return (
-    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full justify-items-center overflow-y-scroll max-h-[90vh] my-5 border-2 p-4 rounded-md">
+    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 w-full justify-items-center overflow-y-scroll max-h-[90svh] my-5 border-2 p-4 rounded-md">
       {animalsList.map((animal: string) => {
         return (
           <label
@@ -25,7 +26,7 @@ export default function IconAnimals(props: {
             />
             <div className="border-2 rounded-full">
               <AnimalComponent
-                color={selectedIcon.color}
+                color={colorsListObject[selectedIcon.color]}
                 animalName={animal}
                 size="65px"
               />

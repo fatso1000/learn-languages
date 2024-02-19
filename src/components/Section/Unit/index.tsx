@@ -31,7 +31,7 @@ export default function UnitComponent(props: UnitProps) {
         <h3 className="font-bold text-2xl">{unit.title}</h3>
         <p className="text-lg">{unit.description}</p>
       </div>
-      <div className="grid grid-cols-3 gap-5 p-5 w-4/5 sm:w-3/5 z-20 justify-items-center relative">
+      <div className="grid grid-cols-3 gap-5 p-5 z-20 justify-items-center relative">
         {unit.levels.map((level, i) => (
           <Level
             key={level.id}

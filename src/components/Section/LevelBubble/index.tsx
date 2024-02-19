@@ -5,6 +5,7 @@ export default function LevelBubble({
   state,
   href,
   difficulty,
+  level,
 }: LevelBubbleProps) {
   return (
     <div
@@ -17,7 +18,7 @@ export default function LevelBubble({
     >
       <div className="card-body text-start !p-0 flex flex-col gap-2 w-full">
         <h3 className="text-lg font-black flex justify-between ">
-          Name
+          {level.title}
           {state === LevelState.STUDYING && (
             <span className="badge badge-success-content font-black border-2 border-success-content badge-outline flex justify-center items-center">
               {difficulty}
@@ -26,7 +27,7 @@ export default function LevelBubble({
         </h3>
         {state === LevelState.STUDYING && (
           <>
-            <p>Leccion 1/3.</p>
+            <p>Current level</p>
             <Link
               href={href}
               className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
