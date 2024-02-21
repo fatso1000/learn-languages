@@ -1,5 +1,6 @@
 "use server";
 
+import { ExerciseType } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { logoutUserAction } from "src/app/actions";
 import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
@@ -156,4 +157,83 @@ export async function selectUserLanguageFormValidation(
 export async function logoutUserFormAction() {
   await logoutUserAction();
   redirect("/");
+}
+
+export async function exercisesLevelFormAction(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const choices = formData.getAll("choices"),
+      compactTranslations = formData.getAll("compactTranslations"),
+      correctSolutions = formData.getAll("correctSolutions"),
+      correctAnswers = formData.getAll("correctAnswers"),
+      prompt = formData.get("prompt"),
+      solutionTranslation = formData.get("solutionTranslation"),
+      sourceLanguage = formData.get("sourceLanguage"),
+      targetLanguage = formData.get("targetLanguage"),
+      unitId = formData.get("unitId"),
+      type = formData.get("type"),
+      difficulty = formData.get("difficulty");
+    let body: any = {
+      prompt,
+      unitId: unitId ? +unitId : null,
+      type,
+      targetLanguage,
+      sourceLanguage,
+      difficulty,
+    };
+
+    switch (type) {
+      case ExerciseType.ChooseCorrect:
+        body = {
+          ...body,
+          correctAnswers,
+          choices,
+        };
+        break;
+
+      case ExerciseType.CompleteSentence:
+        body = { ...body, compactTranslations, correctSolutions };
+        break;
+
+      case ExerciseType.Translation:
+        body = {
+          ...body,
+          compactTranslations,
+          correctSolutions,
+          choices,
+          correctAnswers,
+        };
+        break;
+
+      case ExerciseType.WriteDown:
+        body = { ...body, compactTranslations, solutionTranslation };
+        break;
+
+      default:
+        break;
+    }
+
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/course/level",
+      "POST",
+      body,
+      true
+    );
+
+    if (request && request.data) {
+      return {
+        errors: [],
+        success: true,
+      };
+    }
+
+    return {
+      errors: [...request.errors, { message: request.message }],
+      success: false,
+    };
+  } catch (error) {
+    return { errors: [{ message: "Unknown error" }], success: false };
+  }
 }
