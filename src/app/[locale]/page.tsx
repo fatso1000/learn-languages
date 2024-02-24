@@ -1,29 +1,37 @@
 import Image from "next/image";
-import Link from "next/link";
 import HomeHeader from "src/components/HomeHeader";
 import Navbar from "src/components/Navbar";
-
+import { getTranslations } from "next-intl/server";
+import { Link } from "src/shared/navigation";
 export default async function Home(props: any) {
+  const generics = await getTranslations("generics");
+
+  const t = await getTranslations("pages.unauthDashboard");
+
   return (
     <>
       <Navbar props={props} />
       <main>
         <div className="m-auto">
           <header className="h-[calc(100svh-68px)] px-4 border-b-2 m-auto overflow-hidden flex justify-center flex-col">
-            <HomeHeader />
+            <HomeHeader subtitle={t("sectionOne.subtitle")} />
           </header>
           <section className="flex flex-col gap-52">
             <section className="max-w-[1182px] px-4 m-auto mt-32 overflow-hidden flex justify-center flex-col">
               <div className="relative flex items-center justify-center flex-col-reverse gap-7 md:flex-row">
                 <div className="md:w-2/5">
                   <h2 className="font-light text-5xl leading-none">
-                    <span className="font-black text-success">Fast</span> and{" "}
-                    <span className="font-black text-info">free</span> :)
+                    <span className="font-black text-success">
+                      {t("sectionTwo.title.fast")}
+                    </span>{" "}
+                    {t("sectionTwo.title.and")}{" "}
+                    <span className="font-black text-info">
+                      {t("sectionTwo.title.free")}
+                    </span>{" "}
+                    :)
                   </h2>
                   <p className="mt-4 text-xl text-base/60 font-light">
-                    Learning with LLO is really easy and the best part,
-                    it&apos;s free for everyone! We make this possible so anyone
-                    has the chance to practice his skills without limitations.
+                    {t("sectionTwo.subtitle")}
                   </p>
                 </div>
                 <div className="md:flex md:w-2/5">
@@ -46,12 +54,15 @@ export default async function Home(props: any) {
               <div className="relative flex items-center justify-center flex-col-reverse gap-7 md:flex-row-reverse">
                 <div className="md:w-2/5">
                   <h2 className="font-light text-5xl leading-none">
-                    <span className="font-black text-success">Feel</span>{" "}
-                    <span className="font-black text-accent">free</span>
+                    <span className="font-black text-success">
+                      {t("sectionThree.title.feel")}
+                    </span>{" "}
+                    <span className="font-black text-accent">
+                      {t("sectionThree.title.free")}
+                    </span>
                   </h2>
                   <p className="mt-4 text-xl text-base/60 font-light">
-                    Our platform it&apos;s build in a way where you can go
-                    easily and free.
+                    {t("sectionThree.subtitle")}
                   </p>
                 </div>
                 <div className="md:flex md:w-2/5">
@@ -77,7 +88,7 @@ export default async function Home(props: any) {
                     className="btn bg-success-content text-success hover:bg-success-content/80 md:btn-wide px-12 normal-case text-xl"
                     href="/auth/signup"
                   >
-                    Start today
+                    {generics("startToday")}
                   </Link>
                 </div>
                 <div className="md:flex md:w-2/4">
@@ -97,16 +108,18 @@ export default async function Home(props: any) {
               <div>
                 <div>
                   <h3 className="font-black text-success-content text-lg">
-                    About
+                    {t("footer.about.title")}
                   </h3>
                 </div>
                 <div className="text-success-content/70 font-bold">
                   <ul className="flex flex-col gap-1">
                     <li>
-                      <Link href="/team">Team</Link>
+                      <Link href="/team">{t("footer.about.label.team")}</Link>
                     </li>
                     <li>
-                      <Link href="/purpose">Purpose</Link>
+                      <Link href="/purpose">
+                        {t("footer.about.label.purpose")}
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -114,16 +127,20 @@ export default async function Home(props: any) {
               <div>
                 <div>
                   <h3 className="font-black text-success-content text-lg">
-                    Help and support
+                    {t("footer.helpAndSupport.title")}
                   </h3>
                 </div>
                 <div className="text-success-content/70 font-bold">
                   <ul className="flex flex-col gap-1">
                     <li>
-                      <Link href="/faq">Faq</Link>
+                      <Link href="/faq">
+                        {t("footer.helpAndSupport.label.faq")}
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/contact">Contact Us</Link>
+                      <Link href="/contact">
+                        {t("footer.helpAndSupport.label.contactUs")}
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -131,7 +148,7 @@ export default async function Home(props: any) {
               <div>
                 <div>
                   <h3 className="font-black text-success-content text-lg">
-                    Social
+                    {t("footer.social.title")}
                   </h3>
                 </div>
                 <div className="text-success-content/70 font-bold">
@@ -151,16 +168,20 @@ export default async function Home(props: any) {
               <div>
                 <div>
                   <h3 className="font-black text-success-content text-lg">
-                    Privacy and terms
+                    {t("footer.privacityAndTerms.title")}
                   </h3>
                 </div>
                 <div className="text-success-content/70 font-bold">
                   <ul className="flex flex-col gap-1">
                     <li>
-                      <Link href="/terms">Terms</Link>
+                      <Link href="/terms">
+                        {t("footer.privacityAndTerms.label.terms")}
+                      </Link>
                     </li>
                     <li>
-                      <Link href="/privacy">Privacy</Link>
+                      <Link href="/privacy">
+                        {t("footer.privacityAndTerms.label.privacity")}
+                      </Link>
                     </li>
                   </ul>
                 </div>

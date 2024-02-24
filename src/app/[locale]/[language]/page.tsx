@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Languages } from "src/types";
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 
 export async function generateMetadata(props: any): Promise<Metadata> {
   return {

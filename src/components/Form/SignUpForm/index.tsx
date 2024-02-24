@@ -6,7 +6,7 @@ import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "src/shared/navigation";
 
 const initialState = {
   errors: [],
@@ -16,8 +16,10 @@ const initialState = {
 export default function SignUpForm() {
   const [state, formAction] = useFormState(signUpFormValidation, initialState);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (state.success) redirect("/auth/verify");
+    if (state.success) router.push("/auth/verify");
   }, [state.success]);
 
   return (

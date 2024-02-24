@@ -2,7 +2,7 @@
 
 import { ExerciseType } from "@prisma/client";
 import { redirect } from "next/navigation";
-import { logoutUserAction } from "src/app/actions";
+import { logoutUserAction } from "src/app/[locale]/actions";
 import {
   addOrRemoveLives,
   continueOrFailStrikes,

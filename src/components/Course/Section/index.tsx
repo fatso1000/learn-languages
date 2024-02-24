@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import Image from "next/image";
 
 import React from "react";

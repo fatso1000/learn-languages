@@ -1,0 +1,66 @@
+{
+  "generics": {
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "startToday": "Start Today",
+    "readings": "Readings",
+    "listenings": "Listenings",
+    "course": "Course",
+    "more": "More",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "pages": {
+    "unauthDashboard": {
+      "sectionOne": {
+        "subtitle": "Learn the desired language you want with online tools and content, all for free!"
+      },
+      "sectionTwo": {
+        "title": {
+          "fast": "Fast",
+          "and": "and",
+          "free": "free"
+        },
+        "subtitle": "Learning with LLO is really easy and the best part, it's free for everyone! We make this possible so anyone has the chance to practice his skills without limitations."
+      },
+      "sectionThree": {
+        "title": {
+          "feel": "Feel",
+          "free": "free"
+        },
+        "subtitle": "Our platform it's build in a way where you can go easily and free."
+      },
+      "footer": {
+        "about": {
+          "title": "About",
+          "label": {
+            "team": "Team",
+            "purpose": "Purpose"
+          }
+        },
+        "helpAndSupport": {
+          "title": "Help and support",
+          "label": { "faq": "Faq", "contactUs": "Contact Us" }
+        },
+        "social": {
+          "title": "Social"
+        },
+        "privacityAndTerms": {
+          "title": "Privacy and terms",
+          "label": { "terms": "Terms", "privacity": "Privacity" }
+        }
+      }
+    },
+    "dashboard": {
+      "title": "Welcome back,",
+      "subtitle": "Let's continue with your learning",
+      "contents": {
+        "lastContentsWatched": "Last contents watched",
+        "notDinishedContent": "Not finished content",
+        "savedContent": "Saved content"
+      }
+    }
+  }
+}

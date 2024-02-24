@@ -12,6 +12,15 @@ export enum Languages {
   french = "french",
 }
 
+export enum Locales {
+  spanish = "es",
+  english = "en",
+  italian = "it",
+  japanese = "jp",
+  german = "de",
+  french = "fr",
+}
+
 export interface ModalProps {
   title: string;
   children: JSX.Element;
