@@ -1,10 +1,11 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import AnimalComponent from "src/components/Animal";
 import CarouselComponent from "src/components/Carousel";
 import { CourseIcon, ListeningIcon, ReadingIcon } from "src/components/Icons";
 import { colorsListObject } from "src/shared/LevelsColors";
 import { DashboardProps, IUser, SelectedLanguageElement } from "src/types";
 import { EmblaOptionsType } from "embla-carousel";
+import { getTranslations } from "next-intl/server";
 
 export default async function Header(props: {
   data: DashboardProps;
@@ -12,6 +13,9 @@ export default async function Header(props: {
   selectedLanguage: SelectedLanguageElement;
   currentUser: IUser;
 }) {
+  const t = await getTranslations("pages.dashboard");
+  const generics = await getTranslations("generics");
+
   const { data, userName, selectedLanguage, currentUser } = props;
 
   const OPTIONS: EmblaOptionsType = { containScroll: "trimSnaps" };
@@ -30,13 +34,13 @@ export default async function Header(props: {
           </div>
           <div className="rounded-t-2xl">
             <h1 className="text-4xl md:text-5xl font-black leading-tight">
-              Welcome back, <br />
+              {t("title")} <br />
               <span className="text-5xl md:text-6xl text-info inline-block">
                 {userName}!
               </span>
             </h1>
             <p className="text-sm md:text-xl text-base-content/60 font-light">
-              Let&apos;s continue with your learning ;)
+              {t("subtitle")} ;)
             </p>
           </div>
         </div>
@@ -46,19 +50,19 @@ export default async function Header(props: {
               href={`/${selectedLanguage.details.name}/reading`}
               className="btn btn-accent max-md:flex-auto h-full font-black gap-y-0"
             >
-              Readings <ReadingIcon />
+              {generics("readings")} <ReadingIcon />
             </Link>
             <Link
               href={`/${selectedLanguage.details.name}/listening`}
               className="btn btn-info max-md:flex-auto h-full font-black gap-y-0"
             >
-              Listenings <ListeningIcon />
+              {generics("listenings")} <ListeningIcon />
             </Link>
             <Link
               href={"course"}
               className="btn btn-success max-md:flex-auto h-full font-black gap-y-0"
             >
-              Course <CourseIcon />
+              {generics("course")} <CourseIcon />
             </Link>
           </div>
         </div>
@@ -66,9 +70,9 @@ export default async function Header(props: {
           <div>
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Last contents watched
+                {t("contents.lastContentsWatched")}
               </h2>
-              <button className="btn">More</button>
+              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.historical && data.historical[0] ? (
               <CarouselComponent
@@ -83,9 +87,9 @@ export default async function Header(props: {
           <div className="mt-6 flex w-full flex-col gap-2 relative">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Not finished content
+                {t("contents.notDinishedContent")}
               </h2>
-              <button className="btn">More</button>
+              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.pendingContent ? (
               <CarouselComponent items={data.pendingContent || []} />
@@ -98,9 +102,9 @@ export default async function Header(props: {
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                Saved content
+                {t("contents.savedContent")}
               </h2>
-              <button className="btn">More</button>
+              <button className="btn">{generics("more")}</button>
             </div>
             {data && data.savedContent ? (
               <CarouselComponent

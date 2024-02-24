@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { ContentByLevel } from "src/types";
 
 export default function ReadingSection(props: ContentByLevel) {

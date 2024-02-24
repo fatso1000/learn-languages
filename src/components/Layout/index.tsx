@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import {
   CourseIcon,
   HomeSolidIcon,
@@ -43,15 +43,16 @@ const LinkButton = ({
   icon: JSX.Element;
   isForm?: boolean;
   pathname: string | null;
-}) =>
-  isForm ? (
+}) => {
+  /*   const t = useTranslations("generics");
+   */ return isForm ? (
     <form className="h-full flex" action={logoutUserFormAction}>
       <button
         type="submit"
         className="inline-flex h-full !gap-2 items-center max-md:justify-center text-neutral-600"
       >
         <LogoutUserSolidIcon />
-        <span className="font-black text-lg max-lg:hidden">Logout</span>
+        <span className="font-black text-lg max-lg:hidden">{`t("logout")`}</span>
       </button>
     </form>
   ) : (
@@ -67,6 +68,7 @@ const LinkButton = ({
       <span className="font-black text-lg max-lg:hidden">{span}</span>
     </Link>
   );
+};
 
 export default function LayoutComponent({
   isLoggedIn,
@@ -75,6 +77,8 @@ export default function LayoutComponent({
   isLoggedIn: boolean;
   children: any;
 }) {
+  /* const t = useTranslations("generics"); */
+
   const pathname = usePathname();
   return (
     <div
@@ -136,14 +140,14 @@ export default function LayoutComponent({
             <LinkButton
               href="/dashboard"
               pathname={pathname}
-              span="Home"
+              span={`generics("home")`}
               icon={<HomeSolidIcon />}
             />
           </li>
           <li className="h-14">
             <LinkButton
               href="/user/profile"
-              span="Profile"
+              span={`generics("profile")`}
               pathname={pathname}
               icon={<UserSolidBorderIcon />}
             />
@@ -151,7 +155,7 @@ export default function LayoutComponent({
           <li className="h-14">
             <LinkButton
               href="/user/settings"
-              span="Settings"
+              span={`generics("settings")`}
               pathname={pathname}
               icon={<SettingsSolidIcon />}
             />
@@ -159,7 +163,7 @@ export default function LayoutComponent({
           <li className="h-14">
             <LinkButton
               href="/section?id=1"
-              span="Course"
+              span={`generics("course")`}
               pathname={pathname}
               icon={<CourseIcon />}
             />

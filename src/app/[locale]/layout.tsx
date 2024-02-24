@@ -14,11 +14,15 @@ const nunito = Nunito({
   subsets: ["latin"],
 });
 
+interface props {
+  children: React.ReactNode;
+  params: { locale: "en" | "es" | "jp" };
+}
+
 export default async function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  params: { locale },
+}: props) {
   const cookieStore = cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
@@ -39,7 +43,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang={locale}
       data-theme="autumn"
       className={nunito.className + " antialiased"}
     >

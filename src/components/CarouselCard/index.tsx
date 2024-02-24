@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { CarouselCardProps } from "src/types";
 
 export default function CarouselCard(props: CarouselCardProps) {

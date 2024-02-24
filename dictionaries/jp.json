@@ -1,0 +1,49 @@
+{
+  "generics": {
+    "signUp": "Registrarse",
+    "signIn": "Iniciar Sesión",
+    "startToday": "Empieza Ahora"
+  },
+  "pages": {
+    "unauthDashboard": {
+      "sectionOne": {
+        "subtitle": "Aprende el idioma que desees con herramientas y contenido en línea, ¡todo de forma gratuita!"
+      },
+      "sectionTwo": {
+        "title": {
+          "fast": "Rápido",
+          "and": "y",
+          "free": "gratis"
+        },
+        "subtitle": "¡Aprender con LLO es realmente fácil y lo mejor de todo, ¡es gratis para todos! Hacemos esto posible para que cualquiera tenga la oportunidad de practicar sus habilidades sin limitaciones."
+      },
+      "sectionThree": {
+        "title": {
+          "feel": "Siéntete",
+          "free": "libre"
+        },
+        "subtitle": "Nuestra plataforma está diseñada para que puedas acceder de manera fácil y gratuita."
+      },
+      "footer": {
+        "about": {
+          "title": "Acerca de",
+          "label": {
+            "team": "Equipo",
+            "purpose": "Propósito"
+          }
+        },
+        "helpAndSupport": {
+          "title": "Ayuda y soporte",
+          "label": { "faq": "Preguntas", "contactUs": "Contáctanos" }
+        },
+        "social": {
+          "title": "Redes"
+        },
+        "privacityAndTerms": {
+          "title": "Términos y privacidad",
+          "label": { "terms": "Términos", "privacity": "Privacidad" }
+        }
+      }
+    }
+  }
+}

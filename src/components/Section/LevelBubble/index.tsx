@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { LevelBubbleProps, LevelState } from "src/types";
 
 export default function LevelBubble({
