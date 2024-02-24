@@ -2,7 +2,17 @@ import Link from "next/link";
 import { IUser, SelectedLanguageElement } from "src/types";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
 import { cookies } from "next/headers";
-import { FireIconSolid, HeartIconSolid } from "../Icons";
+import HeartDropdown from "./HeartDropdown";
+import StrikeDropdown from "./StrikeDropdown";
+
+interface LivesObj {
+  lives: number;
+  last_live_date: string;
+}
+interface StrikesObj {
+  strikes_length: number;
+  last_strike_date: string;
+}
 
 export default async function Navbar(props: any) {
   const cookieStore = cookies();
@@ -10,6 +20,8 @@ export default async function Navbar(props: any) {
     current_user: cookieStore.get("current_user"),
     token: cookieStore.get("token"),
     selectedLanguage: cookieStore.get("selected_language"),
+    lives: cookieStore.get("lives"),
+    strikes: cookieStore.get("strikes"),
   };
 
   const currentUser: IUser | undefined =
@@ -23,6 +35,14 @@ export default async function Navbar(props: any) {
     token =
       cookiesObj.token && cookiesObj.token.value !== ""
         ? cookiesObj.token.value
+        : undefined,
+    lives: LivesObj | undefined =
+      cookiesObj.lives && cookiesObj.lives.value !== ""
+        ? JSON.parse(cookiesObj.lives.value)
+        : undefined,
+    strikes: StrikesObj | undefined =
+      cookiesObj.strikes && cookiesObj.strikes.value !== ""
+        ? JSON.parse(cookiesObj.strikes.value)
         : undefined;
 
   const isLoggedIn = currentUser && token ? true : false;
@@ -47,15 +67,8 @@ export default async function Navbar(props: any) {
               selectedLanguage={selectedLanguage}
               languages={currentUser.profile.languages}
             />
-            <div className="btn max-md:btn-sm btn-ghost flex justify-center items-center gap-1">
-              <HeartIconSolid fill="#F87272" className="w-6 h-6" />
-              <span className="font-extrabold text-lg">5</span>
-            </div>
-
-            <div className="btn max-md:btn-sm btn-ghost flex justify-center items-center gap-1">
-              <FireIconSolid />
-              <span className="font-extrabold text-lg">5</span>
-            </div>
+            <HeartDropdown userId={currentUser.id} lives={lives} />
+            <StrikeDropdown userId={currentUser.id} strikes={strikes} />
           </>
         ) : (
           <>

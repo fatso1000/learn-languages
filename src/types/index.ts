@@ -282,7 +282,10 @@ export interface ExercisesProps {
   data: IExercise;
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   isMessageActive: boolean;
-  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+  onExerciseFail: (
+    correct_answer?: string,
+    translationText?: string
+  ) => Promise<void>;
 }
 
 export enum LevelState {

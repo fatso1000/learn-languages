@@ -1,82 +1,81 @@
 "use client";
 import { useEffect, useState } from "react";
+import { addOrRemoveLifesServer } from "src/actions/auth";
 import { HeartIconSolid } from "src/components/Icons";
-import { addOrRemoveLives } from "src/queryFn";
-import { MAX_LIVES } from "src/shared/helpers";
-import useSWR from "swr";
+import {
+  MAX_LIVES,
+  addTwoHoursToDate,
+  getTimeRemaining,
+} from "src/shared/helpers";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const lifesArray = [0, 1, 2, 3, 4];
 
-export default function HeartDropdown({ userId }: { userId: number }) {
-  // const [lives, setLives] = useState(0);
-  // const [lastLifeDate, setLastLifeDate] = useState<Date>();
-  // const [nextLifeDate, setNextLifeDate] = useState<Date>();
+interface ILives {
+  lives: number;
+  last_live_date: string;
+}
 
-  // const [difference, setDifference] = useState<number>(0);
+export default function HeartDropdown({
+  userId,
+  lives,
+}: {
+  userId: number;
+  lives?: ILives;
+}) {
+  const [timeRemaining, setTimeRemaining] = useState({
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
 
-  // const [hours, setHours] = useState<number>(1);
-  // const [minutes, setMinutes] = useState<number>(1);
-  // const [seconds, setSeconds] = useState<number>(1);
+  useEffect(() => {
+    if (!lives || lives?.lives === MAX_LIVES) return;
+    const startDate = new Date(),
+      endDate = new Date(lives.last_live_date);
+    const twoHoursDate = addTwoHoursToDate(endDate),
+      timer = getTimeRemaining(startDate, twoHoursDate);
 
-  // const { data } = useSWR(`/api/actions/lives/${userId}`, fetcher);
+    if (timer.total <= 0) {
+      addOrRemoveLifesServer(userId, "sum");
+    }
 
-  // useEffect(() => {
-  //   if (!data) return;
-
-  //   const { lives_and_strikes } = data.data;
-
-  //   setLives(lives_and_strikes.lives);
-  //   setLastLifeDate(new Date(lives_and_strikes.last_live_date));
-
-  //   const lastLive = new Date(lives_and_strikes.last_live_date);
-  //   console.log((lastLive?.getTime() / 1000) * 60 * 60);
-
-  //   setNextLifeDate(
-  //     new Date(lastLive.setTime(lastLive.getTime() + 5 * 60 * 1000) / 1000)
-  //   );
-  // }, [data]);
-  // useEffect(() => {
-  //   if (!lives || lives === MAX_LIVES || !nextLifeDate) return;
-
-  //   const interval = setInterval(() => {
-  //     setDifference((difference) => difference - 1);
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, [lives, nextLifeDate, difference]);
-
-  // useEffect(() => {
-  //   const fetch = async () =>
-  //     await addOrRemoveLives(userId, { lives: 1 }).then((res) => {
-  //       setLives(res.data.lives);
-  //       setLastLifeDate(res.data.last_life_date);
-  //     });
-
-  //   if (difference === 0 && nextLifeDate) {
-  //     const now = new Date();
-  //     //setNextLifeDate(new Date(now.setTime(now.getTime() + 5 * 60 * 1000)));
-
-  //     setDifference((nextLifeDate.getTime() - new Date().getTime()) % 1000);
-  //     // fetch();
-  //     return;
-  //   }
-  // }, [difference, nextLifeDate, userId]);
+    setTimeRemaining(timer);
+  }, [userId, lives]);
 
   return (
     <div className="dropdown flex justify-center items-center relative">
-      <button className="btn max-md:btn-sm btn-ghost flex justify-center items-center gap-1">
-        <HeartIconSolid fill="#F87272" className="w-6 h-6" />
-        <span className="font-extrabold text-lg">{5}</span>
+      <button className="btn max-md:btn-sm text-error btn-ghost flex justify-center items-center gap-1">
+        <HeartIconSolid className="w-6 h-6" />
+        <span className="font-extrabold text-base-content text-lg">
+          {lives?.lives}
+        </span>
       </button>
 
-      <h4
+      <div
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-28 h-10 flex justify-center items-center top-12"
+        className="dropdown-content z-[1] menu p-4 gap-2 shadow items-center bg-base-100 flex-col rounded-box flex top-12"
       >
+        <h5 className="font-black text-xl">Lives</h5>
+        <div className="inline-flex">
+          {lifesArray.map((v, i) => (
+            <HeartIconSolid
+              className={
+                "w-6 h-6 " + (i + 1 <= lives!.lives ? "text-error" : "")
+              }
+              key={i}
+            />
+          ))}
+        </div>
         <span className="font-mono text-xl">
-          <span>10</span>:<span>10</span>:<span>10</span>
+          {lives?.lives === MAX_LIVES
+            ? ""
+            : timeRemaining.hours > 0
+            ? "Next life in " + timeRemaining.hours + " hours"
+            : timeRemaining.minutes > 0
+            ? "Next life in " + timeRemaining.minutes + " minutes"
+            : "Next life in " + timeRemaining.seconds + " seconds"}
         </span>
-      </h4>
+      </div>
     </div>
   );
 }

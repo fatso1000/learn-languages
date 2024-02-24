@@ -7,15 +7,18 @@ import { areArraysEqual } from "src/shared/helpers";
 import { ExercisesSection } from "./ExercisesSection";
 import CompletedLevelSection from "./CompletedLevelSection";
 import LifesModal from "./LifesModal";
+import { addOrRemoveLifesServer } from "src/actions/auth";
 
 export default function LevelManager({
   data,
   sectionId,
   lang,
+  userId,
 }: {
   data: IExercise[];
   sectionId: number;
   lang: string;
+  userId: number;
 }) {
   const [playSuccess] = useSound("sounds/success_sfx.mp3", {
       volume: 1,
@@ -31,7 +34,7 @@ export default function LevelManager({
     });
 
   // Agregar vidas a esquema de usuario y actualizar su valor en los fallos
-  const [lifes, setLifes] = useState(5);
+  const [lives, setLives] = useState(5);
   const [currentExercise, setCurrentExercise] = useState(0);
   const [progressIndex, setProgressIndex] = useState(0);
   const [isLevelCompleted, setIsLevelCompleted] = useState(false);
@@ -151,12 +154,13 @@ export default function LevelManager({
     setCurrentExercise(currentExercise + 1);
   };
 
-  const onExerciseFail = (
+  const onExerciseFail = async (
     correct_answer?: string,
     translationText?: string
   ) => {
-    setLifes(lifes - 1);
-    if (lifes - 1 === 0) {
+    setLives(lives - 1);
+    await addOrRemoveLifesServer(userId, "lose");
+    if (lives - 1 === 0) {
       return onRunOutHearts();
     }
     addQueue(data[currentExercise]);
@@ -206,7 +210,7 @@ export default function LevelManager({
               <ExercisesSection
                 currentExercise={currentExercise}
                 data={data}
-                lifes={lifes}
+                lives={lives}
                 message={message}
                 onCheckAnswer={onCheckAnswer}
                 progressIndex={progressIndex}
@@ -220,7 +224,7 @@ export default function LevelManager({
                 sectionId={sectionId}
               />
             )}
-            <LifesModal isLifesOver={lifes === 0} sectionId={sectionId} />
+            <LifesModal isLifesOver={lives === 0} sectionId={sectionId} />
           </div>
         </div>
       </div>
