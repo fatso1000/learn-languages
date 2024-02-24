@@ -3,11 +3,7 @@ import { memo, useEffect } from "react";
 import { continueOrFailStrikesServer } from "src/actions/auth";
 import { FireIconSolid, SuccessIconCircle } from "src/components/Icons";
 import { hasOneDayPassed, isSameDay } from "src/shared/helpers";
-
-interface IStrikes {
-  strikes_length: number;
-  last_strike_date: string;
-}
+import { IStrikes } from "src/types";
 
 const weekDays = [
   { day: "Su", strike: false },

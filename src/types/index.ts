@@ -338,3 +338,13 @@ export interface LevelBubbleProps {
   difficulty?: ExerciseDifficulty;
   level: ILevel;
 }
+
+export interface IStrikes {
+  strikes_length: number;
+  last_strike_date: string;
+}
+
+export interface ILives {
+  lives: number;
+  last_live_date: string;
+}

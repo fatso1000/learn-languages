@@ -7,13 +7,9 @@ import {
   addTwoHoursToDate,
   getTimeRemaining,
 } from "src/shared/helpers";
+import { ILives } from "src/types";
 
 const lifesArray = [0, 1, 2, 3, 4];
-
-interface ILives {
-  lives: number;
-  last_live_date: string;
-}
 
 export default function HeartDropdown({
   userId,
