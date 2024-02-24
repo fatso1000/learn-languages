@@ -5,7 +5,7 @@ import { signInFormValidation } from "src/actions/auth";
 import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "src/shared/navigation";
 
 const initialState = {
   errors: [],
@@ -15,8 +15,10 @@ const initialState = {
 export default function SignInForm() {
   const [state, formAction] = useFormState(signInFormValidation, initialState);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (state.success) redirect("/dashboard");
+    if (state.success) router.push("/dashboard");
   }, [state.success]);
 
   return (

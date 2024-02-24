@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { HeartIconSolid, XIcon } from "src/components/Icons";
 import { MessageModal } from "../..";
 import { IExercise, onCheckAnswerProps } from "src/types";

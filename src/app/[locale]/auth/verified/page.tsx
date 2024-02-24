@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import Navbar from "src/components/Navbar";
 import { authorizeUser } from "src/queryFn";
 

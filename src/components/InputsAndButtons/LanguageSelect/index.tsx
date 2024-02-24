@@ -11,7 +11,7 @@ import japaneseFlag from "public/images/flags/japanese_flag.png";
 import { useRouter } from "next/navigation";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { useEffect, useRef } from "react";
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import { LanguageSelectProps } from "src/types";
 import Modal from "src/components/Modal";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import SignInForm from "src/components/Form/SignInForm";
 import Navbar from "src/components/Navbar";
 

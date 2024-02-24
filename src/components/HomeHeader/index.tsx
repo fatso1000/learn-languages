@@ -1,8 +1,11 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import Image from "next/image";
 import { CSSProperties } from "react";
+import { useTranslations } from "next-intl";
 
-export default function HomeHeader() {
+export default function HomeHeader({ subtitle }: { subtitle: string }) {
+  const t = useTranslations("generics");
+
   return (
     <>
       <div className="relative max-w-[1182px] flex m-auto items-center justify-center flex-row gap-7">
@@ -47,22 +50,19 @@ export default function HomeHeader() {
               })}
             </span>
           </h1>
-          <p className="mt-6 text-xl text-base/60 font-light">
-            Learn the desired language you want with online tools and content,
-            all for free!
-          </p>
+          <p className="mt-6 text-xl text-base/60 font-light">{subtitle}</p>
           <div className="mt-6 inline-flex items-center w-full gap-2 ">
             <Link
-              className="btn btn-success flex-1 px-12 normal-case"
+              className="btn btn-success flex-1 px-12 normal-case text-base"
               href="/auth/signup"
             >
-              Sign Up
+              {t("signUp")}
             </Link>
             <Link
-              className="btn md:btn-wide flex-1 px-12 normal-case"
+              className="btn md:btn-wide flex-1 px-12 normal-case text-base"
               href="/auth/signin"
             >
-              Sign In
+              {t("signIn")}
             </Link>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { useEffect, useState } from "react";
 import {
   ArrowLeftShort,

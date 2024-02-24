@@ -1,10 +1,13 @@
-import Link from "next/link";
 import { IUser, SelectedLanguageElement } from "src/types";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
 import { cookies } from "next/headers";
 import { FireIconSolid, HeartIconSolid } from "../Icons";
+import { getTranslations } from "next-intl/server";
+import { Link } from "src/shared/navigation";
 
 export default async function Navbar(props: any) {
+  const t = await getTranslations("generics");
+
   const cookieStore = cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
@@ -61,12 +64,12 @@ export default async function Navbar(props: any) {
           <>
             <div>
               <Link className="btn btn-success normal-case" href="/auth/signup">
-                Sign Up
+                {t("signUp")}
               </Link>
             </div>
             <div className="ml-4">
               <Link className="btn normal-case" href="/auth/signin">
-                Log In
+                {t("signIn")}
               </Link>
             </div>
           </>

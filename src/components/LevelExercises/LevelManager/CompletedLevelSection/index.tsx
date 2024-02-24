@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { AccuracyIcon, ClockIcon, CourseIcon } from "src/components/Icons";
 import { parseTimeLevelCompleted } from "src/shared/helpers";
 import Image from "next/image";

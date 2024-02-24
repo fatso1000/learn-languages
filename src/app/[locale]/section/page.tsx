@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import Unit from "src/components/Section/Unit";

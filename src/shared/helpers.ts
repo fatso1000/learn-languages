@@ -1,5 +1,6 @@
 import { IColorsObject } from "src/types";
 import { colorsListObject } from "./LevelsColors";
+import { NextRequest } from "next/server";
 
 function getRandomItemFromArray<T>(array: T[]) {
   const randomIndex = Math.floor(Math.random() * array.length);
@@ -56,6 +57,25 @@ function parseTimeLevelCompleted(inputTime: string) {
   // Return the formatted time
   return `${formattedMinutes}:${formattedSeconds}`;
 }
+
+const locales = ["en", "es", "jp"];
+
+const getBrowserLanguage = (req: NextRequest) => {
+  return req.headers
+    .get("accept-language")
+    ?.split(",")
+    .map((i) => i.split(";"))
+    ?.reduce(
+      (ac: { code: string; priority: string }[], lang) => [
+        ...ac,
+        { code: lang[0], priority: lang[1] },
+      ],
+      []
+    )
+    ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+    ?.find((i) => locales.includes(i.code.substring(0, 2)))
+    ?.code?.substring(0, 2);
+};
 
 const animalsList = [
   "Alligator",
@@ -184,4 +204,6 @@ export {
   areArraysEqual,
   areArraysEqualUnordered,
   parseTimeLevelCompleted,
+  locales,
+  getBrowserLanguage,
 };
