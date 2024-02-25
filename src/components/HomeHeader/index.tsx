@@ -1,10 +1,10 @@
 import { Link } from "src/shared/navigation";
 import Image from "next/image";
 import { CSSProperties } from "react";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export default function HomeHeader({ subtitle }: { subtitle: string }) {
-  const t = useTranslations("generics");
+export default async function HomeHeader({ subtitle }: { subtitle: string }) {
+  const t = await getTranslations("generics");
 
   return (
     <>

@@ -1,7 +1,6 @@
 "use server";
 
 import { ExerciseType } from "@prisma/client";
-import { redirect } from "next/navigation";
 import { logoutUserAction } from "src/app/[locale]/actions";
 import {
   addOrRemoveLives,
@@ -17,6 +16,7 @@ import {
   setUserCookie,
 } from "src/shared/apiShared";
 import { handleCustomApiRequest } from "src/shared/clientShared";
+import { redirect } from "src/shared/navigation";
 import { SelectedLanguageElement } from "src/types";
 
 export async function signUpFormValidation(
