@@ -3,6 +3,7 @@ import HomeHeader from "src/components/HomeHeader";
 import Navbar from "src/components/Navbar";
 import { getTranslations } from "next-intl/server";
 import { Link } from "src/shared/navigation";
+
 export default async function Home(props: any) {
   const generics = await getTranslations("generics");
 
