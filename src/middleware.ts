@@ -15,12 +15,12 @@ const intlMiddleware = (defaultLocale: string, req: NextRequest) =>
 
 export async function middleware(req: NextRequest) {
   let [, locale, ...segments] = req.nextUrl.pathname.split("/");
-  const defaultLanguage = getBrowserLanguage(req) || "en";
-  const current_user = req.cookies.get("current_user"),
+  const defaultLanguage = getBrowserLanguage(req) || "en",
+    current_user = req.cookies.get("current_user"),
     token = req.cookies.get("token"),
     authHeader = req.headers.get("Authorization"),
     pathname = req.nextUrl.pathname,
-    language = req.cookies.get("selected_language");
+    selected_language = req.cookies.get("selected_language");
   if (pathname.endsWith("/") || locale === null || !locales.includes(locale)) {
     return intlMiddleware(defaultLanguage, req);
   }
@@ -49,8 +49,9 @@ export async function middleware(req: NextRequest) {
       (locale) =>
         pathname.endsWith("/" + locale) || pathname.endsWith("/" + locale + "/")
     );
-    if (language) {
-      const userSelectedLocale = JSON.parse(language.value).details.short_name;
+    if (selected_language && selected_language.value !== "") {
+      const userSelectedLocale = JSON.parse(selected_language.value).details
+        .short_name;
       if (userSelectedLocale !== locale) {
         locale = userSelectedLocale;
         req.nextUrl.pathname = `/${locale}/${req.nextUrl.pathname.slice(4)}`;
