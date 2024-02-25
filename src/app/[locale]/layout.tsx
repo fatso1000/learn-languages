@@ -4,6 +4,8 @@ import React from "react";
 import { Nunito } from "next/font/google";
 import { IUser } from "src/types";
 import { cookies } from "next/headers";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 export const metadata = {
   title: "Matias Benitez Blog",
@@ -40,6 +42,7 @@ export default async function RootLayout({
         : undefined;
 
   const isLoggedIn = currentUser && token ? true : false;
+  const messages = await getMessages();
 
   return (
     <html
@@ -48,7 +51,9 @@ export default async function RootLayout({
       className={nunito.className + " antialiased"}
     >
       <body>
-        <LayoutComponent isLoggedIn={isLoggedIn}>{children}</LayoutComponent>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <LayoutComponent isLoggedIn={isLoggedIn}>{children}</LayoutComponent>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
