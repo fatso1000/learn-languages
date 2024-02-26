@@ -10,12 +10,15 @@ interface Props {
   data: IExercise[];
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   progressIndex: number;
-  lifes: number;
+  lives: number;
   message: any;
   onNextExercise: () => void;
   setIsLevelCompleted: (value: boolean) => void;
   sectionId: number;
-  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+  onExerciseFail: (
+    correct_answer?: string,
+    translationText?: string
+  ) => Promise<void>;
 }
 
 export function ExercisesSection({
@@ -24,7 +27,7 @@ export function ExercisesSection({
   data,
   onCheckAnswer,
   progressIndex,
-  lifes,
+  lives,
   message,
   onNextExercise,
   setIsLevelCompleted,
@@ -48,7 +51,7 @@ export function ExercisesSection({
         </div>
         <div className="w-[20%] md:w-[13%] flex justify-center items-center gap-1">
           <HeartIconSolid fill="#F87272" className="w-6 h-6" />
-          <span className="font-extrabold text-lg">{lifes}</span>
+          <span className="font-extrabold text-lg">{lives}</span>
         </div>
       </div>
       <CurrentExerciseComponent

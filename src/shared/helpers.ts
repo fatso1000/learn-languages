@@ -15,6 +15,25 @@ function getRandomColor() {
   return getRandomItemFromArray<string>(Object.keys(colorsListObject));
 }
 
+function calculate2HourIntervals(startDate: number, endDate: number) {
+  const intervalDuration = 2 * 60 * 60 * 1000;
+  const difference = endDate - startDate;
+  return Math.floor(difference / intervalDuration);
+}
+
+function hasOneDayPassed(baseDate: Date, targetDate: Date) {
+  const difference = Math.abs(baseDate.getTime() - targetDate.getTime());
+  return difference >= 86400000;
+}
+
+function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
+
 function areArraysEqual(arr1: any[], arr2: any[]) {
   if (arr1.length !== arr2.length) {
     return false;
@@ -47,20 +66,35 @@ function areArraysEqualUnordered(arr1: any[], arr2: any[]) {
 }
 
 function parseTimeLevelCompleted(inputTime: string) {
-  // Split the input string into minutes and seconds
   const [minutes, seconds] = inputTime.split(":").map(Number);
 
-  // Use conditional (ternary) operators to ensure leading zeros
   const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
   const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
-  // Return the formatted time
   return `${formattedMinutes}:${formattedSeconds}`;
 }
 
-const locales = ["en", "es", "jp"];
+function addTwoHoursToDate(date: Date) {
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 2);
+  return newDate;
+}
 
-const getBrowserLanguage = (req: NextRequest) => {
+function getTimeRemaining(start: Date, end: Date) {
+  const total = end.getTime() - start.getTime();
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+
+  return {
+    total,
+    hours,
+    minutes,
+    seconds,
+  };
+}
+
+function getBrowserLanguage(req: NextRequest) {
   return req.headers
     .get("accept-language")
     ?.split(",")
@@ -75,7 +109,9 @@ const getBrowserLanguage = (req: NextRequest) => {
     ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
     ?.find((i) => locales.includes(i.code.substring(0, 2)))
     ?.code?.substring(0, 2);
-};
+}
+
+const locales = ["en", "es", "jp"];
 
 const animalsList = [
   "Alligator",
@@ -166,6 +202,8 @@ const languagesList = [
   "french",
 ];
 
+const levelAuthRegex = new RegExp(/\/(level|auth\/signin)/);
+
 const MAX_EXPERIENCE = 250;
 
 const MAX_LIVES = 5;
@@ -204,6 +242,12 @@ export {
   areArraysEqual,
   areArraysEqualUnordered,
   parseTimeLevelCompleted,
+  addTwoHoursToDate,
+  getTimeRemaining,
+  calculate2HourIntervals,
+  hasOneDayPassed,
+  isSameDay,
   locales,
   getBrowserLanguage,
+  levelAuthRegex,
 };

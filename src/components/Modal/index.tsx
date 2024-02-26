@@ -3,9 +3,9 @@ import { ModalProps } from "src/types";
 import { XIcon } from "../Icons";
 
 export default function Modal(props: ModalProps) {
-  const { title, children, onClose, modalRef } = props;
+  const { title, children, onClose, modalRef, id } = props;
   return (
-    <dialog id="generic_modal" className={"modal"} ref={modalRef}>
+    <dialog id={id} className={"modal"} ref={modalRef}>
       <div className="modal-box">
         <div className="flex justify-end w-full">
           <form

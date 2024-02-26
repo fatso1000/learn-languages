@@ -2,8 +2,19 @@
 
 import { ExerciseType } from "@prisma/client";
 import { logoutUserAction } from "src/app/[locale]/actions";
-import { editUserProfile, getUrl, signinUser, signupUser } from "src/queryFn";
-import { setLoginCookies, setUserCookie } from "src/shared/apiShared";
+import {
+  addOrRemoveLives,
+  continueOrFailStrikes,
+  editUserProfile,
+  getUrl,
+  signinUser,
+  signupUser,
+} from "src/queryFn";
+import {
+  setCookie,
+  setLoginCookies,
+  setUserCookie,
+} from "src/shared/apiShared";
 import { handleCustomApiRequest } from "src/shared/clientShared";
 import { redirect } from "src/shared/navigation";
 import { SelectedLanguageElement } from "src/types";
@@ -36,6 +47,42 @@ export async function signUpFormValidation(
   }
 }
 
+export async function continueOrFailStrikesServer(userId: number) {
+  try {
+    const request = await continueOrFailStrikes(userId);
+    if (
+      !request ||
+      !request.data ||
+      (request.data && Object.keys(request.data).length === 0) ||
+      request.message ||
+      request.errors.length > 0
+    )
+      return;
+    setCookie("strikes", JSON.stringify(request.data));
+  } catch (error) {
+    return;
+  }
+}
+
+export async function addOrRemoveLifesServer(
+  userId: number,
+  type: "sum" | "lose"
+) {
+  try {
+    const request = await addOrRemoveLives(userId, { type });
+    if (
+      !request ||
+      !request.data ||
+      request.message ||
+      request.errors.length > 0
+    )
+      return;
+    setCookie("lives", JSON.stringify(request.data));
+  } catch (error) {
+    return;
+  }
+}
+
 export async function signInFormValidation(
   currentState: any,
   formData: FormData
@@ -47,16 +94,16 @@ export async function signInFormValidation(
     const user = await signinUser({ email, password });
 
     if (!user.errors || user.errors.length === 0) {
+      const { lives, last_strike_date, strikes_length, last_live_date } =
+        user.data.user.lives_and_strikes;
       const userStringify = JSON.stringify(user.data.user),
         languageStringify = JSON.stringify(
           user.data.user.profile.languages.find(
             (language: SelectedLanguageElement) => language.active
           )
         ),
-        livesStringify = JSON.stringify(user.data.user.lives_and_strikes.lives),
-        strikesStringify = JSON.stringify(
-          user.data.user.lives_and_strikes.strikes_length
-        );
+        livesStringify = JSON.stringify({ lives, last_live_date }),
+        strikesStringify = JSON.stringify({ strikes_length, last_strike_date });
       setLoginCookies(
         userStringify,
         languageStringify,

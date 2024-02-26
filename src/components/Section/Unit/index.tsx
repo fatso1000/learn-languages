@@ -22,8 +22,8 @@ const colors = {
   },
 };
 
-export default function UnitComponent(props: UnitProps) {
-  const { sectionId, unit, color } = props;
+export default async function UnitComponent(props: UnitProps) {
+  const { sectionId, unit, color, lives } = props;
 
   return (
     <div className={`flex flex-col items-center justify-center rounded`}>
@@ -34,6 +34,7 @@ export default function UnitComponent(props: UnitProps) {
       <div className="grid grid-cols-3 gap-5 p-5 z-20 justify-items-center relative">
         {unit.levels.map((level, i) => (
           <Level
+            lives={lives}
             key={level.id}
             sectionId={sectionId}
             row={i}

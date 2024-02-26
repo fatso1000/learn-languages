@@ -2,28 +2,22 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getBrowserLanguage, languagesList, locales } from "./shared/helpers";
 import createMiddleware from "next-intl/middleware";
+import { localePrefix } from "./shared/navigation";
+import { ILives } from "./types";
 
 const authRoutes = ["/user/"];
 const publicPages = ["/auth"];
 const unauthRoutes = ["/languages", "/user", "/dashboard", "/profile"];
-
-const intlMiddleware = (defaultLocale: string, req: NextRequest) =>
-  createMiddleware({
-    locales,
-    defaultLocale,
-  })(req);
 
 export async function middleware(req: NextRequest) {
   let [, locale, ...segments] = req.nextUrl.pathname.split("/");
   const defaultLanguage = getBrowserLanguage(req) || "en",
     current_user = req.cookies.get("current_user"),
     token = req.cookies.get("token"),
+    lives = req.cookies.get("lives"),
     authHeader = req.headers.get("Authorization"),
     pathname = req.nextUrl.pathname,
     selected_language = req.cookies.get("selected_language");
-  if (pathname.endsWith("/") || locale === null || !locales.includes(locale)) {
-    return intlMiddleware(defaultLanguage, req);
-  }
 
   if (
     !token ||
@@ -37,8 +31,7 @@ export async function middleware(req: NextRequest) {
     const isUnauthLanguagesRoute = languagesList.find((route) =>
       pathname.includes(route)
     );
-
-    if (isUnauthRoute || isUnauthLanguagesRoute) {
+    if (!!isUnauthRoute || !!isUnauthLanguagesRoute) {
       req.nextUrl.pathname = `/${locale}`;
       return NextResponse.redirect(req.nextUrl);
     }
@@ -69,8 +62,36 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  const res = intlMiddleware(defaultLanguage, req);
-  return NextResponse.next(res);
+  // CATCH ENTERING LEVEL WITHOUT LIVES
+  if (pathname.includes("level")) {
+    const section_id = req.nextUrl.searchParams.get("section_id");
+
+    if (lives && lives.value) {
+      const livesObj = JSON.parse(lives.value) as ILives;
+      if (livesObj.lives === 0) {
+        if (section_id) req.nextUrl.searchParams.set("id", section_id);
+        req.nextUrl.pathname = section_id ? `/${locale}/section` : `/${locale}`;
+
+        return NextResponse.redirect(req.nextUrl);
+      }
+    } else if (!lives || !lives.value) {
+      if (section_id) req.nextUrl.searchParams.set("id", section_id);
+      req.nextUrl.pathname = section_id ? `/${locale}/section` : `/${locale}`;
+
+      return NextResponse.redirect(req.nextUrl);
+    }
+  }
+
+  const handleI18nRouting = createMiddleware({
+    locales,
+    defaultLocale: defaultLanguage,
+    localePrefix,
+  });
+  const response = handleI18nRouting(req);
+
+  response.headers.set("x-url", req.nextUrl.pathname);
+
+  return response;
 }
 
 export const config = {

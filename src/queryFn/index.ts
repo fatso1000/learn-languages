@@ -146,7 +146,17 @@ const getUserLives = async (userId: number) => {
   );
 };
 
-const addOrRemoveLives = async (userId: number, body: { lives: number }) => {
+const continueOrFailStrikes = async (userId: number) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/strikes/${userId}`,
+    "GET"
+  );
+};
+
+const addOrRemoveLives = async (
+  userId: number,
+  body: { type: "sum" | "lose" }
+) => {
   return await handleCustomApiRequest(
     getUrl + `/api/actions/lives/${userId}`,
     "POST",
@@ -172,4 +182,5 @@ export {
   addOrRemoveUserContent,
   getUserLives,
   addOrRemoveLives,
+  continueOrFailStrikes,
 };

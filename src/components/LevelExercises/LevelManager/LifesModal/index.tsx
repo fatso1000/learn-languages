@@ -7,21 +7,23 @@ import Modal from "src/components/Modal";
 export default function LifesModal({
   isLifesOver,
   sectionId,
+  isLevel,
 }: {
   isLifesOver: boolean;
   sectionId: number;
+  isLevel: boolean;
 }) {
   const router = useRouter();
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const onClose = () => router.push("/section?id=" + sectionId);
+  const onClose = () => isLevel && router.push("/section?id=" + sectionId);
 
   useEffect(() => {
     if (isLifesOver) modalRef.current && modalRef.current.showModal();
   }, [isLifesOver]);
 
   return (
-    <Modal modalRef={modalRef} title="" onClose={onClose}>
+    <Modal modalRef={modalRef} id="livesModal" title="" onClose={onClose}>
       <>
         <div className="flex flex-col justify-between items-center w-full mt-auto gap-10">
           <div>
@@ -44,13 +46,23 @@ export default function LifesModal({
             </button>
           </div>
           <div className="w-full flex justify-center">
-            <Link
-              href={"/section?id=" + sectionId}
-              type="button"
-              className="btn btn-ghost"
-            >
-              No, gracias
-            </Link>
+            {isLevel ? (
+              <Link
+                href={"/section?id=" + sectionId}
+                type="button"
+                className="btn btn-ghost"
+              >
+                No, gracias
+              </Link>
+            ) : (
+              <button
+                className="btn btn-ghost"
+                type="button"
+                onClick={() => modalRef.current?.close()}
+              >
+                No, gracias
+              </button>
+            )}
           </div>
         </div>
       </>

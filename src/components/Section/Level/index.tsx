@@ -1,4 +1,3 @@
-"use client";
 import { LevelProps, LevelState } from "src/types";
 import StudyingBubble from "../StudyingBubble";
 import LevelIcon from "../LevelIcon";
@@ -42,8 +41,8 @@ const levelBloquedStyle = {
   },
 };
 
-export default function LevelComponent(props: LevelProps) {
-  const { level, sectionId, unitId, row, state, color } = props;
+export default async function LevelComponent(props: LevelProps) {
+  const { level, sectionId, unitId, row, state, color, lives } = props;
   let progressPorcent = 0;
 
   let progress = 3;
@@ -86,6 +85,7 @@ export default function LevelComponent(props: LevelProps) {
         (state === LevelState.STUDYING || state === LevelState.COMPLETED) &&
         lineColors[color][state]
       } h-28 w-28 flex flex-col justify-center items-center level dropdown relative`}
+      type="button"
       tabIndex={0}
     >
       {state === "studying" && <StudyingBubble />}
@@ -95,6 +95,7 @@ export default function LevelComponent(props: LevelProps) {
         <LevelIcon state={state} />
       </div>
       <LevelBubble
+        lives={lives}
         level={level}
         state={state}
         href={href}

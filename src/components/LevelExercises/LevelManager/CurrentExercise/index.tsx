@@ -19,7 +19,10 @@ const CurrentExerciseComponent = ({
   data: IExercise[];
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   message: any;
-  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+  onExerciseFail: (
+    correct_answer?: string,
+    translationText?: string
+  ) => Promise<void>;
 }) => {
   let current: any = {};
   if (queueFailedExercises.length > 0 && currentExercise >= data.length) {

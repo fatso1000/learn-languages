@@ -3,7 +3,7 @@ import prisma from "src/app/config/db";
 import { onSuccessRequest, onThrowError } from "../../../apiService";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
-import { MAX_LIVES } from "src/shared/helpers";
+import { MAX_LIVES, calculate2HourIntervals } from "src/shared/helpers";
 
 export async function GET(
   req: NextRequest,
@@ -33,7 +33,7 @@ export async function POST(
   { params }: { params: { id: number } }
 ) {
   try {
-    const { lives } = await req.json();
+    const { type } = await req.json();
     const user_id = Number(params.id);
 
     const lastLivesSaved = await prisma.livesAndStrikes.findUnique({
@@ -43,6 +43,7 @@ export async function POST(
       select: {
         lives: true,
         last_live_date: true,
+        id: true,
       },
     });
 
@@ -53,32 +54,71 @@ export async function POST(
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
 
-    const sumLives = lastLivesSaved.lives + lives;
+    switch (type) {
+      case "lose":
+        const removeOneLife = Math.max(lastLivesSaved.lives - 1, 0);
+        const nowDate = new Date();
+        const remove = await prisma.livesAndStrikes.update({
+          data: {
+            lives: removeOneLife,
+            last_live_date: nowDate,
+          },
+          where: {
+            id: lastLivesSaved.id,
+          },
+        });
+        return onSuccessRequest({ data: remove, httpStatusCode: 200 });
+      case "sum":
+        if (
+          lastLivesSaved.last_live_date === null ||
+          lastLivesSaved.lives === MAX_LIVES
+        )
+          break;
+        const currentDate = new Date(),
+          last_life_date = new Date(lastLivesSaved.last_live_date);
+        let calculate = calculate2HourIntervals(
+          last_life_date.getTime(),
+          currentDate.getTime()
+        );
+        calculate = calculate >= MAX_LIVES ? MAX_LIVES : calculate;
+        let sum = calculate + lastLivesSaved.lives,
+          total = sum >= MAX_LIVES ? MAX_LIVES : sum,
+          request;
 
-    const lastLiveDate = lastLivesSaved.last_live_date;
+        if (total !== lastLivesSaved.lives)
+          request = await prisma.livesAndStrikes.update({
+            data: {
+              lives: total,
+              last_live_date: currentDate,
+            },
+            where: {
+              id: lastLivesSaved.id,
+            },
+          });
 
-    const isMaxLives = sumLives >= MAX_LIVES;
+        if (!request)
+          return onSuccessRequest({
+            data: undefined,
+            message: "Lives already full",
+            httpStatusCode: 200,
+          });
 
-    const isLiveGain = sumLives > lastLivesSaved.lives;
+        return onSuccessRequest({
+          data: {
+            lives: request.lives,
+            last_live_date: request.last_live_date,
+          },
+          httpStatusCode: 200,
+        });
 
-    const totalLives = isMaxLives ? MAX_LIVES : sumLives;
+      default:
+        break;
+    }
 
-    const user_lives = await prisma.livesAndStrikes.update({
-      where: { id: user_id },
-      data: {
-        lives: totalLives,
-        last_live_date: isMaxLives
-          ? null
-          : isLiveGain || sumLives === 4
-          ? new Date()
-          : lastLiveDate,
-      },
-      select: { lives: true, last_live_date: true },
-    });
-
-    return onSuccessRequest({
-      httpStatusCode: HttpStatusCode.OK,
-      data: user_lives,
+    throw new CustomError({
+      errors: [],
+      msg: "Unknown error",
+      httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
     });
   } catch (error) {
     return onThrowError(error);

@@ -1,5 +1,5 @@
 "use client";
-
+import { useFormatter } from "next-intl";
 import Image from "next/image";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { editProfileFormValidation } from "src/actions/auth";
@@ -45,7 +45,8 @@ const initialState = {
 };
 
 export default function ProfileForm(props: any) {
-  const { currentUser } = useUser(props);
+  const format = useFormatter();
+  const { currentUser, strikes } = useUser(props);
   const { isEditMode, handleEditMode, isEditIconMode, handleEditIconMode } =
     useEditUser(props);
   const [state, formAction] = useFormState(
@@ -91,9 +92,30 @@ export default function ProfileForm(props: any) {
               <span className="mt-3 inline-flex w-full gap-2 text-neutral-400 items-center">
                 <ClockIcon />
                 <span className="text-neutral-400">
-                  Cuenta creada en mayo del 2021
+                  Cuenta creada en{" "}
+                  {format.dateTime(new Date(currentUser.created_at), {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
                 </span>
               </span>
+              {currentUser.ubication && (
+                <span className="mt-3 inline-flex w-full gap-2 text-neutral-400 items-center">
+                  <ClockIcon />
+                  <span className="text-neutral-400">
+                    {currentUser.ubication}
+                  </span>
+                </span>
+              )}
+              {currentUser.biography && (
+                <span className="mt-3 inline-flex w-full gap-2 text-neutral-400 items-center">
+                  <ClockIcon />
+                  <span className="text-neutral-400">
+                    {currentUser.biography}
+                  </span>
+                </span>
+              )}
               <button
                 className="btn btn-ghost font-black absolute top-0 right-0"
                 onClick={() => handleEditMode()}
@@ -105,11 +127,13 @@ export default function ProfileForm(props: any) {
             <h2 className="font-black text-3xl">Statistics</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="border-2 p-3 rounded-md flex items-center flex-row gap-3">
-                <div>
+                <div className="text-error">
                   <FireIconSolid />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-black text-xl leading-none">12</span>
+                  <span className="font-black text-xl leading-none">
+                    {strikes?.strikes_length || 0}
+                  </span>
                   <span>Dias racha</span>
                 </div>
               </div>

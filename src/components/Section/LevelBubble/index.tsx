@@ -1,3 +1,4 @@
+"use client";
 import { Link } from "src/shared/navigation";
 import { LevelBubbleProps, LevelState } from "src/types";
 
@@ -6,7 +7,13 @@ export default function LevelBubble({
   href,
   difficulty,
   level,
+  lives,
 }: LevelBubbleProps) {
+  const onButtonClick = () => {
+    const modal = document.querySelector("#livesModal") as HTMLDialogElement;
+    modal && modal.showModal();
+  };
+
   return (
     <div
       tabIndex={0}
@@ -28,12 +35,21 @@ export default function LevelBubble({
         {state === LevelState.STUDYING && (
           <>
             <p>Current level</p>
-            <Link
-              href={href}
-              className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
-            >
-              Empezar
-            </Link>
+            {lives.lives === 0 ? (
+              <div
+                className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
+                onClick={onButtonClick}
+              >
+                Empezar
+              </div>
+            ) : (
+              <Link
+                href={href}
+                className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
+              >
+                Empezar
+              </Link>
+            )}
           </>
         )}
         {state === LevelState.COMPLETED && (
@@ -41,12 +57,21 @@ export default function LevelBubble({
             <p className="text-base">
               Practica este nivel para tener más puntos.
             </p>
-            <Link
-              href={href}
-              className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
-            >
-              Practicar
-            </Link>
+            {lives.lives === 0 ? (
+              <div
+                className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
+                onClick={onButtonClick}
+              >
+                Practicar
+              </div>
+            ) : (
+              <Link
+                href={href}
+                className="btn bg-success-content hover:bg-success-content text-success shadow-lg "
+              >
+                Practicar
+              </Link>
+            )}
           </>
         )}
         {state !== LevelState.COMPLETED && state !== "studying" && (

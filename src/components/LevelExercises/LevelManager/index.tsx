@@ -2,20 +2,28 @@
 // @ts-ignore
 import useSound from "use-sound";
 import { useEffect, useRef, useState } from "react";
-import { IExercise, onCheckAnswerProps } from "src/types";
+import { IExercise, ILives, onCheckAnswerProps } from "src/types";
 import { areArraysEqual } from "src/shared/helpers";
 import { ExercisesSection } from "./ExercisesSection";
 import CompletedLevelSection from "./CompletedLevelSection";
 import LifesModal from "./LifesModal";
+import {
+  addOrRemoveLifesServer,
+  continueOrFailStrikesServer,
+} from "src/actions/auth";
 
 export default function LevelManager({
   data,
   sectionId,
   lang,
+  userId,
+  userLives,
 }: {
   data: IExercise[];
   sectionId: number;
   lang: string;
+  userId: number;
+  userLives: ILives;
 }) {
   const [playSuccess] = useSound("sounds/success_sfx.mp3", {
       volume: 1,
@@ -31,7 +39,7 @@ export default function LevelManager({
     });
 
   // Agregar vidas a esquema de usuario y actualizar su valor en los fallos
-  const [lifes, setLifes] = useState(5);
+  const [lives, setLives] = useState<number>(5);
   const [currentExercise, setCurrentExercise] = useState(0);
   const [progressIndex, setProgressIndex] = useState(0);
   const [isLevelCompleted, setIsLevelCompleted] = useState(false);
@@ -46,6 +54,10 @@ export default function LevelManager({
   const totalSecondsRef = useRef(0);
   const minutes = Math.floor(totalSecondsRef.current / 60);
   const seconds = totalSecondsRef.current % 60;
+
+  useEffect(() => {
+    if (userLives.lives) setLives(userLives.lives);
+  }, []);
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
@@ -151,12 +163,13 @@ export default function LevelManager({
     setCurrentExercise(currentExercise + 1);
   };
 
-  const onExerciseFail = (
+  const onExerciseFail = async (
     correct_answer?: string,
     translationText?: string
   ) => {
-    setLifes(lifes - 1);
-    if (lifes - 1 === 0) {
+    setLives(lives - 1);
+    await addOrRemoveLifesServer(userId, "lose");
+    if (lives - 1 === 0) {
       return onRunOutHearts();
     }
     addQueue(data[currentExercise]);
@@ -206,13 +219,14 @@ export default function LevelManager({
               <ExercisesSection
                 currentExercise={currentExercise}
                 data={data}
-                lifes={lifes}
+                lives={lives}
                 message={message}
                 onCheckAnswer={onCheckAnswer}
                 progressIndex={progressIndex}
                 queueFailedExercises={queueFailedExercises}
                 onNextExercise={onNextExercise}
-                setIsLevelCompleted={(value: boolean) => {
+                setIsLevelCompleted={async (value: boolean) => {
+                  await continueOrFailStrikesServer(userId);
                   setIsLevelCompleted(value);
                   playWin();
                 }}
@@ -220,7 +234,11 @@ export default function LevelManager({
                 sectionId={sectionId}
               />
             )}
-            <LifesModal isLifesOver={lifes === 0} sectionId={sectionId} />
+            <LifesModal
+              isLifesOver={lives === 0}
+              sectionId={sectionId}
+              isLevel={true}
+            />
           </div>
         </div>
       </div>

@@ -27,6 +27,7 @@ export interface ModalProps {
   onSuccess?: () => void;
   onClose?: () => void;
   modalRef: RefObject<HTMLDialogElement>;
+  id: string;
 }
 
 export interface IFlags {
@@ -63,6 +64,7 @@ export interface IUser {
   profile: Profile;
   password: string;
   rank: UserRank;
+  created_at: string;
 }
 
 export interface UserRank {
@@ -291,7 +293,10 @@ export interface ExercisesProps {
   data: IExercise;
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   isMessageActive: boolean;
-  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+  onExerciseFail: (
+    correct_answer?: string,
+    translationText?: string
+  ) => Promise<void>;
 }
 
 export enum LevelState {
@@ -312,6 +317,7 @@ export interface LevelProps {
   row: number;
   state: LevelState;
   color: colors;
+  lives: ILives;
 }
 
 export enum colors {
@@ -327,11 +333,23 @@ export interface UnitProps {
   sectionId: string;
   unit: IUnit;
   color: colors;
+  lives: ILives;
 }
 
 export interface LevelBubbleProps {
   state: LevelState;
+  lives: ILives;
   href: string;
   difficulty?: ExerciseDifficulty;
   level: ILevel;
+}
+
+export interface IStrikes {
+  strikes_length: number;
+  last_strike_date: string;
+}
+
+export interface ILives {
+  lives: number;
+  last_live_date: string;
 }

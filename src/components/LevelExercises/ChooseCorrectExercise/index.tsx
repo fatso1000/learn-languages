@@ -91,7 +91,10 @@ export function ChooseCorrectExercise(props: ExercisesProps) {
       <div className="inline-flex justify-between w-full h-20 mt-auto">
         <div className="hidden md:w-[13%] md:flex justify-center">
           {!isMessageActive && (
-            <button className="btn" onClick={() => onExerciseFail(prompt!)}>
+            <button
+              className="btn"
+              onClick={async () => await onExerciseFail(prompt!)}
+            >
               Skip
             </button>
           )}
