@@ -65,7 +65,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
           />
         )}
       </button>
-      <Modal modalRef={modalRef} title="Select Language">
+      <Modal id="languagesModal" modalRef={modalRef} title="Select Language">
         <form
           action={formAction}
           ref={formRef}

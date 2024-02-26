@@ -18,7 +18,7 @@ export default function SignInForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (state.success) router.push("/dashboard");
+    if (state.success) router.refresh();
   }, [state.success]);
 
   return (

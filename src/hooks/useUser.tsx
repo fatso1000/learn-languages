@@ -3,24 +3,29 @@ import {
   getCurrentUser,
   getLives,
   getSelectedLanguage,
+  getStrikes,
   isUserLoggedIn,
 } from "src/shared/cookies";
-import { IUser } from "src/types";
+import { ILives, IStrikes, IUser } from "src/types";
 
 export default function useUser(props?: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
   const [selectedLanguage, setSelectedLanguage] = useState<any>();
-  const [userLives, setUserLives] = useState<any>();
+  const [userLives, setUserLives] = useState<ILives>();
+  const [strikes, setStrikes] = useState<IStrikes>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const checkUser = async () => {
-    const user = await getCurrentUser();
-    const selectedLanguageStr = await getSelectedLanguage();
-    const lives = await getLives();
+    const user = await getCurrentUser(),
+      selectedLanguageStr = await getSelectedLanguage(),
+      lives = await getLives(),
+      strikes = await getStrikes();
+
     if (user) {
       setCurrentUser(JSON.parse(user.value));
       setSelectedLanguage(JSON.parse(selectedLanguageStr!.value));
       setUserLives(JSON.parse(lives!.value));
+      setStrikes(JSON.parse(strikes!.value));
     }
   };
 
@@ -34,5 +39,5 @@ export default function useUser(props?: any) {
     checkUserLoggedIn();
   }, [props]);
 
-  return { currentUser, isLoggedIn, selectedLanguage, userLives };
+  return { currentUser, isLoggedIn, selectedLanguage, userLives, strikes };
 }

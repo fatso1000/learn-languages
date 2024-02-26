@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 import { getBrowserLanguage, languagesList, locales } from "./shared/helpers";
 import createMiddleware from "next-intl/middleware";
 import { localePrefix } from "./shared/navigation";
+import { ILives } from "./types";
 
 const authRoutes = ["/user/"];
 const publicPages = ["/auth"];
@@ -13,6 +14,7 @@ export async function middleware(req: NextRequest) {
   const defaultLanguage = getBrowserLanguage(req) || "en",
     current_user = req.cookies.get("current_user"),
     token = req.cookies.get("token"),
+    lives = req.cookies.get("lives"),
     authHeader = req.headers.get("Authorization"),
     pathname = req.nextUrl.pathname,
     selected_language = req.cookies.get("selected_language");
@@ -60,12 +62,34 @@ export async function middleware(req: NextRequest) {
     }
   }
 
+  // CATCH ENTERING LEVEL WITHOUT LIVES
+  if (pathname.includes("level")) {
+    const section_id = req.nextUrl.searchParams.get("section_id");
+
+    if (lives && lives.value) {
+      const livesObj = JSON.parse(lives.value) as ILives;
+      if (livesObj.lives === 0) {
+        if (section_id) req.nextUrl.searchParams.set("id", section_id);
+        req.nextUrl.pathname = section_id ? `/${locale}/section` : `/${locale}`;
+
+        return NextResponse.redirect(req.nextUrl);
+      }
+    } else if (!lives || !lives.value) {
+      if (section_id) req.nextUrl.searchParams.set("id", section_id);
+      req.nextUrl.pathname = section_id ? `/${locale}/section` : `/${locale}`;
+
+      return NextResponse.redirect(req.nextUrl);
+    }
+  }
+
   const handleI18nRouting = createMiddleware({
     locales,
     defaultLocale: defaultLanguage,
     localePrefix,
   });
   const response = handleI18nRouting(req);
+
+  response.headers.set("x-url", req.nextUrl.pathname);
 
   return response;
 }

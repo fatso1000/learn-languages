@@ -3,7 +3,9 @@ import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import Unit from "src/components/Section/Unit";
 import { getSectionUnits } from "src/queryFn";
-import { IUnit, colors } from "src/types";
+import { ILives, IUnit, IUser, colors } from "src/types";
+import { cookies } from "next/headers";
+import LifesModal from "src/components/LevelExercises/LevelManager/LifesModal";
 
 const colorsList = [
   colors.SUCCESS,
@@ -16,9 +18,22 @@ const colorsList = [
 
 export default async function Section(props: any) {
   if (!props.searchParams || !props.searchParams.id) return <div></div>;
+  const cookieStore = cookies();
+  const cookiesObj = {
+    current_user: cookieStore.get("current_user"),
+    lives: cookieStore.get("lives"),
+    strikes: cookieStore.get("strikes"),
+  };
+
+  const lives: ILives | undefined =
+    cookiesObj.lives && cookiesObj.lives.value !== ""
+      ? JSON.parse(cookiesObj.lives.value)
+      : undefined;
+
   const request = await getSectionUnits(props.searchParams.id);
 
   if (!request.data) return <div></div>;
+
   return (
     <>
       <Navbar props={props} />
@@ -43,6 +58,7 @@ export default async function Section(props: any) {
               const currentIndexColor = i % colorsList.length;
               return (
                 <Unit
+                  lives={lives!}
                   unit={unit}
                   sectionId={props.searchParams.id}
                   key={unit.id}
@@ -52,6 +68,11 @@ export default async function Section(props: any) {
             })}
           </div>
         </div>
+        <LifesModal
+          isLevel={false}
+          isLifesOver={false}
+          sectionId={props.searchParams.id}
+        />
       </main>
     </>
   );

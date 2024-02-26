@@ -1,10 +1,11 @@
 import { ILives, IStrikes, IUser, SelectedLanguageElement } from "src/types";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import HeartDropdown from "./HeartDropdown";
 import StrikeDropdown from "./StrikeDropdown";
 import { getTranslations } from "next-intl/server";
 import { Link } from "src/shared/navigation";
+import { levelAuthRegex } from "src/shared/helpers";
 
 export default async function Navbar(props: any) {
   const t = await getTranslations("generics");
@@ -39,6 +40,9 @@ export default async function Navbar(props: any) {
         ? JSON.parse(cookiesObj.strikes.value)
         : undefined;
 
+  const headersList = headers(),
+    pathname = headersList.get("x-url") || "";
+
   const isLoggedIn = currentUser && token ? true : false;
 
   return (
@@ -55,7 +59,10 @@ export default async function Navbar(props: any) {
       </div>
 
       <div className="flex-none">
-        {isLoggedIn && currentUser && selectedLanguage ? (
+        {isLoggedIn &&
+        currentUser &&
+        selectedLanguage &&
+        !levelAuthRegex.test(pathname) ? (
           <>
             <LanguageSelect
               selectedLanguage={selectedLanguage}

@@ -32,7 +32,6 @@ const StrikesDays = memo(function StrikesDays(props: { strikes?: IStrikes }) {
     isToday: index === currentDate,
     strike: index >= todayIndex - maxStrike && index < todayIndex,
   }));
-  console.log(todayIndex);
 
   return (
     <div className="inline-flex bg-error-content p-4 gap-2 rounded-md">
@@ -68,11 +67,6 @@ export default function StrikeDropdown({
     const startDate = new Date(),
       endDate = new Date(strikes.last_strike_date),
       hasPassedOneDay = hasOneDayPassed(startDate, endDate);
-    console.log(
-      new Date(),
-      new Date("2024-02-23T22:04:22.419Z"),
-      hasPassedOneDay
-    );
 
     if (hasPassedOneDay) {
       continueOrFailStrikesServer(userId);

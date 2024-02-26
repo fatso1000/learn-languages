@@ -53,6 +53,7 @@ export async function continueOrFailStrikesServer(userId: number) {
     if (
       !request ||
       !request.data ||
+      (request.data && Object.keys(request.data).length === 0) ||
       request.message ||
       request.errors.length > 0
     )

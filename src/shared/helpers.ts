@@ -202,6 +202,8 @@ const languagesList = [
   "french",
 ];
 
+const levelAuthRegex = new RegExp(/\/(level|auth\/signin)/);
+
 const MAX_EXPERIENCE = 250;
 
 const MAX_LIVES = 5;
@@ -247,4 +249,5 @@ export {
   isSameDay,
   locales,
   getBrowserLanguage,
+  levelAuthRegex,
 };

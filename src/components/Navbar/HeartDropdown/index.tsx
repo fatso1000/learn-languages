@@ -49,20 +49,23 @@ export default function HeartDropdown({
 
       <div
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-4 gap-2 shadow items-center bg-base-100 flex-col rounded-box flex top-12"
+        className="dropdown-content z-[1] min-w-[200px] bg-error menu p-4 gap-2 shadow text-error-content flex-col rounded-box flex top-12"
       >
-        <h5 className="font-black text-xl">Lives</h5>
-        <div className="inline-flex">
+        <div className="inline-flex justify-between items-center">
+          <h5 className="font-black text-xl">{lives?.lives || 0} lives</h5>
+          <HeartIconSolid />
+        </div>
+        <div className="inline-flex bg-error-content p-4 gap-2 rounded-md">
           {lifesArray.map((v, i) => (
             <HeartIconSolid
-              className={
-                "w-6 h-6 " + (i + 1 <= lives!.lives ? "text-error" : "")
-              }
+              className={`w-6 h-6 ${
+                i + 1 <= lives!.lives ? "text-error" : "text-base-100"
+              }`}
               key={i}
             />
           ))}
         </div>
-        <span className="font-mono text-xl">
+        <span className="font-mono text-lg">
           {lives?.lives === MAX_LIVES
             ? ""
             : timeRemaining.hours > 0
