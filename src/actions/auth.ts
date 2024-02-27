@@ -162,11 +162,10 @@ export async function selectUserLanguageFormValidation(
 ) {
   try {
     const body = JSON.stringify({
-      language_id: +formData.get("language_id")!,
+      language: formData.get("language"),
       user_profile_id: currentState.hasOwnProperty("user_profile_id")
         ? +currentState.user_profile_id
         : +formData.get("user_profile_id")!,
-      refresh: true,
     });
 
     const request = await handleCustomApiRequest(

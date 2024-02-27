@@ -113,6 +113,15 @@ function getBrowserLanguage(req: NextRequest) {
 
 const locales = ["en", "es", "jp"];
 
+const localesJSON: any = {
+  en: { short: "en", long: "english" },
+  es: { short: "es", long: "spanish" },
+  jp: { short: "jp", long: "japanese" },
+  it: { short: "it", long: "italian" },
+  de: { short: "de", long: "german" },
+  fr: { short: "fr", long: "french" },
+};
+
 const animalsList = [
   "Alligator",
   "Anteater",
@@ -202,6 +211,19 @@ const languagesList = [
   "french",
 ];
 
+const languagesAndTargets = [
+  { id: 1, target: "spanish", base: "english" },
+  { id: 2, target: "english", base: "spanish" },
+  { id: 5, target: "spanish", base: "italian" },
+  { id: 6, target: "english", base: "italian" },
+  { id: 7, target: "english", base: "japanese" },
+  { id: 8, target: "spanish", base: "japanese" },
+  { id: 9, target: "english", base: "french" },
+  { id: 10, target: "spanish", base: "french" },
+  { id: 3, target: "english", base: "german" },
+  { id: 4, target: "spanish", base: "german" },
+];
+
 const levelAuthRegex = new RegExp(/\/(level|auth\/signin)/);
 
 const MAX_EXPERIENCE = 250;
@@ -229,6 +251,8 @@ const rankFrameColors = [
 ];
 
 export {
+  localesJSON,
+  languagesAndTargets,
   getRandomAnimalName,
   animalsList,
   getRandomItemFromArray,

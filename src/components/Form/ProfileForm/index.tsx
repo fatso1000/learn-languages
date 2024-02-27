@@ -174,7 +174,7 @@ export default function ProfileForm(props: any) {
                 >
                   <div>
                     <Image
-                      src={languagesList[language.details.name].flagUrl.src}
+                      src={languagesList[language.details.target_language.name].flagUrl.src}
                       alt="flag"
                       width={48}
                       height={28}
@@ -182,7 +182,7 @@ export default function ProfileForm(props: any) {
                     />
                   </div>
                   <span className="leading-none">
-                    {languagesList[language.details.name].displayName}
+                    {languagesList[language.details.target_language.name].displayName}
                   </span>
                 </div>
               ))}

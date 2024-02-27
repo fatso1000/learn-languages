@@ -204,7 +204,7 @@ export class UserSignUpPOST {
 
   public profile_color: string;
 
-  public language: number;
+  public language: string;
 
   constructor({ email, password, name, profile_color, language }: IUserSignUp) {
     this.email = email;
@@ -246,7 +246,7 @@ export interface IUserSignUp {
   email: string;
   password: string;
   name?: string;
-  language: number;
+  language: string;
   profile_color: string;
 }
 

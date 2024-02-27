@@ -47,13 +47,13 @@ export default async function Header(props: {
         <div className="flex flex-col mt-1">
           <div className="w-full gap-2 inline-flex flex-wrap">
             <Link
-              href={`/${selectedLanguage.details.name}/reading`}
+              href={`/${selectedLanguage.details.target_language.name}/reading`}
               className="btn btn-accent max-md:flex-auto h-full font-black gap-y-0"
             >
               {generics("readings")} <ReadingIcon />
             </Link>
             <Link
-              href={`/${selectedLanguage.details.name}/listening`}
+              href={`/${selectedLanguage.details.target_language.name}/listening`}
               className="btn btn-info max-md:flex-auto h-full font-black gap-y-0"
             >
               {generics("listenings")} <ListeningIcon />

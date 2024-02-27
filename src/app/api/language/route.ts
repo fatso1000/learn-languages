@@ -1,9 +1,9 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import prisma from "src/app/config/db";
 import { CustomError, ILanguage, LanguagePOST } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
-import { onThrowError } from "../apiService";
+import { onSuccessRequest, onThrowError } from "../apiService";
 import { verifyUserAuth } from "src/shared/apiShared";
 
 export async function POST(req: NextRequest) {
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         msg: "Unexpected error during user registration.",
       });
 
-    return NextResponse.json(request);
+    return onSuccessRequest({ data: request, httpStatusCode: 200 });
   } catch (error: any) {
     return onThrowError(error);
   }
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
 export async function GET() {
   try {
     const request = await prisma.languages.findMany();
-    return NextResponse.json({ request });
+    return onSuccessRequest({ data: request, httpStatusCode: 200 });
   } catch (error) {
     return onThrowError(error);
   }

@@ -186,7 +186,22 @@ export interface SelectedLanguageElement {
 
 export interface SelectedLanguageDetail {
   id: number;
+  base_language_id: number;
+  target_language: TargetLanguage;
+  target_language_id: number;
+  base_language: BaseLanguage;
+}
+
+export interface BaseLanguage {
+  id: number;
   name: string;
+  short_name: string;
+  coursesId: null;
+}
+
+export interface TargetLanguage {
+  name: string;
+  short_name: string;
 }
 
 export interface IconProps {
