@@ -24,7 +24,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const request = await prisma.user.findFirst({
       where: { email: body.email },
       include: {
-        profile: { include: { languages: { include: { details: true } } } },
+        profile: {
+          include: {
+            languages: {
+              include: { details: { include: { base_language: true } } },
+            },
+          },
+        },
         rank: { include: { rank: true } },
         lives_and_strikes: true,
       },

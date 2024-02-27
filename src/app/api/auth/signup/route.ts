@@ -41,7 +41,23 @@ export async function POST(req: NextRequest) {
     body.password = await bcrypt.hash(body.password, 8);
     const name = body.name ? body.name : randomAnimal;
 
-    await sendMail(body.name, body.email, encodedToken);
+    const stringify = body.language.split(",");
+    const languageCombo = await prisma.languagesCombos.findFirst({
+      where: {
+        base_language: { name: stringify[0] },
+        target_language: { path: ["name"], equals: stringify[1] },
+      },
+      include: {
+        base_language: true,
+        user_language: true,
+      },
+    });
+
+    if (!languageCombo)
+      throw new CustomError({
+        httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        msg: "Cannot find LanguageCombo.",
+      });
 
     const request = await prisma.user.create({
       data: {
@@ -56,7 +72,7 @@ export async function POST(req: NextRequest) {
             languages: {
               create: {
                 active: true,
-                details: { connect: { id: +body.language + 1 } },
+                details: { connect: { id: languageCombo?.id } },
               },
             },
           },
@@ -72,9 +88,7 @@ export async function POST(req: NextRequest) {
           create: {
             course: {
               connect: {
-                language_id: +body.language + 1,
-                // CAMBIAR EN SIGUIENTE UPDATE
-                target_language_id: 2,
+                languages_id: languageCombo?.id,
               },
             },
           },
@@ -92,6 +106,13 @@ export async function POST(req: NextRequest) {
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
         msg: "Unexpected error during user registration.",
       });
+
+    await sendMail(
+      body.name,
+      body.email,
+      encodedToken,
+      languageCombo!.base_language.short_name
+    );
 
     return onSuccessRequest({
       data: request,

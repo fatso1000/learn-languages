@@ -57,7 +57,10 @@ export default function LanguageSelect(props: LanguageSelectProps) {
       <button className="btn max-md:btn-sm btn-ghost" onClick={onOpenModal}>
         {selectedLanguage && (
           <Image
-            src={languagesList[selectedLanguage.details.name].flagUrl.src}
+            src={
+              languagesList[selectedLanguage.details.target_language.name]
+                .flagUrl.src
+            }
             alt=""
             width={48}
             height={28}
@@ -65,51 +68,66 @@ export default function LanguageSelect(props: LanguageSelectProps) {
           />
         )}
       </button>
-      <Modal id="languagesModal" modalRef={modalRef} title="Select Language">
+      <Modal id="languagesModal" modalRef={modalRef} title="Select course">
         <form
           action={formAction}
           ref={formRef}
           className="grid grid-cols-4 gap-2 justify-center items-center"
         >
           {languages &&
-            languages.map((language) => {
-              return (
-                <label
-                  className={`w-full cursor-pointer flex flex-col items-center justify-center hover:bg-base-200 rounded p-2 ${
-                    language.id === selectedLanguage.id ? "order-first" : ""
-                  }`}
-                  key={language.id}
-                >
-                  <input
-                    type="radio"
-                    name="language_id"
-                    value={language.id}
-                    onClick={() => formRef.current.requestSubmit()}
-                    disabled={language.id === selectedLanguage.id}
-                    defaultChecked={language.id === selectedLanguage.id}
-                    className="invisible h-0 w-0 radio-input"
+            languages.map((language) => (
+              <label
+                className={`w-full cursor-pointer flex flex-col items-center justify-center hover:bg-base-200 rounded p-2 ${
+                  language.active ? "order-first border-2" : ""
+                }`}
+                key={language.id}
+              >
+                <input
+                  type="radio"
+                  name="language"
+                  value={[
+                    language.details.base_language.name,
+                    language.details.target_language.name,
+                  ]}
+                  onClick={() => formRef.current.requestSubmit()}
+                  disabled={language.active}
+                  defaultChecked={language.active}
+                  className="invisible h-0 w-0 radio-input"
+                />
+                <div className="cursor-pointer rounded relative">
+                  <Image
+                    src={
+                      languagesList[language.details.target_language.name]
+                        .flagUrl.src
+                    }
+                    alt="flag"
+                    width={48}
+                    height={28}
+                    className="rounded"
                   />
-                  <div className="cursor-pointer rounded">
+                  {language.details.base_language_id !==
+                    selectedLanguage.details.base_language_id && (
                     <Image
-                      src={languagesList[language.details.name].flagUrl.src}
+                      src={
+                        languagesList[language.details.base_language.name]
+                          .flagUrl.src
+                      }
                       alt="flag"
-                      width={48}
-                      height={28}
-                      className="rounded"
+                      width={63}
+                      height={24}
+                      className="m-auto h-4 w-6 rounded-md absolute top-0 right-0 shadow"
                     />
-                  </div>
-                  <span
-                    className={`text-[0.7rem] first-letter:uppercase ${
-                      language.id === selectedLanguage.id
-                        ? "font-extrabold"
-                        : ""
-                    }`}
-                  >
-                    {language.details.name}
-                  </span>
-                </label>
-              );
-            })}
+                  )}
+                </div>
+                <span
+                  className={`text-[0.7rem] first-letter:uppercase ${
+                    language.active ? "font-extrabold" : ""
+                  }`}
+                >
+                  {language.details.target_language.name}
+                </span>
+              </label>
+            ))}
           <label className="order-last col-span-4">
             <Link href="/languages" className="btn w-full">
               <svg
