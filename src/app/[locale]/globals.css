@@ -279,3 +279,20 @@ progress[value]::-webkit-progress-value {
     }
   }
 }
+
+.embla {
+  --slide-height: 19rem;
+  --slide-spacing: 1rem;
+  --slide-size: 20%;
+}
+.embla__container {
+  backface-visibility: hidden;
+  display: flex;
+  touch-action: pan-y;
+  margin-left: calc(var(--slide-spacing) * -1);
+}
+.embla__slide {
+  flex: 0 0 var(--slide-size);
+  min-width: 0;
+  padding-left: var(--slide-spacing);
+}

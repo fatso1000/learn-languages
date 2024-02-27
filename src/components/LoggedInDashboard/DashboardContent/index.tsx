@@ -18,7 +18,11 @@ export default async function Header(props: {
 
   const { data, userName, selectedLanguage, currentUser } = props;
 
-  const OPTIONS: EmblaOptionsType = { containScroll: "trimSnaps" };
+  const OPTIONS: EmblaOptionsType = {
+    align: "start",
+    containScroll: false,
+    slidesToScroll: "auto",
+  };
   return (
     <header className="mb-4 min-h-[100svh] overflow-hidden py-4">
       <div className="relative flex flex-col">
@@ -72,7 +76,6 @@ export default async function Header(props: {
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 {t("contents.lastContentsWatched")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.historical && data.historical[0] ? (
               <CarouselComponent
@@ -89,7 +92,6 @@ export default async function Header(props: {
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 {t("contents.notDinishedContent")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.pendingContent ? (
               <CarouselComponent items={data.pendingContent || []} />
@@ -104,7 +106,6 @@ export default async function Header(props: {
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 {t("contents.savedContent")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {data && data.savedContent ? (
               <CarouselComponent
