@@ -3,7 +3,7 @@ import { getBearerToken, logoutUser } from "./cookies";
 
 const handleCustomApiRequest = async <T = any>(
   request: string,
-  method: "POST" | "GET" | "PATCH",
+  method: "POST" | "GET" | "PATCH" | "DELETE",
   body: any = undefined,
   withToken: boolean = false
 ) => {

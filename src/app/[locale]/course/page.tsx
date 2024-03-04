@@ -1,10 +1,12 @@
 import Navbar from "src/components/Navbar";
-import { getCourses } from "src/queryFn";
+import { getCourseByUserId } from "src/queryFn";
 import { ISection } from "src/types";
 import Section from "src/components/Course/Section";
 
 export default async function Course(props: any) {
-  const request = await getCourses();
+  if (!props.searchParams || !props.searchParams.id) return <div></div>;
+
+  const request = await getCourseByUserId(props.searchParams.id);
 
   if (!request.data) return <div></div>;
 

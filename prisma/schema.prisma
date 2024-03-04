@@ -33,13 +33,13 @@ model User {
     name                 String
     biography            String?
     location             String?
-    profile              UserProfile     @relation(fields: [profile_id], references: [id])
+    profile              UserProfile     @relation(fields: [profile_id], references: [id], onDelete: Cascade)
     profile_id           Int             @unique
     user_content         UserContent[]
     historical           Historical[]
     rank                 UserRank?
     user_courses         UserCourses[]
-    lives_and_strikes    LivesAndStrikes @relation(fields: [lives_and_strikes_id], references: [id])
+    lives_and_strikes    LivesAndStrikes @relation(fields: [lives_and_strikes_id], references: [id], onDelete: Cascade)
     lives_and_strikes_id Int             @unique
 }
 
@@ -63,9 +63,9 @@ model UserProfile {
 model UserLanguages {
     id              Int             @id @default(autoincrement())
     active          Boolean
-    details         LanguagesCombos @relation(fields: [details_id], references: [id])
+    details         LanguagesCombos @relation(fields: [details_id], references: [id], onDelete: Cascade)
     details_id      Int
-    user_profile    UserProfile     @relation(fields: [user_profile_id], references: [id])
+    user_profile    UserProfile     @relation(fields: [user_profile_id], references: [id], onDelete: Cascade)
     user_profile_id Int
 }
 
@@ -92,11 +92,12 @@ model Languages {
 
 model UserCourses {
     id               Int     @id @default(autoincrement())
+    active           Boolean
     course_id        Int
     user_id          Int
     completed_levels Level[]
-    course           Courses @relation(fields: [course_id], references: [id])
-    user             User    @relation(fields: [user_id], references: [id])
+    course           Courses @relation(fields: [course_id], references: [id], onDelete: Cascade)
+    user             User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Courses {
@@ -106,7 +107,7 @@ model Courses {
     languages    LanguagesCombos @relation(fields: [languages_id], references: [id])
     languages_id Int             @unique
     sections     Section[]
-    user_courses UserCourses[]
+    UserCourses UserCourses[]
 }
 
 model Section {
@@ -196,9 +197,9 @@ model Ranks {
 }
 
 model UserRank {
-    rank            Ranks    @relation(fields: [rank_id], references: [id])
+    rank            Ranks    @relation(fields: [rank_id], references: [id], onDelete: Cascade)
     rank_id         Int
-    user            User     @relation(fields: [user_id], references: [id])
+    user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id         Int      @unique
     created_at      DateTime @default(now())
     updated_at      DateTime @updatedAt
@@ -244,8 +245,8 @@ model UserContent {
 
 model PendingContent {
     id              Int            @id @default(autoincrement())
-    pending_content ContentDetails @relation(fields: [pending_id], references: [id])
-    user_content    UserContent    @relation(fields: [user_content_id], references: [id])
+    pending_content ContentDetails @relation(fields: [pending_id], references: [id], onDelete: Cascade)
+    user_content    UserContent    @relation(fields: [user_content_id], references: [id], onDelete: Cascade)
     marked_as_read  Boolean
     is_completed    Boolean
     user_content_id Int
@@ -254,9 +255,9 @@ model PendingContent {
 
 model Historical {
     id           Int      @id @default(autoincrement())
-    user         User?    @relation(fields: [user_id], references: [id])
+    user         User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id      Int?
-    content      Content  @relation(fields: [content_id], references: [id])
+    content      Content  @relation(fields: [content_id], references: [id], onDelete: Cascade)
     last_watched DateTime @default(now())
     content_id   Int
 }

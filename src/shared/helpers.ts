@@ -202,7 +202,7 @@ const colorsList = [
   "#DBBBFF",
 ];
 
-const languagesList = [
+const languages = [
   "english",
   "spanish",
   "italian",
@@ -259,7 +259,7 @@ export {
   colorsList,
   getRandomColor,
   colorsObject,
-  languagesList,
+  languages,
   MAX_EXPERIENCE,
   MAX_LIVES,
   rankFrameColors,

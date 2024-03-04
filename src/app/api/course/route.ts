@@ -1,10 +1,9 @@
 import { NextRequest } from "next/server";
 import { onSuccessRequest, onThrowError } from "../apiService";
-import { getSearchQuery, verifyUserAuth } from "src/shared/apiShared";
+import { verifyUserAuth } from "src/shared/apiShared";
 import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import prisma from "src/app/config/db";
-import { getUrl } from "src/queryFn";
 
 function groupBy(array: any[], key: string) {
   return array.reduce((grouped, item) => {
@@ -18,9 +17,23 @@ function groupBy(array: any[], key: string) {
   }, {});
 }
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: number } }
+) {
   try {
+    verifyUserAuth(req);
+    const id = +params.id;
+
+    if (id === undefined || id === null)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.BAD_REQUEST,
+        msg: "Error parsing request id.",
+      });
+
     const request = await prisma.userCourses.findFirst({
+      where: { user_id: id, active: true },
       include: {
         completed_levels: true,
         course: {

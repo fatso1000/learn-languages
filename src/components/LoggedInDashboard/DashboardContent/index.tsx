@@ -63,7 +63,7 @@ export default async function Header(props: {
               {generics("listenings")} <ListeningIcon />
             </Link>
             <Link
-              href={"course"}
+              href={`course?id=${currentUser.id}`}
               className="btn btn-success max-md:flex-auto h-full font-black gap-y-0"
             >
               {generics("course")} <CourseIcon />

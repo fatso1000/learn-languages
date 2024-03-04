@@ -106,7 +106,6 @@ export interface CarouselCardProps {
   href: string;
   title: string;
   level: string;
-  language: string;
   type: string;
   description: string;
 }

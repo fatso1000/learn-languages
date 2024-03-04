@@ -1,3 +1,5 @@
-export default function Settings() {
-  return <div className="w-[10em] h-[10em]">User not found</div>;
+import { SettingsForm } from "src/components/Form";
+
+export default function Settings(props: any) {
+  return <SettingsForm props={props} />;
 }

@@ -6,11 +6,12 @@ import {
   getStrikes,
   isUserLoggedIn,
 } from "src/shared/cookies";
-import { ILives, IStrikes, IUser } from "src/types";
+import { ILives, IStrikes, IUser, SelectedLanguageElement } from "src/types";
 
 export default function useUser(props?: any) {
   const [currentUser, setCurrentUser] = useState<IUser>();
-  const [selectedLanguage, setSelectedLanguage] = useState<any>();
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<SelectedLanguageElement>();
   const [userLives, setUserLives] = useState<ILives>();
   const [strikes, setStrikes] = useState<IStrikes>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);

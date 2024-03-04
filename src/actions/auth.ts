@@ -93,7 +93,7 @@ export async function signInFormValidation(
 
     const user = await signinUser({ email, password });
 
-    if (!user.errors || user.errors.length === 0) {
+    if (!user.message || !user.errors || user.errors.length === 0) {
       const { lives, last_strike_date, strikes_length, last_live_date } =
         user.data.user.lives_and_strikes;
       const userStringify = JSON.stringify(user.data.user),
@@ -196,6 +196,151 @@ export async function selectUserLanguageFormValidation(
       errors: [{ message: "Unknown error" }],
       success: false,
       user_profile_id: currentState.user_profile_id,
+    };
+  }
+}
+
+export async function userDeleteLanguage(
+  course_id: number,
+  language_combo_id: number,
+  user_id: number
+) {
+  try {
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/userCourse/" + course_id,
+      "DELETE",
+      { user_id, language_combo_id },
+      true
+    );
+
+    if (request && request.data) {
+      const userStringify = JSON.stringify(request.data.removePassword),
+        languageStringify = JSON.stringify(
+          request.data.removePassword.profile.languages.find(
+            (language: SelectedLanguageElement) => language.active
+          )
+        );
+      setLoginCookies(userStringify, languageStringify);
+      return null;
+    }
+
+    return null;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function userPasswordFormValidation(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const user_id = currentState.hasOwnProperty("user_id")
+      ? +currentState.user_id
+      : +formData.get("user_id")!;
+
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/user/" + user_id,
+      "DELETE",
+      null,
+      true
+    );
+
+    if (request && request.data) {
+      return {
+        errors: [],
+        success: true,
+        user_id: currentState.user_id,
+      };
+    }
+
+    return {
+      errors: [],
+      success: false,
+      user_id: currentState.user_id,
+    };
+  } catch (error) {
+    return {
+      errors: [{ message: "Unknown error" }],
+      success: false,
+      user_id: currentState.user_id,
+    };
+  }
+}
+
+export async function userAccountFormValidation(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const user_id = currentState.hasOwnProperty("user_id")
+      ? +currentState.user_id
+      : +formData.get("user_id")!;
+
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/user/" + user_id,
+      "DELETE",
+      null,
+      true
+    );
+
+    if (request && request.data) {
+      return {
+        errors: [],
+        success: true,
+        user_id: currentState.user_id,
+      };
+    }
+
+    return {
+      errors: [],
+      success: false,
+      user_id: currentState.user_id,
+    };
+  } catch (error) {
+    return {
+      errors: [{ message: "Unknown error" }],
+      success: false,
+      user_id: currentState.user_id,
+    };
+  }
+}
+
+export async function deleteUserFormValidation(
+  currentState: any,
+  formData: FormData
+) {
+  try {
+    const user_id = currentState.hasOwnProperty("user_id")
+      ? +currentState.user_id
+      : +formData.get("user_id")!;
+
+    const request = await handleCustomApiRequest(
+      getUrl + "/api/user/" + user_id,
+      "DELETE",
+      null,
+      true
+    );
+
+    if (request && request.data) {
+      await logoutUserFormAction();
+      return {
+        errors: [],
+        success: true,
+        user_id: currentState.user_id,
+      };
+    }
+
+    return {
+      errors: [],
+      success: false,
+      user_id: currentState.user_id,
+    };
+  } catch (error) {
+    return {
+      errors: [{ message: "Unknown error" }],
+      success: false,
+      user_id: currentState.user_id,
     };
   }
 }
