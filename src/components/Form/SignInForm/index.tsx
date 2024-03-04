@@ -6,6 +6,7 @@ import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import { useEffect } from "react";
 import { useRouter } from "src/shared/navigation";
+import { useTranslations } from "next-intl";
 
 const initialState = {
   errors: [],
@@ -13,6 +14,8 @@ const initialState = {
 };
 
 export default function SignInForm() {
+  const generics = useTranslations("generics");
+  const t = useTranslations("pages.signIn");
   const [state, formAction] = useFormState(signInFormValidation, initialState);
 
   const router = useRouter();
@@ -54,20 +57,16 @@ export default function SignInForm() {
           </div>
         </div>
       )}
-      <FormInput
-        label="Email"
-        type="email"
-        required
-        placeholder="Email"
-        name="email"
-      />
+      <FormInput label={t("email")} type="email" required name="email" />
       <PasswordInput
-        label="Password"
-        placeholder="Password"
+        label={t("password")}
+        placeholder=""
         name="password"
         required
       />
-      <SubmitButton className="btn btn-success w-full">Sign In</SubmitButton>
+      <SubmitButton className="btn btn-success w-full">
+        {generics("signIn")}
+      </SubmitButton>
     </form>
   );
 }

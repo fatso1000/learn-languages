@@ -10,7 +10,36 @@
     "home": "Inicio",
     "profile": "Perfil",
     "settings": "Configuración",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "read": "Leer",
+    "languages": {
+      "english": "Inglés",
+      "spanish": "Español",
+      "german": "Alemán",
+      "italian": "Italiano",
+      "japanese": "Japonés",
+      "french": "Francés"
+    },
+    "ranks": {
+      "iron": "Hierro",
+      "bronze": "Bronce",
+      "silver": "Plata"
+    },
+    "difficulty": {
+      "easy": "Fácil",
+      "medium": "Medio",
+      "hard": "Difícil"
+    },
+    "languagesModal": {
+      "title": "Elije un idioma",
+      "button": "Nuevo idioma!"
+    },
+    "lives": "Vidas",
+    "hours": "horas",
+    "minutes": "minutos",
+    "seconds": "segundos",
+    "nextLifeIn": "Próxima vida en {time} {dateTime}",
+    "strike": "días de racha"
   },
   "pages": {
     "unauthDashboard": {
@@ -53,14 +82,69 @@
         }
       }
     },
+    "signUp": {
+      "title": "Registro",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "repeatPassword": "Repetir contraseña",
+      "language": "Lenguage"
+    },
+    "signIn": {
+      "title": "Iniciar Sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "Olvidaste tu contraseña?"
+    },
     "dashboard": {
       "title": "Bienvenido de vuelta,",
       "subtitle": "Continuemos con tu aprendizaje",
       "contents": {
         "lastContentsWatched": "Últimos contenidos vistos",
-        "notDinishedContent": "Contenido no finalizado",
-        "savedContent": "Contenido guardado"
+        "noContentWatched": "Aún no hay contenido visto.",
+        "notFinishedContent": "Contenido no finalizado",
+        "noUnfinishedContent": "Aún no hay contenido sin terminar.",
+        "savedContent": "Contenido guardado",
+        "noSavedContent": "Aún no hay contenido guardado."
       }
+    },
+    "profile": {
+      "accountCreatedOn": "Cuenta creada el",
+      "statistics": {
+        "title": "Estadísticas",
+        "streaks": "Días en racha",
+        "rank": "Rango actual"
+      },
+      "languages": "Lenguajes"
+    },
+    "reading": {
+      "title": "Textos en {language} para principiantes",
+      "subtitle": "Estos son algunos de los mejores textos para aprender y practicar {language} en línea y de forma gratuita."
+    },
+    "course": {
+      "title": "Aprendiendo {language}",
+      "etape": "Etapa",
+      "buttons": {
+        "review": "Repasar",
+        "blocked": "Bloqueado",
+        "continue": "Continuar"
+      }
+    },
+    "section": {
+      "currentLevel": "Nivel actual",
+      "start": "Empezar",
+      "practiceLevel": "Practica este nivel para tener más puntos.",
+      "practice": "Practicar",
+      "levelBlocked": "Completa los niveles anteriores para desbloquear este nivel!"
+    },
+    "languages": { "title": "Selección de Idiomas" },
+    "verify": {
+      "title": "¡Correo electrónico enviado!",
+      "subtitle": "Se envió un correo electrónico para verificar tu usuario."
+    },
+    "verified": {
+      "title": "¡Autenticado!",
+      "subtitle": "Tu correo electrónico ahora está verificado."
     }
   }
 }

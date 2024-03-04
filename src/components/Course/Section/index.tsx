@@ -4,6 +4,7 @@ import Image from "next/image";
 import React from "react";
 import { ISection } from "src/types";
 import { TrophyIconSolid } from "src/components/Icons";
+import { getTranslations } from "next-intl/server";
 
 const colors = {
   primary: {
@@ -44,7 +45,7 @@ const colors = {
   },
 };
 
-export default function Section({
+export default async function Section({
   section,
   etape,
   unitCompleted,
@@ -55,6 +56,7 @@ export default function Section({
   unitCompleted?: boolean;
   isBlocked?: boolean;
 }) {
+  const t = await getTranslations("pages.course");
   return (
     <div
       className={`${colors[section?.color || "error"].base} ${
@@ -63,7 +65,10 @@ export default function Section({
     >
       <div className="h-full w-full flex-1 items-start flex flex-col gap-3 ">
         <h3 className="font-black text-3xl leading-none">
-          <span className="text-2xl">Etape {etape}:</span> <br />
+          <span className="text-2xl">
+            {t("etape")} {etape}:
+          </span>{" "}
+          <br />
           {section?.title || "Ejemplo"}
         </h3>
         <div className="flex flex-col w-full">
@@ -93,7 +98,11 @@ export default function Section({
               colors[section?.color || "error"].button
             } ${isBlocked ? "btn-disabled !text-base-100" : ""}`}
           >
-            {unitCompleted ? "Repasar" : isBlocked ? "Bloqueado" : "Continuar"}
+            {unitCompleted
+              ? t("buttons.review")
+              : isBlocked
+              ? t("buttons.blocked")
+              : t("buttons.continue")}
           </Link>
         </div>
       </div>

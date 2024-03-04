@@ -1,5 +1,5 @@
 "use client";
-import { useFormatter } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import Image from "next/image";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { editProfileFormValidation } from "src/actions/auth";
@@ -45,6 +45,9 @@ const initialState = {
 };
 
 export default function ProfileForm(props: any) {
+  const t = useTranslations("pages.profile");
+  const generics = useTranslations("generics");
+
   const format = useFormatter();
   const { currentUser, strikes } = useUser(props);
   const { isEditMode, handleEditMode, isEditIconMode, handleEditIconMode } =
@@ -92,7 +95,7 @@ export default function ProfileForm(props: any) {
               <span className="mt-3 inline-flex w-full gap-2 text-neutral-400 items-center">
                 <ClockIcon />
                 <span className="text-neutral-400">
-                  Cuenta creada en{" "}
+                  {t("accountCreatedOn")}{" "}
                   {format.dateTime(new Date(currentUser.created_at), {
                     year: "numeric",
                     month: "short",
@@ -124,7 +127,7 @@ export default function ProfileForm(props: any) {
               </button>
             </div>
             <div className="divider"></div>
-            <h2 className="font-black text-3xl">Statistics</h2>
+            <h2 className="font-black text-3xl">{t("statistics.title")}</h2>
             <div className="grid grid-cols-2 gap-4">
               <div className="border-2 p-3 rounded-md flex items-center flex-row gap-3">
                 <div className="text-error">
@@ -134,7 +137,7 @@ export default function ProfileForm(props: any) {
                   <span className="font-black text-xl leading-none">
                     {strikes?.strikes_length || 0}
                   </span>
-                  <span>Dias racha</span>
+                  <span>{t("statistics.streaks")}</span>
                 </div>
               </div>
               <div className="border-2 p-3 rounded-md flex items-center flex-row gap-3">
@@ -159,13 +162,13 @@ export default function ProfileForm(props: any) {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-black text-xl leading-none">
-                    {currentUser.rank.rank.name}
+                    {generics(`ranks.${currentUser.rank.rank.name}`)}
                   </span>
-                  <span>Division actual</span>
+                  <span>{t("statistics.rank")}</span>
                 </div>
               </div>
             </div>
-            <h2 className="font-black text-3xl">Languages</h2>
+            <h2 className="font-black text-3xl">{t("languages")}</h2>
             <div className="grid grid-cols-2 gap-4">
               {currentUser.profile.languages.map((language, i) => (
                 <div
@@ -174,7 +177,10 @@ export default function ProfileForm(props: any) {
                 >
                   <div>
                     <Image
-                      src={languagesList[language.details.target_language.name].flagUrl.src}
+                      src={
+                        languagesList[language.details.target_language.name]
+                          .flagUrl.src
+                      }
                       alt="flag"
                       width={48}
                       height={28}
@@ -182,7 +188,11 @@ export default function ProfileForm(props: any) {
                     />
                   </div>
                   <span className="leading-none">
-                    {languagesList[language.details.target_language.name].displayName}
+                    {generics(
+                      `languages.${languagesList[
+                        language.details.target_language.name
+                      ].displayName.toLowerCase()}`
+                    )}
                   </span>
                 </div>
               ))}

@@ -1,7 +1,12 @@
 import { Link } from "src/shared/navigation";
 import AnimalComponent from "src/components/Animal";
 import CarouselComponent from "src/components/Carousel";
-import { CourseIcon, ListeningIcon, ReadingIcon } from "src/components/Icons";
+import {
+  CourseIcon,
+  ExclamationIcon,
+  ListeningIcon,
+  ReadingIcon,
+} from "src/components/Icons";
 import { colorsListObject } from "src/shared/LevelsColors";
 import { DashboardProps, IUser, SelectedLanguageElement } from "src/types";
 import { EmblaOptionsType } from "embla-carousel";
@@ -69,42 +74,45 @@ export default async function Header(props: {
         <div className="mt-8 flex w-full flex-col gap-2">
           <div>
             <div className="inline-flex w-full justify-between">
-              <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
+              <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center ">
                 {t("contents.lastContentsWatched")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.historical && data.historical[0] ? (
               <CarouselComponent
                 items={data.historical[0].content.details || []}
               />
             ) : (
-              <div>
-                <h3>No content watched yet.</h3>
-              </div>
             )} */}
+            <div className="flex justify-center border p-4 rounded-lg gap-1">
+              <ExclamationIcon className="text-info" />
+              <h3 className="font-semibold">
+                {t("contents.noContentWatched")}
+              </h3>
+            </div>
           </div>
           <div className="mt-6 flex w-full flex-col gap-2 relative">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
-                {t("contents.notDinishedContent")}
+                {t("contents.notFinishedContent")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {/* {data && data.pendingContent ? (
               <CarouselComponent items={data.pendingContent || []} />
             ) : (
-              <div>
-                <h3>No unfinished content yet.</h3>
-              </div>
             )} */}
+            <div className="flex justify-center border p-4 rounded-lg gap-1">
+              <ExclamationIcon className="text-info" />
+              <h3 className="font-semibold">
+                {t("contents.noUnfinishedContent")}
+              </h3>
+            </div>
           </div>
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
               <h2 className="text-2xl leading-6 font-black text-center inline-flex items-center">
                 {t("contents.savedContent")}
               </h2>
-              <button className="btn">{generics("more")}</button>
             </div>
             {data && data.savedContent ? (
               <CarouselComponent
@@ -112,8 +120,11 @@ export default async function Header(props: {
                 options={OPTIONS}
               />
             ) : (
-              <div>
-                <h3>No saved content yet.</h3>
+              <div className="flex justify-center border p-4 rounded-lg gap-1">
+                <ExclamationIcon className="text-info" />
+                <h3 className="font-semibold">
+                  {t("contents.noSavedContent")}
+                </h3>
               </div>
             )}
           </div>
