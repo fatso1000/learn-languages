@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { addOrRemoveLifesServer } from "src/actions/auth";
 import { HeartIconSolid } from "src/components/Icons";
@@ -18,6 +19,8 @@ export default function HeartDropdown({
   userId: number;
   lives?: ILives;
 }) {
+  const generics = useTranslations("generics");
+
   const [timeRemaining, setTimeRemaining] = useState({
     hours: 0,
     minutes: 0,
@@ -37,7 +40,6 @@ export default function HeartDropdown({
 
     setTimeRemaining(timer);
   }, [userId, lives]);
-
   return (
     <div className="dropdown flex justify-center items-center relative">
       <button className="btn max-md:btn-sm text-error btn-ghost flex justify-center items-center gap-1">
@@ -52,7 +54,9 @@ export default function HeartDropdown({
         className="dropdown-content z-[1] min-w-[200px] bg-error menu p-4 gap-2 shadow text-error-content flex-col rounded-box flex top-12"
       >
         <div className="inline-flex justify-between items-center">
-          <h5 className="font-black text-xl">{lives?.lives || 0} lives</h5>
+          <h5 className="font-black text-xl">
+            {lives?.lives || 0} {generics("lives")}
+          </h5>
           <HeartIconSolid />
         </div>
         <div className="inline-flex bg-error-content p-4 gap-2 rounded-md">
@@ -69,10 +73,19 @@ export default function HeartDropdown({
           {lives?.lives === MAX_LIVES
             ? ""
             : timeRemaining.hours > 0
-            ? "Next life in " + timeRemaining.hours + " hours"
+            ? generics("nextLifeIn", {
+                time: timeRemaining.hours,
+                dateTime: generics("hours"),
+              })
             : timeRemaining.minutes > 0
-            ? "Next life in " + timeRemaining.minutes + " minutes"
-            : "Next life in " + timeRemaining.seconds + " seconds"}
+            ? generics("nextLifeIn", {
+                time: timeRemaining.minutes,
+                dateTime: generics("minutes"),
+              })
+            : generics("nextLifeIn", {
+                time: timeRemaining.seconds,
+                dateTime: generics("seconds"),
+              })}
         </span>
       </div>
     </div>

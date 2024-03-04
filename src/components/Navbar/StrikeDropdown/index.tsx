@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { memo, useEffect } from "react";
 import { continueOrFailStrikesServer } from "src/actions/auth";
 import { FireIconSolid, SuccessIconCircle } from "src/components/Icons";
@@ -62,6 +63,8 @@ export default function StrikeDropdown({
   userId: number;
   strikes?: IStrikes;
 }) {
+  const generics = useTranslations("generics");
+
   useEffect(() => {
     if (!strikes || strikes?.strikes_length === 0) return;
     const startDate = new Date(),
@@ -87,7 +90,7 @@ export default function StrikeDropdown({
       >
         <div className="inline-flex justify-between items-center">
           <h5 className="font-black text-xl">
-            {strikes?.strikes_length || 0} strike days
+            {strikes?.strikes_length || 0} {generics("strike")}
           </h5>
           <FireIconSolid />
         </div>

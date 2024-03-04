@@ -4,6 +4,7 @@ import { IUser, Languages } from "src/types";
 import { getContentByLanguageAndType } from "src/queryFn";
 import Navbar from "src/components/Navbar";
 import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata({
   params,
@@ -32,6 +33,9 @@ export default async function ReadingsPage({
 }: {
   params: { language?: Languages };
 }) {
+  const generics = await getTranslations("generics");
+  const t = await getTranslations("pages.reading");
+
   const language = params.hasOwnProperty("language")
     ? params["language"]
     : undefined;
@@ -45,6 +49,7 @@ export default async function ReadingsPage({
       : undefined;
 
   if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
+
   const readingTexts = await getContentByLanguageAndType(language, "Reading");
   if (!readingTexts.data || readingTexts.errors.length > 0)
     return <div>ERROR</div>;
@@ -55,11 +60,18 @@ export default async function ReadingsPage({
       <main className="mt-4 px-4 sm:px-4 md:px-16">
         <header className="mb-4">
           <h1 className="text-4xl text-success font-black first-letter:uppercase">
-            {language} texts for begginers
+            {t("title", {
+              language: generics(
+                `languages.${language.toLowerCase()}`
+              ).toLowerCase(),
+            })}
           </h1>
           <p className="font-semibold text-neutral-500">
-            This are some of the best text to learn and practice {language}{" "}
-            online and for free.
+            {t("subtitle", {
+              language: generics(
+                `languages.${language.toLowerCase()}`
+              ).toLowerCase(),
+            })}
           </p>
         </header>
         <section className="flex flex-col gap-y-5">

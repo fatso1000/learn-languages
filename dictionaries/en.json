@@ -6,11 +6,37 @@
     "readings": "Readings",
     "listenings": "Listenings",
     "course": "Course",
-    "more": "More",
     "home": "Home",
     "profile": "Profile",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "read": "Read",
+    "continue": "Continue",
+    "languages": {
+      "english": "English",
+      "spanish": "Spanish",
+      "german": "German",
+      "italian": "Italian",
+      "japanese": "Japanese",
+      "french": "French"
+    },
+    "ranks": {
+      "iron": "Iron",
+      "bronze": "Bronze",
+      "silver": "Silver"
+    },
+    "difficulty": {
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "languagesModal": { "title": "Select language", "button": "New language!" },
+    "lives": "Lives",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds",
+    "nextLifeIn": "Next life in {time} {dateTime}",
+    "strike": "strike days"
   },
   "pages": {
     "unauthDashboard": {
@@ -53,14 +79,69 @@
         }
       }
     },
+    "signUp": {
+      "title": "Sign Up",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "language": "Language"
+    },
+    "signIn": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "password",
+      "forgotPassword": "Forgot password?"
+    },
     "dashboard": {
       "title": "Welcome back,",
       "subtitle": "Let's continue with your learning",
       "contents": {
         "lastContentsWatched": "Last contents watched",
-        "notDinishedContent": "Not finished content",
-        "savedContent": "Saved content"
+        "noContentWatched": "No content watched yet.",
+        "notFinishedContent": "Not finished content",
+        "noUnfinishedContent": "No unfinished content yet.",
+        "savedContent": "Saved content",
+        "noSavedContent": "No saved content yet."
       }
+    },
+    "profile": {
+      "accountCreatedOn": "Account created on",
+      "statistics": {
+        "title": "Statistics",
+        "streaks": "Streak days",
+        "rank": "Current rank"
+      },
+      "languages": "Languages"
+    },
+    "reading": {
+      "title": "{language} texts for begginers",
+      "subtitle": "This are some of the best text to learn and practice {language} online and for free."
+    },
+    "course": {
+      "title": "Learning {language}",
+      "etape": "Etape",
+      "buttons": {
+        "review": "Review",
+        "blocked": "Blockes",
+        "continue": "Continue"
+      }
+    },
+    "section": {
+      "currentLevel": "Current level",
+      "start": "Start",
+      "practiceLevel": "Practice this level to earn more points.",
+      "practice": "Practice",
+      "levelBlocked": "Complete the previous levels to unlock this level!"
+    },
+    "languages": { "title": "Languages Selection" },
+    "verify": {
+      "title": "Email sent!",
+      "subtitle": "An email was sent to you to verify your user."
+    },
+    "verified": {
+      "title": "Authenticated!",
+      "subtitle": "Your email is now verified."
     }
   }
 }

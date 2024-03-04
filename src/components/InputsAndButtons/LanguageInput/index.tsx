@@ -1,6 +1,7 @@
 import useSWR from "swr";
 import Image from "next/image";
 import { languagesList } from "src/shared/helpers";
+import { useTranslations } from "next-intl";
 
 const fetcher = async () => {
   let languages: { name: string; url: string; id: number }[] =
@@ -30,6 +31,8 @@ const fetcher = async () => {
 };
 
 export default function LanguageInput() {
+  const t = useTranslations("pages.signUp");
+
   const { data, error, isLoading } = useSWR("/auth/user", fetcher);
 
   if (error) return <div>error</div>;
@@ -39,7 +42,7 @@ export default function LanguageInput() {
     <div className="form-control w-full">
       <label className="label p-0 px-4">
         <span className="label-text">
-          Language
+          {t("language")}
           <span className="label-text-alt text-[red]">*</span>
         </span>
       </label>

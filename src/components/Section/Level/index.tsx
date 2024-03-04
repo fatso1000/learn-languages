@@ -44,7 +44,6 @@ const levelBloquedStyle = {
 export default async function LevelComponent(props: LevelProps) {
   const { level, sectionId, unitId, row, state, color, lives } = props;
   let progressPorcent = 0;
-
   let progress = 3;
   let exercices = 4;
 
@@ -95,6 +94,7 @@ export default async function LevelComponent(props: LevelProps) {
         <LevelIcon state={state} />
       </div>
       <LevelBubble
+        color={color}
         lives={lives}
         level={level}
         state={state}

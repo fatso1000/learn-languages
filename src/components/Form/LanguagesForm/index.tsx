@@ -14,6 +14,7 @@ import { getCurrentUser, getSelectedLanguage } from "src/shared/cookies";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import Image from "next/image";
 import { SelectedLanguageElement } from "src/types";
+import { useTranslations } from "next-intl";
 
 const languagesList = [
   {
@@ -35,6 +36,7 @@ const initialState: any = {
 };
 
 export default function LanguagesForm() {
+  const generics = useTranslations("generics");
   const [selectedLanguage, setSelectedLanguage] =
     useState<SelectedLanguageElement>();
   const [state, formAction] = useFormState(selectUserLanguageFormValidation, {
@@ -104,7 +106,7 @@ export default function LanguagesForm() {
                 language.id === languagex ? "font-extrabold" : ""
               }`}
             >
-              {language.displayName}
+              {generics(`languages.${language.displayName.toLowerCase()}`)}
             </span>
           </label>
         );

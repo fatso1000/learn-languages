@@ -342,6 +342,7 @@ export interface LevelBubbleProps {
   href: string;
   difficulty?: ExerciseDifficulty;
   level: ILevel;
+  color: colors;
 }
 
 export interface IStrikes {
