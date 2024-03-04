@@ -7,6 +7,7 @@ import FormInput from "src/components/InputsAndButtons/FormInput";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import { useEffect } from "react";
 import { useRouter } from "src/shared/navigation";
+import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
 const initialState = {
@@ -15,6 +16,8 @@ const initialState = {
 };
 
 export default function SignUpForm() {
+  const t = useTranslations("pages.signUp");
+  const generics = useTranslations("generics");
   const [state, formAction]: any[] = useFormState(
     signUpFormValidation,
     initialState
@@ -61,34 +64,26 @@ export default function SignUpForm() {
             </div>
           </div>
         )}
-        <FormInput
-          label="Name"
-          type="text"
-          name="name"
-          placeholder="Matias Benitez"
-          required
-        />
-        <FormInput
-          label="Email"
-          type="email"
-          required
-          name="email"
-          placeholder="example@gmail.com"
-        />
+        <FormInput label={t("name")} type="text" name="name" required />
+        <FormInput label={t("email")} type="email" required name="email" />
         <PasswordInput
           name="password"
-          label="Password"
+          label={t("password")}
           minLength={6}
           required
+          placeholder=""
         />
         <PasswordInput
           name="repeat_password"
-          label="Repeat password"
+          label={t("repeatPassword")}
           minLength={6}
+          placeholder=""
           required
         />
         <LanguageInput defaultLanguage={locale} />
-        <SubmitButton className="btn btn-success w-full">Sign Up</SubmitButton>
+        <SubmitButton className="btn btn-success w-full">
+          {generics("signUp")}
+        </SubmitButton>
       </>
     </form>
   );

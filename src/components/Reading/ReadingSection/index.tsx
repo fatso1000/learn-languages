@@ -1,8 +1,12 @@
+import { getTranslations } from "next-intl/server";
 import { Link } from "src/shared/navigation";
 import { ContentByLevel } from "src/types";
 
-export default function ReadingSection(props: ContentByLevel) {
+export default async function ReadingSection(props: ContentByLevel) {
   const { level, data, userId } = props;
+
+  const generics = await getTranslations("generics");
+
   return (
     <div className="border-b-2 pb-5">
       <div className="inline-flex justify-between items-center w-full">
@@ -33,7 +37,7 @@ export default function ReadingSection(props: ContentByLevel) {
                 }`}
                 className="btn"
               >
-                Read
+                {generics("read")}
               </Link>
             </div>
           ))}

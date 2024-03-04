@@ -7,6 +7,7 @@ import {
   localesJSON,
 } from "src/shared/helpers";
 import { ChangeEvent, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const fetcher = async () => {
   let languages: {
@@ -49,6 +50,8 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
   const [selectedLanguage, setSelectedLanguage] = useState(
     localesJSON[defaultLanguage].long
   );
+  const t = useTranslations("pages.signUp");
+
   const { data, error, isLoading } = useSWR("/auth/user", fetcher);
 
   if (error) return <div>error</div>;
@@ -62,7 +65,8 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
     <div className="form-control w-full">
       <label className="label p-0 px-4">
         <span className="label-text">
-          Cursos de idiomas para hablantes de {localesJSON[defaultLanguage].long}
+          Cursos de idiomas para hablantes de{" "}
+          {localesJSON[defaultLanguage].long}
           <span className="label-text-alt text-[red]">*</span>
         </span>
       </label>

@@ -9,12 +9,16 @@ import { selectUserLanguageFormValidation } from "src/actions/auth";
 import { LanguageSelectProps } from "src/types";
 import Modal from "src/components/Modal";
 import languagesList from "src/shared/languagesList";
+import { useTranslations } from "use-intl";
+
 const initialState: any = {
   errors: [],
   success: false,
 };
 
 export default function LanguageSelect(props: LanguageSelectProps) {
+  const generics = useTranslations("generics");
+
   const { selectedLanguage, languages } = props;
   const router = useRouter();
   const [state, formAction] = useFormState(selectUserLanguageFormValidation, {
@@ -46,7 +50,11 @@ export default function LanguageSelect(props: LanguageSelectProps) {
           />
         )}
       </button>
-      <Modal id="languagesModal" modalRef={modalRef} title="Select course">
+      <Modal
+        id="languagesModal"
+        modalRef={modalRef}
+        title={generics("languagesModal.title")}
+      >
         <form
           action={formAction}
           ref={formRef}
@@ -122,7 +130,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
                   d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
-              <span>New Language!</span>
+              <span>{generics("languagesModal.button")}</span>
             </Link>
           </label>
         </form>
