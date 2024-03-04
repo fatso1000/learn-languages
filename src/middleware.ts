@@ -44,7 +44,7 @@ export async function middleware(req: NextRequest) {
     );
     if (selected_language && selected_language.value !== "") {
       const userSelectedLocale = JSON.parse(selected_language.value).details
-        .short_name;
+        .base_language.short_name;
       if (userSelectedLocale !== locale) {
         locale = userSelectedLocale;
         req.nextUrl.pathname = `/${locale}/${req.nextUrl.pathname.slice(4)}`;

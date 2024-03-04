@@ -35,10 +35,10 @@ const setLoginCookies = (
   lives?: string,
   strikes?: string
 ) => {
-  setCookie("lives", lives);
-  setCookie("strikes", strikes);
   setCookie("current_user", user);
   setCookie("selected_language", language);
+  lives && setCookie("lives", lives);
+  strikes && setCookie("strikes", strikes);
   token && setCookie("token", token);
 };
 

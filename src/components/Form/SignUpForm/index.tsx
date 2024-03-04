@@ -8,6 +8,7 @@ import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import { useEffect } from "react";
 import { useRouter } from "src/shared/navigation";
 import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 const initialState = {
   errors: [],
@@ -17,9 +18,13 @@ const initialState = {
 export default function SignUpForm() {
   const t = useTranslations("pages.signUp");
   const generics = useTranslations("generics");
-  const [state, formAction] = useFormState(signUpFormValidation, initialState);
+  const [state, formAction]: any[] = useFormState(
+    signUpFormValidation,
+    initialState
+  );
 
   const router = useRouter();
+  const locale = useLocale();
 
   useEffect(() => {
     if (state.success) router.push("/auth/verify");
@@ -75,7 +80,7 @@ export default function SignUpForm() {
           placeholder=""
           required
         />
-        <LanguageInput />
+        <LanguageInput defaultLanguage={locale} />
         <SubmitButton className="btn btn-success w-full">
           {generics("signUp")}
         </SubmitButton>
