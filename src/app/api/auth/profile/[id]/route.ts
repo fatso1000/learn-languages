@@ -52,7 +52,24 @@ export async function PATCH(
       },
       where: { id: id },
       include: {
-        profile: { include: { languages: { include: { details: true } } } },
+        profile: {
+          include: {
+            languages: {
+              include: {
+                details: {
+                  select: {
+                    base_language: true,
+                    id: true,
+                    base_language_id: true,
+                    target_language: true,
+                    target_language_id: true,
+                    user_language: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         rank: { include: { rank: true } },
       },
     });

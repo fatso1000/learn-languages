@@ -68,7 +68,9 @@ export async function POST(req: NextRequest) {
               },
             },
           },
-          include: { details: true },
+          include: {
+            details: { include: { base_language: true, user_language: true } },
+          },
         })
       );
     }

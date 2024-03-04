@@ -58,9 +58,10 @@ const getContentByLanguageAndType = async (name: string, type: string) => {
   );
 };
 
-const getCourses = async () => {
+// AGREGAR USER_ID Y COURSE_ID
+const getCourseByUserId = async (user_id: number) => {
   return await handleCustomApiRequest<IUserCourse>(
-    getUrl + "/api/course",
+    getUrl + "/api/course?id=" + user_id,
     "GET"
   );
 };
@@ -173,7 +174,7 @@ export {
   signupUser,
   editUserProfile,
   getDashboardData,
-  getCourses,
+  getCourseByUserId,
   getSectionUnits,
   getExercises,
   authorizeUser,

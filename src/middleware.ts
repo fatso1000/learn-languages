@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { getBrowserLanguage, languagesList, locales } from "./shared/helpers";
+import { getBrowserLanguage, languages, locales } from "./shared/helpers";
 import createMiddleware from "next-intl/middleware";
 import { localePrefix } from "./shared/navigation";
 import { ILives } from "./types";
@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
     const isUnauthRoute = unauthRoutes.find((route) =>
       pathname.includes(route)
     );
-    const isUnauthLanguagesRoute = languagesList.find((route) =>
+    const isUnauthLanguagesRoute = languages.find((route) =>
       pathname.includes(route)
     );
     if (!!isUnauthRoute || !!isUnauthLanguagesRoute) {

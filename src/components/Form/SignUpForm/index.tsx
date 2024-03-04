@@ -34,7 +34,7 @@ export default function SignUpForm() {
     <form action={formAction} className="flex flex-col items-center gap-y-5">
       <>
         {state.errors && state.errors.length > 0 && (
-          <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card w-full bg-base-100 border">
             <div className="card-body">
               <h2 className="card-title text-error">
                 <svg

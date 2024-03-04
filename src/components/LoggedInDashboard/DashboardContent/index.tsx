@@ -23,7 +23,11 @@ export default async function Header(props: {
 
   const { data, userName, selectedLanguage, currentUser } = props;
 
-  const OPTIONS: EmblaOptionsType = { containScroll: "trimSnaps" };
+  const OPTIONS: EmblaOptionsType = {
+    align: "start",
+    containScroll: false,
+    slidesToScroll: "auto",
+  };
   return (
     <header className="mb-4 min-h-[100svh] overflow-hidden py-4">
       <div className="relative flex flex-col">
@@ -64,7 +68,7 @@ export default async function Header(props: {
               {generics("listenings")} <ListeningIcon />
             </Link>
             <Link
-              href={"course"}
+              href={`course?id=${currentUser.id}`}
               className="btn btn-success max-md:flex-auto h-full font-black gap-y-0"
             >
               {generics("course")} <CourseIcon />

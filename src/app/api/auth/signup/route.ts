@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     if (!token)
       throw new CustomError({
-        errors: [],
+        errors: [{ message: "Error parsing token." }],
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
         msg: "Error parsing token.",
       });
@@ -56,11 +56,13 @@ export async function POST(req: NextRequest) {
     if (!languageCombo)
       throw new CustomError({
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        errors: [{ message: "Cannot find language_combo" }],
         msg: "Cannot find LanguageCombo.",
       });
 
     const request = await prisma.user.create({
       data: {
+        active: true,
         email: body.email,
         password: body.password,
         name,
@@ -86,6 +88,7 @@ export async function POST(req: NextRequest) {
         },
         user_courses: {
           create: {
+            active: true,
             course: {
               connect: {
                 languages_id: languageCombo?.id,
@@ -104,6 +107,7 @@ export async function POST(req: NextRequest) {
     if (!request)
       throw new CustomError({
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        errors: [{ message: "Unexpected error during user registration." }],
         msg: "Unexpected error during user registration.",
       });
 

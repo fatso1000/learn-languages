@@ -3,7 +3,7 @@ import useSWR from "swr";
 import Image from "next/image";
 import {
   languagesAndTargets,
-  languagesList,
+  languages,
   localesJSON,
 } from "src/shared/helpers";
 import { ChangeEvent, useState } from "react";
@@ -80,7 +80,7 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
           I speak {localesJSON[defaultLanguage].long}
         </option>
         <option value={"all"}>All languages</option>
-        {languagesList.map((type) => (
+        {languages.map((type) => (
           <option value={type} key={type}>
             I speak {type}
           </option>

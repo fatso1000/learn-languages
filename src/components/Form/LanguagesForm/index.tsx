@@ -19,7 +19,6 @@ export default function LanguagesForm() {
   });
 
   const { selectedLanguage } = useUser();
-  const formRef = useRef<any>(null);
   const router = useRouter();
   const locale = useLocale();
 
@@ -30,7 +29,6 @@ export default function LanguagesForm() {
   return (
     <form
       action={formAction}
-      ref={formRef}
       className="flex flex-col w-full gap-6 justify-center items-center"
     >
       <LanguageInput defaultLanguage={locale} />
