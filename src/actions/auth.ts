@@ -174,10 +174,11 @@ export async function selectUserLanguageFormValidation(
       body,
       true
     );
-
     if (request && request.data) {
-      const userStringify = JSON.stringify(request.data[2]),
-        languageStringify = JSON.stringify(request.data[1]);
+      const userStringify = JSON.stringify(
+          request.data[request.data.length - 1]
+        ),
+        languageStringify = JSON.stringify(request.data[2]);
       setLoginCookies(userStringify, languageStringify);
       return {
         errors: [],

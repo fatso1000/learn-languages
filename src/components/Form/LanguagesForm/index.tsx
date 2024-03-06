@@ -1,12 +1,12 @@
 "use client";
 import { experimental_useFormState as useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import useUser from "src/hooks/useUser";
 import { useLocale } from "next-intl";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
+import { useRouter } from "src/shared/navigation";
 
 const initialState: any = {
   errors: [],
@@ -23,7 +23,7 @@ export default function LanguagesForm() {
   const locale = useLocale();
 
   useEffect(() => {
-    if (state.success) router.refresh();
+    if (state.success) router.push("/languages");
   }, [state.success]);
 
   return (

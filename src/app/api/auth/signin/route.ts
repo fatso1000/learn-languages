@@ -35,7 +35,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
                     base_language_id: true,
                     target_language: true,
                     target_language_id: true,
-                    user_language: true,
                   },
                 },
               },

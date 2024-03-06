@@ -1,6 +1,5 @@
 "use client";
-import { Link } from "src/shared/navigation";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "src/shared/navigation";
 import { useEffect, useRef } from "react";
 import Modal from "src/components/Modal";
 

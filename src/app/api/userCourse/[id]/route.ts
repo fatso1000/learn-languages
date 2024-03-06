@@ -48,14 +48,9 @@ export async function DELETE(
       });
 
     const transactions = await prisma.$transaction([
-      prisma.userCourses.update({
+      prisma.userCourses.delete({
         where: {
           id: isUserCourseExisting.id,
-        },
-        data: {
-          completed_levels: {
-            deleteMany: { user_courses_id: isUserCourseExisting.id },
-          },
         },
       }),
       prisma.userLanguages.delete({
@@ -70,7 +65,7 @@ export async function DELETE(
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
 
-    const userlol = await prisma.user.findUnique({
+    const responseUser = await prisma.user.findUnique({
       where: {
         id: body.user_id,
       },
@@ -86,7 +81,6 @@ export async function DELETE(
                     base_language_id: true,
                     target_language: true,
                     target_language_id: true,
-                    user_language: true,
                   },
                 },
               },
@@ -97,7 +91,7 @@ export async function DELETE(
         lives_and_strikes: true,
       },
     });
-    const { password, ...removePassword } = userlol!;
+    const { password, ...removePassword } = responseUser!;
 
     return onSuccessRequest({
       httpStatusCode: HttpStatusCode.OK,

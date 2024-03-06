@@ -49,7 +49,6 @@ export async function POST(req: NextRequest) {
       },
       include: {
         base_language: true,
-        user_language: true,
       },
     });
 

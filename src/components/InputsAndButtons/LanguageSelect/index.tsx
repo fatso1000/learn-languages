@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
 
-import { useRouter } from "next/navigation";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { useEffect, useRef } from "react";
-import { Link } from "src/shared/navigation";
+import { Link, useRouter } from "src/shared/navigation";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import { LanguageSelectProps } from "src/types";
 import Modal from "src/components/Modal";
