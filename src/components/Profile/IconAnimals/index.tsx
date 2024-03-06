@@ -20,11 +20,11 @@ export default function IconAnimals(props: {
               type="radio"
               name="animal"
               value={animal.toLocaleLowerCase()}
-              className="invisible h-0 w-0 radio-input color-select"
+              className="invisible h-0 w-0 [&+div]:checked:border-base-content [&+div+span]:checked:font-extrabold"
               checked={selectedIcon.animal === animal.toLocaleLowerCase()}
               onChange={handleAnimal}
             />
-            <div className="border-2 rounded-full">
+            <div className="border-4 border-transparent rounded-full">
               <AnimalComponent
                 color={colorsListObject[selectedIcon.color]}
                 animalName={animal}

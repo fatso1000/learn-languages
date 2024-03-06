@@ -13,7 +13,11 @@ const initialState: any = {
   success: false,
 };
 
-export default function LanguagesForm() {
+export default function LanguagesForm({
+  smallContainer,
+}: {
+  smallContainer?: boolean;
+}) {
   const [state, formAction] = useFormState(selectUserLanguageFormValidation, {
     ...initialState,
   });
@@ -31,7 +35,7 @@ export default function LanguagesForm() {
       action={formAction}
       className="flex flex-col w-full gap-6 justify-center items-center"
     >
-      <LanguageInput defaultLanguage={locale} />
+      <LanguageInput defaultLanguage={locale} smallContainer={smallContainer} />
       <SubmitButton className="w-full btn btn-success mt-4">
         Start new course
       </SubmitButton>
