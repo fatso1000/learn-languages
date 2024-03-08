@@ -20,7 +20,7 @@ export async function DELETE(
         msg: "Error parsing request id.",
       });
 
-    const request = await prisma.user.delete({
+    const user = await prisma.user.findUnique({
       where: { id: id },
       include: {
         historical: true,
@@ -31,6 +31,21 @@ export async function DELETE(
         user_courses: true,
       },
     });
+
+    const lives_and_strikes_id = user!.lives_and_strikes_id;
+    const profile_id = user!.profile_id;
+
+    const request = await prisma.$transaction([
+      prisma.user.delete({
+        where: { id },
+      }),
+      prisma.livesAndStrikes.delete({
+        where: { id: lives_and_strikes_id },
+      }),
+      prisma.userProfile.delete({
+        where: { id: profile_id },
+      }),
+    ]);
 
     return onSuccessRequest({
       httpStatusCode: HttpStatusCode.OK,
