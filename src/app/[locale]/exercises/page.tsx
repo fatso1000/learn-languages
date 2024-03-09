@@ -2,7 +2,6 @@
 
 import { ExerciseDifficulty } from "@prisma/client";
 import { ChangeEvent, useState } from "react";
-import Navbar from "src/components/Navbar";
 import { experimental_useFormState as useFormState } from "react-dom";
 import { ExercisesType } from "src/types";
 import { exercisesLevelFormAction } from "src/actions/auth";
