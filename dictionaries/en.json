@@ -142,6 +142,11 @@
     "verified": {
       "title": "Authenticated!",
       "subtitle": "Your email is now verified."
+    },
+    "error": {
+      "title": "Error 404",
+      "message": "The page you were looking for doesn't exist",
+      "goToHome": "Go to Home"
     }
   }
 }

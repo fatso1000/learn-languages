@@ -4,6 +4,7 @@ import { getContentByLanguageAndType } from "src/queryFn";
 import Navbar from "src/components/Navbar";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import ErrorComponent from "src/components/Error";
 
 const languageslist = [
   Languages.english,
@@ -33,10 +34,11 @@ export default async function ReadingsPage({
       ? JSON.parse(current_user.value)
       : undefined;
 
-  if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
+  if (!language || !languageslist.includes(language)) return <ErrorComponent />;
 
   const listenings = await getContentByLanguageAndType(language, "Listening");
-  if (!listenings.data || listenings.errors.length > 0) return <div>ERROR</div>;
+  if (!listenings.data || listenings.errors.length > 0)
+    return <ErrorComponent />;
 
   console.log(listenings);
 

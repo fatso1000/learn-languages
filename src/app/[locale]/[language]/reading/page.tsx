@@ -5,6 +5,7 @@ import { getContentByLanguageAndType } from "src/queryFn";
 import Navbar from "src/components/Navbar";
 import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import ErrorComponent from "src/components/Error";
 
 export async function generateMetadata({
   params,
@@ -48,11 +49,11 @@ export default async function ReadingsPage({
       ? JSON.parse(current_user.value)
       : undefined;
 
-  if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
+  if (!language || !languageslist.includes(language)) return <ErrorComponent />;
 
   const readingTexts = await getContentByLanguageAndType(language, "Reading");
   if (!readingTexts.data || readingTexts.errors.length > 0)
-    return <div>ERROR</div>;
+    return <ErrorComponent />;
 
   return (
     <>

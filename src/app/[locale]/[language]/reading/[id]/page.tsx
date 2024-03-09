@@ -4,6 +4,7 @@ import { PendingContentContent } from "src/types";
 import QA from "src/components/Reading/QA";
 import Navbar from "src/components/Navbar";
 import ReadingHeader from "src/components/Reading/ReadingHeader";
+import ErrorComponent from "src/components/Error";
 
 export async function generateMetadata({
   params,
@@ -37,7 +38,7 @@ export default async function ReadingPageById({
   }>(id!, userId);
 
   if (readingText.errors.length > 0 || !readingText.data)
-    return <div>ERROR</div>;
+    return <ErrorComponent />;
 
   const { data, isMarked } = readingText.data;
 

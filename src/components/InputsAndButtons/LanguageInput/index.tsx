@@ -8,6 +8,7 @@ import {
 } from "src/shared/helpers";
 import { ChangeEvent, useState } from "react";
 import { useTranslations } from "next-intl";
+import ErrorComponent from "src/components/Error";
 
 const fetcher = async () => {
   let languages: {
@@ -61,7 +62,7 @@ export default function LanguageInput(props: {
 
   const { data, error, isLoading } = useSWR("/auth/user", fetcher);
 
-  if (error) return <div>error</div>;
+  if (error) return <ErrorComponent />;
   if (isLoading) return "Loading...";
 
   const onLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
