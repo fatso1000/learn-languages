@@ -9,7 +9,7 @@ export default async function SignUp() {
     <>
       <Navbar />
       <div>
-        <main className="mt-4 px-4 sm:px-4 md:px-16">
+        <main className="my-4 px-4 sm:px-4 md:px-16">
           <section className="flex flex-col gap-y-5 max-w-[50ch] m-auto md:border-2 md:p-7 md:rounded-md">
             <h1 className="font-black text-6xl text-center">{t("title")}</h1>
             <Image

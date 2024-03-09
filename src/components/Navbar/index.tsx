@@ -6,6 +6,7 @@ import StrikeDropdown from "./StrikeDropdown";
 import { getTranslations } from "next-intl/server";
 import { Link } from "src/shared/navigation";
 import { levelAuthRegex } from "src/shared/helpers";
+import LocaleSelect from "../InputsAndButtons/LocaleSelect";
 
 export default async function Navbar(props: any) {
   const t = await getTranslations("generics");
@@ -72,18 +73,7 @@ export default async function Navbar(props: any) {
             <StrikeDropdown userId={currentUser.id} strikes={strikes} />
           </>
         ) : (
-          <>
-            <div>
-              <Link className="btn btn-success normal-case" href="/auth/signup">
-                {t("signUp")}
-              </Link>
-            </div>
-            <div className="ml-4">
-              <Link className="btn normal-case" href="/auth/signin">
-                {t("signIn")}
-              </Link>
-            </div>
-          </>
+          <LocaleSelect pathname={pathname} />
         )}
       </div>
     </nav>
