@@ -51,19 +51,6 @@ body {
   color: hsl(var(--p) / var(--tw-border-opacity)) !important;
 }
 
-.color-select.radio-input:checked + div {
-  border: 3px solid #291334;
-}
-.color-select.radio-input:checked + div + span {
-  font-weight: 800;
-}
-
-.hidden:checked + label img {
-  --tw-border-opacity: 1;
-  border-color: hsl(var(--p) / var(--tw-border-opacity));
-  box-sizing: border-box;
-}
-
 /* DROPDOWN LANGUAGE */
 .menu :where(li > details > summary):after,
 .menu :where(li > .menu-dropdown-toggle):after {

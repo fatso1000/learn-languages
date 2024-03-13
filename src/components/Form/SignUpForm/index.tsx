@@ -80,7 +80,7 @@ export default function SignUpForm() {
           placeholder=""
           required
         />
-        <LanguageInput defaultLanguage={locale} />
+        <LanguageInput defaultLanguage={locale} smallContainer />
         <SubmitButton className="btn btn-success w-full">
           {generics("signUp")}
         </SubmitButton>

@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
     body = typeof body === "string" ? JSON.parse(body) : body;
 
     const stringify = body.language.split(",");
+
     const languageAlreadyExistsInUser = await prisma.userLanguages.findFirst({
       where: {
         details: {
@@ -24,6 +25,7 @@ export async function POST(req: NextRequest) {
         },
       },
     });
+
     const languageCombo = await prisma.languagesCombos.findFirst({
       where: {
         base_language: { name: stringify[0] },
@@ -31,7 +33,6 @@ export async function POST(req: NextRequest) {
       },
       include: {
         base_language: true,
-        user_language: true,
       },
     });
 
@@ -39,6 +40,10 @@ export async function POST(req: NextRequest) {
       prisma.userLanguages.updateMany({
         data: { active: false },
         where: { user_profile: { id: body.user_profile_id } },
+      }),
+      prisma.userCourses.updateMany({
+        data: { active: false },
+        where: { user: { id: body.user_profile_id } },
       }),
     ];
 
@@ -48,11 +53,20 @@ export async function POST(req: NextRequest) {
           where: { id: languageAlreadyExistsInUser.id },
           data: { active: true },
           include: {
-            details: { include: { base_language: true, user_language: true } },
+            details: { include: { base_language: true, user_language: false } },
           },
         })
       );
     } else {
+      const selectedCourse = await prisma.courses.findFirst({
+        where: {
+          languages: {
+            base_language: { name: stringify[0] },
+            target_language: { path: ["name"], equals: stringify[1] },
+          },
+        },
+      });
+
       transactions.push(
         prisma.userLanguages.create({
           data: {
@@ -69,7 +83,18 @@ export async function POST(req: NextRequest) {
             },
           },
           include: {
-            details: { include: { base_language: true, user_language: true } },
+            details: { include: { base_language: true, user_language: false } },
+          },
+        }),
+        prisma.userCourses.create({
+          data: {
+            active: true,
+            course: { connect: { id: selectedCourse?.id } },
+            user: {
+              connect: {
+                id: body.user_profile_id,
+              },
+            },
           },
         })
       );

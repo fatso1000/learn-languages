@@ -45,11 +45,18 @@ const fetcher = async () => {
   return languages;
 };
 
-export default function LanguageInput(props: { defaultLanguage: string }) {
-  const { defaultLanguage } = props;
+export default function LanguageInput(props: {
+  defaultLanguage: string;
+  smallContainer?: boolean;
+}) {
+  const { defaultLanguage, smallContainer } = props;
   const [selectedLanguage, setSelectedLanguage] = useState(
     localesJSON[defaultLanguage].long
   );
+
+  const [selectedLanguageInput, setSelectedLanguageInput] =
+    useState<string[]>();
+
   const t = useTranslations("pages.signUp");
 
   const { data, error, isLoading } = useSWR("/auth/user", fetcher);
@@ -59,6 +66,9 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
 
   const onLanguageChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setSelectedLanguage(e.target.value);
+  };
+  const handleLanguage = (event: { target: any }) => {
+    setSelectedLanguageInput(event.target.value.split(","));
   };
 
   return (
@@ -86,33 +96,44 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
           </option>
         ))}
       </select>
-      <div className="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-5 mt-3">
+      <div
+        className={`grid grid-cols-3 ${
+          smallContainer ? "" : "md:grid-cols-5 lg:grid-cols-6"
+        }  gap-5 mt-3`}
+      >
         {data &&
           data
             .filter((l) =>
               selectedLanguage === "all" ? true : l.base === selectedLanguage
             )
-            .map((language, i) => (
-              <>
-                <input
-                  required
-                  name="language"
-                  type="radio"
-                  id={"language-" + language.id}
-                  value={[language.base, language.target]}
-                  className="radio hidden"
-                ></input>
+            .map((language, i) => {
+              const value = [language.base, language.target];
+              const isChecked =
+                selectedLanguageInput &&
+                selectedLanguageInput[0] === language.base &&
+                selectedLanguageInput[1] === language.target;
+              return (
                 <label
                   key={i}
                   htmlFor={"language-" + language.id}
                   className="flex h-20 relative items-center flex-col"
                 >
+                  <input
+                    required
+                    name="language"
+                    type="radio"
+                    id={"language-" + language.id}
+                    value={value}
+                    onChange={handleLanguage}
+                    checked={isChecked}
+                    className="invisible h-0 w-0 [&+img]:checked:border-success"
+                  />
                   <Image
                     src={language.targetUrl}
                     alt="flag"
                     width={96}
                     height={64}
-                    className="m-auto h-16 w-24 rounded-md"
+                    className="m-auto h-16 w-24 rounded-xl border-4 border-transparent"
                   />
                   {selectedLanguage === "all" && (
                     <Image
@@ -123,10 +144,10 @@ export default function LanguageInput(props: { defaultLanguage: string }) {
                       className="m-auto h-9 w-12 rounded-md absolute top-0 right-0 shadow"
                     />
                   )}
-                  {language.target}
+                  <span>{language.target}</span>
                 </label>
-              </>
-            ))}
+              );
+            })}
       </div>
     </div>
   );

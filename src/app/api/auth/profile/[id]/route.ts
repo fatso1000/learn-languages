@@ -63,7 +63,6 @@ export async function PATCH(
                     base_language_id: true,
                     target_language: true,
                     target_language_id: true,
-                    user_language: true,
                   },
                 },
               },

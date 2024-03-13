@@ -174,10 +174,11 @@ export async function selectUserLanguageFormValidation(
       body,
       true
     );
-
     if (request && request.data) {
-      const userStringify = JSON.stringify(request.data[2]),
-        languageStringify = JSON.stringify(request.data[1]);
+      const userStringify = JSON.stringify(
+          request.data[request.data.length - 1]
+        ),
+        languageStringify = JSON.stringify(request.data[2]);
       setLoginCookies(userStringify, languageStringify);
       return {
         errors: [],
@@ -238,11 +239,13 @@ export async function userPasswordFormValidation(
     const user_id = currentState.hasOwnProperty("user_id")
       ? +currentState.user_id
       : +formData.get("user_id")!;
+    const old_password = formData.get("old_password"),
+      new_password = formData.get("new_password");
 
     const request = await handleCustomApiRequest(
-      getUrl + "/api/user/" + user_id,
-      "DELETE",
-      null,
+      getUrl + "/api/user/" + user_id + "/password",
+      "PATCH",
+      { old_password, new_password },
       true
     );
 
@@ -255,7 +258,7 @@ export async function userPasswordFormValidation(
     }
 
     return {
-      errors: [],
+      errors: [request],
       success: false,
       user_id: currentState.user_id,
     };
@@ -274,13 +277,14 @@ export async function userAccountFormValidation(
 ) {
   try {
     const user_id = currentState.hasOwnProperty("user_id")
-      ? +currentState.user_id
-      : +formData.get("user_id")!;
+        ? +currentState.user_id
+        : +formData.get("user_id")!,
+      new_email = formData.get("email");
 
     const request = await handleCustomApiRequest(
-      getUrl + "/api/user/" + user_id,
-      "DELETE",
-      null,
+      getUrl + "/api/user/" + user_id + "/email",
+      "PATCH",
+      new_email,
       true
     );
 
@@ -293,7 +297,7 @@ export async function userAccountFormValidation(
     }
 
     return {
-      errors: [],
+      errors: [request],
       success: false,
       user_id: currentState.user_id,
     };
