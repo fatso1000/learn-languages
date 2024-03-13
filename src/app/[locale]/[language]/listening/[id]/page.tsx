@@ -4,6 +4,7 @@ import QA from "src/components/Reading/QA";
 import Navbar from "src/components/Navbar";
 import ReadingHeader from "src/components/Reading/ReadingHeader";
 import Listening from "./Listening";
+import ErrorComponent from "src/components/Error";
 
 export default async function ListeningPageById({
   params,
@@ -24,7 +25,7 @@ export default async function ListeningPageById({
   }>(id!, userId);
 
   if (readingText.errors.length > 0 || !readingText.data)
-    return <div>ERROR</div>;
+    return <ErrorComponent />;
 
   const { data, isMarked } = readingText.data;
 

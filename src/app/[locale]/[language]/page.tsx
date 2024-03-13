@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Languages } from "src/types";
 import { Link } from "src/shared/navigation";
+import ErrorComponent from "src/components/Error";
 
 export async function generateMetadata(props: any): Promise<Metadata> {
   return {
@@ -22,7 +23,7 @@ export default async function ReadingsPage({ params }: any) {
     ? params["language"]
     : undefined;
 
-  if (!language || !languageslist.includes(language)) return <div>ERROR</div>;
+  if (!language || !languageslist.includes(language)) return <ErrorComponent />;
 
   return (
     <main className="mt-4 px-4 sm:px-4 md:px-16">

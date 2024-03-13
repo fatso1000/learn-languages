@@ -145,6 +145,11 @@
     "verified": {
       "title": "¡Autenticado!",
       "subtitle": "Tu correo electrónico ahora está verificado."
+    },
+    "error": {
+      "title": "Error 404",
+      "message": "La página que estabas buscando no existe.",
+      "goToHome": "Ir al Inicio"
     }
   }
 }
