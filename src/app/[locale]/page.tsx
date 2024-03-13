@@ -6,7 +6,6 @@ import { Link } from "src/shared/navigation";
 
 export default async function Home(props: any) {
   const generics = await getTranslations("generics");
-
   const t = await getTranslations("pages.unauthDashboard");
 
   return (

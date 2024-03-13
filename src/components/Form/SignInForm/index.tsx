@@ -21,7 +21,7 @@ export default function SignInForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (state.success) router.refresh();
+    if (state.success) router.push("/");
   }, [state.success]);
 
   return (

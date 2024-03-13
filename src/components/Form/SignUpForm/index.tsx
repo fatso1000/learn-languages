@@ -6,7 +6,7 @@ import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import { useEffect } from "react";
-import { useRouter } from "src/shared/navigation";
+import { Link, useRouter } from "src/shared/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
@@ -81,9 +81,15 @@ export default function SignUpForm() {
           required
         />
         <LanguageInput defaultLanguage={locale} smallContainer />
-        <SubmitButton className="btn btn-success w-full">
-          {generics("signUp")}
-        </SubmitButton>
+        <div className="w-full pt-4">
+          <SubmitButton className="btn btn-success w-full">
+            {generics("signUp")}
+          </SubmitButton>
+          <div className="divider" />
+          <Link href="/auth/signin" className="btn w-full">
+            {generics("signIn")}
+          </Link>
+        </div>
       </>
     </form>
   );
