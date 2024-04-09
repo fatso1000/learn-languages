@@ -37,7 +37,7 @@ export async function POST(req: NextRequest) {
 
       const current_date = new Date();
 
-      await prisma.user.update({
+      const response = await prisma.user.update({
         where: { id: +user_id },
         data: {
           rank: {
@@ -78,7 +78,11 @@ export async function POST(req: NextRequest) {
 
       message = "Historical modified successfully.";
 
-      return onSuccessRequest({ httpStatusCode: 200, data: {}, message });
+      return onSuccessRequest({
+        httpStatusCode: 200,
+        data: { response },
+        message,
+      });
     }
   } catch (error) {
     return onThrowError(error);

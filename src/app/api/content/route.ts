@@ -1,6 +1,6 @@
 import { validate } from "class-validator";
 import { NextRequest, NextResponse } from "next/server";
-import { APIContent, CustomError, ReadingsPOST } from "types/apiTypes";
+import { APIContent, CustomError, ContentsPOST } from "types/apiTypes";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import { onSuccessRequest, onThrowError } from "../apiService";
@@ -57,9 +57,8 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    verifyUserAuth(req);
     let body: APIContent = await req.json();
-    const bodyType = new ReadingsPOST(body);
+    const bodyType = new ContentsPOST(body);
 
     const validation = await validate(bodyType);
     if (validation.length > 0) {
@@ -78,7 +77,9 @@ export async function POST(req: NextRequest) {
             description: body.description,
             title: body.title,
             type: body.type,
-            text: body.text.split("\n"),
+            text: body.text?.split("\n") || [""],
+            stories: body?.stories || [""],
+            principal: body.principal || "",
             question_and_answer: {
               create: [...body.question_and_answer],
             },

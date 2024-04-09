@@ -4,6 +4,7 @@ import { ExerciseType } from "@prisma/client";
 import { logoutUserAction } from "src/app/[locale]/actions";
 import {
   addOrRemoveLives,
+  completeContent,
   continueOrFailStrikes,
   editUserProfile,
   getUrl,
@@ -16,6 +17,7 @@ import {
   setUserCookie,
 } from "src/shared/apiShared";
 import { handleCustomApiRequest } from "src/shared/clientShared";
+import { getCurrentUser } from "src/shared/cookies";
 import { redirect } from "src/shared/navigation";
 import { SelectedLanguageElement } from "src/types";
 
@@ -59,6 +61,39 @@ export async function continueOrFailStrikesServer(userId: number) {
     )
       return;
     setCookie("strikes", JSON.stringify(request.data));
+  } catch (error) {
+    return;
+  }
+}
+
+export async function completeExerciseContent(
+  user_id: string,
+  experience: string,
+  content_id: string
+) {
+  try {
+    const request = await completeContent(user_id, experience, content_id);
+    const userCookie = await getCurrentUser();
+    if (
+      !request ||
+      !userCookie ||
+      !request.data ||
+      (request.data && Object.keys(request.data).length === 0) ||
+      request.message ||
+      request.errors.length > 0
+    )
+      return;
+
+    const { rank, ...currentUser } = JSON.parse(userCookie.value);
+
+    const newExperience = rank.user_experience + Number(experience);
+
+    const updatedCurrentUser = {
+      ...currentUser,
+      rank: { ...rank, user_experience: newExperience },
+    };
+
+    setCookie("current_user", JSON.stringify(updatedCurrentUser));
   } catch (error) {
     return;
   }

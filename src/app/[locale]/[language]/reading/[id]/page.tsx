@@ -23,7 +23,7 @@ export default async function ReadingPageById({
   params,
   searchParams,
 }: {
-  params: { id?: string };
+  params: { id?: string; language?: string };
   searchParams: { userId?: string };
 }) {
   const id = params.hasOwnProperty("id") ? params["id"] : "1",
@@ -47,11 +47,16 @@ export default async function ReadingPageById({
       <Navbar props={{ params }} />
       <main className="mt-4 mb-20 md:mb-4 max-w-[1100px] m-auto px-4 xl:py-8 md:px-8 grid grid-cols-1 xl:grid-cols-2 gap-x-4 xl:border-2 xl:rounded-md">
         <header className="mb-4 border-b-2 xl:border-0">
-          <ReadingHeader content_id={id} isMarked={isMarked} userId={userId} />
+          <ReadingHeader
+            content_id={id}
+            isMarked={isMarked}
+            userId={userId}
+            language={params.language}
+          />
           <h1 className="text-5xl mt-6 mb-3 font-black">{data.title}</h1>
-          {data.details &&
-            data.details[0] &&
-            data.details[0].text.map((v: string, i: number) => (
+          {data &&
+            data.details &&
+            data.details[0].text?.map((v: string, i: number) => (
               <p key={i} className="mb-4 font-medium">
                 {v}
               </p>

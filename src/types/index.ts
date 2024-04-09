@@ -129,7 +129,9 @@ export interface PendingContent {
   id: number;
   title: string;
   description: string;
-  text: any[];
+  text?: any[];
+  stories?: any[];
+  principal?: string;
   level: string;
   type: string;
   content_id: number;

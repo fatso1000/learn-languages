@@ -40,8 +40,6 @@ export default async function ReadingsPage({
   if (!listenings.data || listenings.errors.length > 0)
     return <ErrorComponent />;
 
-  console.log(listenings);
-
   return (
     <>
       <Navbar />

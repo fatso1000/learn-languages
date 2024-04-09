@@ -65,3 +65,66 @@ export async function GET(req: NextRequest) {
     return onThrowError(error);
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    verifyUserAuth(req);
+    const { isCompleted } = await req.json();
+    const id = req.nextUrl.pathname.slice(13),
+      userId = req.nextUrl.searchParams.get("userId");
+
+    if (!id)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.BAD_REQUEST,
+        msg: "Error parsing request id.",
+      });
+
+    if (!userId)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.BAD_REQUEST,
+        msg: "Error parsing request user id.",
+      });
+
+    const checkMarked = await prisma.pendingContent.findFirst({
+      where: {
+        pending_id: +id,
+        user_content_id: +userId,
+      
+      },
+      include: {
+
+        pending_content: true,
+      },
+    });
+    const isMarked = checkMarked && checkMarked.marked_as_read;
+
+    const request = await prisma.content.findUnique({
+      where: {
+        id: +id,
+      },
+      include: {
+        details: {
+          include: {
+            question_and_answer: true,
+          },
+        },
+      },
+    });
+
+    if (!request)
+      throw new CustomError({
+        errors: [],
+        httpStatusCode: HttpStatusCode.NOT_FOUND,
+        msg: "Reading not found.",
+      });
+
+    return onSuccessRequest({
+      httpStatusCode: 200,
+      data: { data: request, isMarked, isCompleted },
+    });
+  } catch (error: any) {
+    return onThrowError(error);
+  }
+}

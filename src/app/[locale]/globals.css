@@ -42,9 +42,6 @@ body {
 }
 
 /* CUSTOM */
-.swiper-button-disabled {
-  display: none !important;
-}
 
 .swiper-button-prev,
 .swiper-button-next {
@@ -282,4 +279,30 @@ progress[value]::-webkit-progress-value {
   flex: 0 0 var(--slide-size);
   min-width: 0;
   padding-left: var(--slide-spacing);
+}
+
+.chat-container {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+}
+
+.chat-animated {
+  opacity: 0;
+  animation: 0.3s both fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
