@@ -25,7 +25,8 @@ export async function GET(req: NextRequest) {
         prisma.pendingContent.findMany({
           where: {
             user_content_id: +userId,
-            is_completed: true,
+            is_completed: false,
+            marked_as_read: true,
           },
           include: {
             pending_content: {

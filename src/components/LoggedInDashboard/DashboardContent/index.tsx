@@ -82,18 +82,23 @@ export default async function Header(props: {
                 {t("contents.lastContentsWatched")}
               </h2>
             </div>
-            {/* {data && data.historical && data.historical[0] ? (
+            {data &&
+            data.historical &&
+            data.historical[0] &&
+            data.historical[0].content &&
+            data.historical[0].content.details.lenght > 0 ? (
               <CarouselComponent
-                items={data.historical[0].content.details || []}
+                items={data.historical[0].content.details}
+                options={OPTIONS}
               />
             ) : (
-            )} */}
-            <div className="flex justify-center border p-4 rounded-lg gap-1">
-              <ExclamationIcon className="text-info" />
-              <h3 className="font-semibold">
-                {t("contents.noContentWatched")}
-              </h3>
-            </div>
+              <div className="flex justify-center border p-4 rounded-lg gap-1">
+                <ExclamationIcon className="text-info" />
+                <h3 className="font-semibold">
+                  {t("contents.noContentWatched")}
+                </h3>
+              </div>
+            )}
           </div>
           <div className="mt-6 flex w-full flex-col gap-2 relative">
             <div className="inline-flex w-full justify-between">
@@ -101,16 +106,19 @@ export default async function Header(props: {
                 {t("contents.notFinishedContent")}
               </h2>
             </div>
-            {/* {data && data.pendingContent ? (
-              <CarouselComponent items={data.pendingContent || []} />
+            {data && data.pendingContent && data.pendingContent.length > 0 ? (
+              <CarouselComponent
+                items={data.pendingContent}
+                options={OPTIONS}
+              />
             ) : (
-            )} */}
-            <div className="flex justify-center border p-4 rounded-lg gap-1">
-              <ExclamationIcon className="text-info" />
-              <h3 className="font-semibold">
-                {t("contents.noUnfinishedContent")}
-              </h3>
-            </div>
+              <div className="flex justify-center border p-4 rounded-lg gap-1">
+                <ExclamationIcon className="text-info" />
+                <h3 className="font-semibold">
+                  {t("contents.noUnfinishedContent")}
+                </h3>
+              </div>
+            )}
           </div>
           <div className="mt-6 flex w-full flex-col gap-2">
             <div className="inline-flex w-full justify-between">
@@ -118,11 +126,8 @@ export default async function Header(props: {
                 {t("contents.savedContent")}
               </h2>
             </div>
-            {data && data.savedContent ? (
-              <CarouselComponent
-                items={data.savedContent || []}
-                options={OPTIONS}
-              />
+            {data && data.savedContent && data.savedContent.length > 0 ? (
+              <CarouselComponent items={data.savedContent} options={OPTIONS} />
             ) : (
               <div className="flex justify-center border p-4 rounded-lg gap-1">
                 <ExclamationIcon className="text-info" />

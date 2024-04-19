@@ -226,7 +226,9 @@ model ContentDetails {
     id                  Int                 @id @default(autoincrement())
     title               String
     description         String
-    text                String[]
+    text                String[]            
+    stories             Json?                
+    principal           String?
     level               Levels
     type                Types
     content             Content             @relation(fields: [content_id], references: [id])
