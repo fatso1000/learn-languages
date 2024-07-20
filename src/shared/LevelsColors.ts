@@ -1,4 +1,4 @@
-const colorsList = {
+const colorsListObject: any = {
   primary: "#8C0327",
   secondary: "#D75050",
   accent: "#DCBDFF",
@@ -19,7 +19,7 @@ const levelColors = {
       content:
         "bg-primary-content text-primary active:bg-primary active:text-primary-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.primary} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.primary} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
   secondary: {
@@ -33,7 +33,7 @@ const levelColors = {
       content:
         "bg-secondary-content text-secondary active:bg-secondary active:text-secondary-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.secondary} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.secondary} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
   accent: {
@@ -47,7 +47,7 @@ const levelColors = {
       content:
         "bg-accent-content text-accent active:bg-accent active:text-accent-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.accent} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.accent} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
   success: {
@@ -61,7 +61,7 @@ const levelColors = {
       content:
         "bg-success-content text-success active:bg-success active:text-success-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.success} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.success} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
   info: {
@@ -75,7 +75,7 @@ const levelColors = {
       content:
         "bg-info-content text-info active:bg-info active:text-info-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.info} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.info} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
   error: {
@@ -89,9 +89,9 @@ const levelColors = {
       content:
         "bg-error-content text-error active:bg-error active:text-error-content",
       gradientProgress: (progressPorcent: number) =>
-        `conic-gradient(${colorsList.error} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
+        `conic-gradient(${colorsListObject.error} ${progressPorcent}%,#F2F2F2 ${progressPorcent}%)`,
     },
   },
 };
 
-export { levelColors };
+export { levelColors, colorsListObject };

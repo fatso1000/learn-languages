@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "src/shared/navigation";
 import { useEffect, useState } from "react";
 import {
   ArrowLeftShort,
@@ -13,6 +13,7 @@ export default function ReadingHeader(props: {
   isMarked: boolean;
   userId?: string;
   content_id?: string;
+  language?: string;
 }) {
   const [isMarked, setIsMarked] = useState(false);
 
@@ -28,7 +29,7 @@ export default function ReadingHeader(props: {
 
   return (
     <div className="inline-flex gap-3">
-      <Link className="btn" href={"/english/reading"}>
+      <Link className="btn" href={`/${props.language}/listening`}>
         <ArrowLeftShort />
       </Link>
       {props.userId && (

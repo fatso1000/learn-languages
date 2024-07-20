@@ -6,7 +6,9 @@ import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { Link, useRouter } from "src/shared/navigation";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 const initialState = {
   errors: [],
@@ -14,17 +16,25 @@ const initialState = {
 };
 
 export default function SignUpForm() {
-  const [state, formAction] = useFormState(signUpFormValidation, initialState);
+  const t = useTranslations("pages.signUp");
+  const generics = useTranslations("generics");
+  const [state, formAction]: any[] = useFormState(
+    signUpFormValidation,
+    initialState
+  );
+
+  const router = useRouter();
+  const locale = useLocale();
 
   useEffect(() => {
-    if (state.success) redirect("/auth/verify");
+    if (state.success) router.push("/auth/verify");
   }, [state.success]);
 
   return (
     <form action={formAction} className="flex flex-col items-center gap-y-5">
       <>
         {state.errors && state.errors.length > 0 && (
-          <div className="card w-96 bg-base-100 shadow-xl">
+          <div className="card w-full bg-base-100 border">
             <div className="card-body">
               <h2 className="card-title text-error">
                 <svg
@@ -54,34 +64,32 @@ export default function SignUpForm() {
             </div>
           </div>
         )}
-        <FormInput
-          label="Name"
-          type="text"
-          name="name"
-          placeholder="Matias Benitez"
-          required
-        />
-        <FormInput
-          label="Email"
-          type="email"
-          required
-          name="email"
-          placeholder="example@gmail.com"
-        />
+        <FormInput label={t("name")} type="text" name="name" required />
+        <FormInput label={t("email")} type="email" required name="email" />
         <PasswordInput
           name="password"
-          label="Password"
+          label={t("password")}
           minLength={6}
           required
+          placeholder=""
         />
         <PasswordInput
           name="repeat_password"
-          label="Repeat password"
+          label={t("repeatPassword")}
           minLength={6}
+          placeholder=""
           required
         />
-        <LanguageInput />
-        <SubmitButton className="btn btn-success w-full">Sign Up</SubmitButton>
+        <LanguageInput defaultLanguage={locale} smallContainer />
+        <div className="w-full pt-4">
+          <SubmitButton className="btn btn-success w-full">
+            {generics("signUp")}
+          </SubmitButton>
+          <div className="divider" />
+          <Link href="/auth/signin" className="btn w-full">
+            {generics("signIn")}
+          </Link>
+        </div>
       </>
     </form>
   );

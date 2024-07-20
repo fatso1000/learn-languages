@@ -1,4 +1,6 @@
 import { IColorsObject } from "src/types";
+import { colorsListObject } from "./LevelsColors";
+import { NextRequest } from "next/server";
 
 function getRandomItemFromArray<T>(array: T[]) {
   const randomIndex = Math.floor(Math.random() * array.length);
@@ -10,7 +12,26 @@ function getRandomAnimalName() {
 }
 
 function getRandomColor() {
-  return getRandomItemFromArray<string>(colorsList);
+  return getRandomItemFromArray<string>(Object.keys(colorsListObject));
+}
+
+function calculate2HourIntervals(startDate: number, endDate: number) {
+  const intervalDuration = 2 * 60 * 60 * 1000;
+  const difference = endDate - startDate;
+  return Math.floor(difference / intervalDuration);
+}
+
+function hasOneDayPassed(baseDate: Date, targetDate: Date) {
+  const difference = Math.abs(baseDate.getTime() - targetDate.getTime());
+  return difference >= 86400000;
+}
+
+function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
 }
 
 function areArraysEqual(arr1: any[], arr2: any[]) {
@@ -45,16 +66,61 @@ function areArraysEqualUnordered(arr1: any[], arr2: any[]) {
 }
 
 function parseTimeLevelCompleted(inputTime: string) {
-  // Split the input string into minutes and seconds
   const [minutes, seconds] = inputTime.split(":").map(Number);
 
-  // Use conditional (ternary) operators to ensure leading zeros
   const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
   const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
 
-  // Return the formatted time
   return `${formattedMinutes}:${formattedSeconds}`;
 }
+
+function addTwoHoursToDate(date: Date) {
+  const newDate = new Date(date);
+  newDate.setHours(newDate.getHours() + 2);
+  return newDate;
+}
+
+function getTimeRemaining(start: Date, end: Date) {
+  const total = end.getTime() - start.getTime();
+  const seconds = Math.floor((total / 1000) % 60);
+  const minutes = Math.floor((total / 1000 / 60) % 60);
+  const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+
+  return {
+    total,
+    hours,
+    minutes,
+    seconds,
+  };
+}
+
+function getBrowserLanguage(req: NextRequest) {
+  return req.headers
+    .get("accept-language")
+    ?.split(",")
+    .map((i) => i.split(";"))
+    ?.reduce(
+      (ac: { code: string; priority: string }[], lang) => [
+        ...ac,
+        { code: lang[0], priority: lang[1] },
+      ],
+      []
+    )
+    ?.sort((a, b) => (a.priority > b.priority ? -1 : 1))
+    ?.find((i) => locales.includes(i.code.substring(0, 2)))
+    ?.code?.substring(0, 2);
+}
+
+const locales = ["en", "es", "jp"];
+
+const localesJSON: any = {
+  en: { short: "en", long: "english" },
+  es: { short: "es", long: "spanish" },
+  jp: { short: "jp", long: "japanese" },
+  it: { short: "it", long: "italian" },
+  de: { short: "de", long: "german" },
+  fr: { short: "fr", long: "french" },
+};
 
 const animalsList = [
   "Alligator",
@@ -136,7 +202,7 @@ const colorsList = [
   "#DBBBFF",
 ];
 
-const languagesList = [
+const languages = [
   "english",
   "spanish",
   "italian",
@@ -145,7 +211,24 @@ const languagesList = [
   "french",
 ];
 
+const languagesAndTargets = [
+  { id: 1, target: "spanish", base: "english" },
+  { id: 2, target: "english", base: "spanish" },
+  { id: 5, target: "spanish", base: "italian" },
+  { id: 6, target: "english", base: "italian" },
+  { id: 7, target: "english", base: "japanese" },
+  { id: 8, target: "spanish", base: "japanese" },
+  { id: 9, target: "english", base: "french" },
+  { id: 10, target: "spanish", base: "french" },
+  { id: 3, target: "english", base: "german" },
+  { id: 4, target: "spanish", base: "german" },
+];
+
+const levelAuthRegex = new RegExp(/\/(level|auth\/signin)/);
+
 const MAX_EXPERIENCE = 250;
+
+const MAX_LIVES = 5;
 
 const colorsObject: IColorsObject = {
   "#FF5861": "red",
@@ -168,16 +251,27 @@ const rankFrameColors = [
 ];
 
 export {
+  localesJSON,
+  languagesAndTargets,
   getRandomAnimalName,
   animalsList,
   getRandomItemFromArray,
   colorsList,
   getRandomColor,
   colorsObject,
-  languagesList,
+  languages,
   MAX_EXPERIENCE,
+  MAX_LIVES,
   rankFrameColors,
   areArraysEqual,
   areArraysEqualUnordered,
   parseTimeLevelCompleted,
+  addTwoHoursToDate,
+  getTimeRemaining,
+  calculate2HourIntervals,
+  hasOneDayPassed,
+  isSameDay,
+  locales,
+  getBrowserLanguage,
+  levelAuthRegex,
 };

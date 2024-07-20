@@ -28,9 +28,17 @@ const setCookie = (cookieKey: string, value: any) => {
   }
 };
 
-const setLoginCookies = (user: string, language: string, token?: string) => {
+const setLoginCookies = (
+  user: string,
+  language: string,
+  token?: string,
+  lives?: string,
+  strikes?: string
+) => {
   setCookie("current_user", user);
   setCookie("selected_language", language);
+  lives && setCookie("lives", lives);
+  strikes && setCookie("strikes", strikes);
   token && setCookie("token", token);
 };
 
@@ -126,24 +134,41 @@ const getTTS = async (text: string) => {
   return blob.url;
 };
 
-// const processChoicesArray = async (array: string[]) => {
-//   const results = await Promise.allSettled(
-//     array.map(async (choice: string) => {
-//       const tts = await getTTS(choice);
-//       return { text: choice, tts };
-//     })
-//   );
-//   return results;
-// };
-
 const processChoicesArray = (array: string[]) => {
   return array.map((choice: string) => {
     return { text: choice };
   });
 };
 
+const basicValidations = (data: ILevelBody) =>
+  !!(
+    data.prompt &&
+    data.prompt.length > 0 &&
+    data.unitId &&
+    data.type &&
+    data.targetLanguage &&
+    data.sourceLanguage &&
+    data.difficulty
+  );
+
 const translationValidation = (data: ILevelBody) =>
-  !!(data.prompt && data.choices);
+  !!(data.choices && basicValidations(data));
+
+const writeDownValidation = (data: ILevelBody) => !!basicValidations(data);
+
+const chooseCorrectValidation = (data: ILevelBody) =>
+  !!(data.correctAnswers && data.choices && basicValidations(data)) ||
+  (data.correctAnswers && data.correctAnswers.length === 0) ||
+  (data.choices && data.choices.length === 0);
+
+const completeSentenceValidation = (data: ILevelBody) =>
+  !!(
+    data.compactTranslations &&
+    data.correctSolutions &&
+    basicValidations(data)
+  ) ||
+  (data.compactTranslations && data.compactTranslations.length === 0) ||
+  (data.correctSolutions && data.correctSolutions.length === 0);
 
 const generateLevelData = async (data: ILevelBody) => {
   const {
@@ -184,6 +209,7 @@ const generateLevelData = async (data: ILevelBody) => {
         correctIndices: correctIndicesT,
       } as ILevelReturn;
     case "WriteDown":
+      if (!writeDownValidation(data)) return undefined;
       const ttsWD = await getTTS(prompt!);
       return {
         compactTranslations,
@@ -196,6 +222,7 @@ const generateLevelData = async (data: ILevelBody) => {
         tts: ttsWD,
       } as ILevelReturn;
     case "ChooseCorrect":
+      if (!chooseCorrectValidation(data)) return undefined;
       const ttsCC = await getTTS(prompt!);
       const choicesCC = processChoicesArray(choices!);
       const correctIndex = +correctAnswers![0];
@@ -210,6 +237,7 @@ const generateLevelData = async (data: ILevelBody) => {
         type,
       } as ILevelReturn;
     case "CompleteSentence":
+      if (!completeSentenceValidation(data)) return undefined;
       const ttsCS = await getTTS(compactTranslations![0]);
       const displayTokens: any[] = correctSolutions![0]
         .split(/([ ,.!]+)/)

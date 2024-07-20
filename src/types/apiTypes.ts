@@ -98,11 +98,13 @@ export interface IRank {
 }
 
 // READINGS
-export class ReadingsPOST {
+export class ContentsPOST {
   public title: string;
   public description: string;
   public level: LevelsTypes;
-  public text: string;
+  public text?: string;
+  public stories?: string[][][];
+  public principal?: string;
   public type: ContentTypes;
   public question_and_answer: APIQuestionAndAnswer[];
   public language_id: number;
@@ -113,12 +115,16 @@ export class ReadingsPOST {
     level,
     question_and_answer,
     text,
+    stories,
+    principal,
     title,
     type,
   }: APIContent) {
     this.title = title;
     this.description = description;
     this.text = text;
+    this.stories = stories;
+    this.principal = principal;
     this.type = type;
     this.level = level;
     this.language_id = language_id;
@@ -144,7 +150,9 @@ export enum LevelsTypes {
 export interface APIContent {
   title: string;
   description: string;
-  text: string;
+  text?: string;
+  stories?: string[][][];
+  principal?: string;
   language_id: number;
   type: ContentTypes;
   level: LevelsTypes;
@@ -204,7 +212,7 @@ export class UserSignUpPOST {
 
   public profile_color: string;
 
-  public language: number;
+  public language: string;
 
   constructor({ email, password, name, profile_color, language }: IUserSignUp) {
     this.email = email;
@@ -246,7 +254,7 @@ export interface IUserSignUp {
   email: string;
   password: string;
   name?: string;
-  language: number;
+  language: string;
   profile_color: string;
 }
 

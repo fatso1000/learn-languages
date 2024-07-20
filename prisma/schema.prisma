@@ -25,20 +25,31 @@ enum Types {
 }
 
 model User {
-    id           Int           @id @default(autoincrement())
-    active       Boolean?
-    created_at   DateTime      @default(now())
-    email        String        @unique
-    password     String
-    name         String
-    biography    String?
-    location     String?
-    profile      UserProfile   @relation(fields: [profile_id], references: [id])
-    profile_id   Int           @unique
-    user_content UserContent[]
-    historical   Historical[]
-    rank         UserRank?
-    user_courses UserCourses[]
+    id                   Int             @id @default(autoincrement())
+    active               Boolean?
+    created_at           DateTime        @default(now())
+    email                String          @unique
+    password             String
+    name                 String
+    biography            String?
+    location             String?
+    profile              UserProfile     @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+    profile_id           Int             @unique
+    user_content         UserContent[]
+    historical           Historical[]
+    rank                 UserRank?
+    user_courses         UserCourses[]
+    lives_and_strikes    LivesAndStrikes @relation(fields: [lives_and_strikes_id], references: [id], onDelete: Cascade)
+    lives_and_strikes_id Int             @unique
+}
+
+model LivesAndStrikes {
+    id               Int       @id @default(autoincrement())
+    user             User?
+    lives            Int       @default(5)
+    last_live_date   DateTime?
+    strikes_length   Int       @default(0)
+    last_strike_date DateTime?
 }
 
 model UserProfile {
@@ -50,44 +61,53 @@ model UserProfile {
 }
 
 model UserLanguages {
-    id              Int         @id @default(autoincrement())
-    active          Boolean     @default(false)
-    details         Languages   @relation(fields: [language_id], references: [id])
-    language_id     Int
-    user_profile    UserProfile @relation(fields: [user_profile_id], references: [id])
+    id              Int             @id @default(autoincrement())
+    active          Boolean
+    details         LanguagesCombos @relation(fields: [details_id], references: [id], onDelete: Cascade)
+    details_id      Int
+    user_profile    UserProfile     @relation(fields: [user_profile_id], references: [id], onDelete: Cascade)
     user_profile_id Int
 }
 
+model LanguagesCombos {
+    id                 Int             @id @default(autoincrement())
+    base_language      Languages       @relation(fields: [base_language_id], references: [id])
+    base_language_id   Int
+    target_language    Json
+    target_language_id Int
+    user_language      UserLanguages[]
+    Courses            Courses?
+}
+
 model Languages {
-    id             Int             @id @default(autoincrement())
-    name           String          @unique
-    short_name     String
-    content        Content[]
-    user_languages UserLanguages[]
-    courses        Courses?
+    id           Int               @id @default(autoincrement())
+    name         String            @unique
+    short_name   String
+    content      Content[]
+    combinations LanguagesCombos[]
+    coursesId    Int?
 }
 
 // **************
 
 model UserCourses {
     id               Int     @id @default(autoincrement())
+    active           Boolean
     course_id        Int
     user_id          Int
     completed_levels Level[]
-    course           Courses @relation(fields: [course_id], references: [id])
-    user             User    @relation(fields: [user_id], references: [id])
+    course           Courses @relation(fields: [course_id], references: [id], onDelete: Cascade)
+    user             User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
 model Courses {
-    id                 Int           @id @default(autoincrement())
-    language_id        Int           @unique
-    target_language_id Int
-    title              String
-    description        String?
-    language           Languages     @relation(fields: [language_id], references: [id])
-    target_language    Json
-    sections           Section[]
-    user_courses       UserCourses[]
+    id           Int             @id @default(autoincrement())
+    title        String
+    description  String?
+    languages    LanguagesCombos @relation(fields: [languages_id], references: [id])
+    languages_id Int             @unique
+    sections     Section[]
+    UserCourses UserCourses[]
 }
 
 model Section {
@@ -177,9 +197,9 @@ model Ranks {
 }
 
 model UserRank {
-    rank            Ranks    @relation(fields: [rank_id], references: [id])
+    rank            Ranks    @relation(fields: [rank_id], references: [id], onDelete: Cascade)
     rank_id         Int
-    user            User     @relation(fields: [user_id], references: [id])
+    user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id         Int      @unique
     created_at      DateTime @default(now())
     updated_at      DateTime @updatedAt
@@ -206,7 +226,9 @@ model ContentDetails {
     id                  Int                 @id @default(autoincrement())
     title               String
     description         String
-    text                String[]
+    text                String[]            
+    stories             Json?                
+    principal           String?
     level               Levels
     type                Types
     content             Content             @relation(fields: [content_id], references: [id])
@@ -219,14 +241,14 @@ model ContentDetails {
 model UserContent {
     id      Int              @id @default(autoincrement())
     content PendingContent[]
-    user    User?            @relation(fields: [user_id], references: [id])
+    user    User?            @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id Int?
 }
 
 model PendingContent {
     id              Int            @id @default(autoincrement())
-    pending_content ContentDetails @relation(fields: [pending_id], references: [id])
-    user_content    UserContent    @relation(fields: [user_content_id], references: [id])
+    pending_content ContentDetails @relation(fields: [pending_id], references: [id], onDelete: Cascade)
+    user_content    UserContent    @relation(fields: [user_content_id], references: [id], onDelete: Cascade)
     marked_as_read  Boolean
     is_completed    Boolean
     user_content_id Int
@@ -235,9 +257,9 @@ model PendingContent {
 
 model Historical {
     id           Int      @id @default(autoincrement())
-    user         User?    @relation(fields: [user_id], references: [id])
+    user         User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
     user_id      Int?
-    content      Content  @relation(fields: [content_id], references: [id])
+    content      Content  @relation(fields: [content_id], references: [id], onDelete: Cascade)
     last_watched DateTime @default(now())
     content_id   Int
 }

@@ -12,12 +12,22 @@ export enum Languages {
   french = "french",
 }
 
+export enum Locales {
+  spanish = "es",
+  english = "en",
+  italian = "it",
+  japanese = "jp",
+  german = "de",
+  french = "fr",
+}
+
 export interface ModalProps {
   title: string;
   children: JSX.Element;
   onSuccess?: () => void;
   onClose?: () => void;
   modalRef: RefObject<HTMLDialogElement>;
+  id: string;
 }
 
 export interface IFlags {
@@ -54,6 +64,7 @@ export interface IUser {
   profile: Profile;
   password: string;
   rank: UserRank;
+  created_at: string;
 }
 
 export interface UserRank {
@@ -95,7 +106,6 @@ export interface CarouselCardProps {
   href: string;
   title: string;
   level: string;
-  language: string;
   type: string;
   description: string;
 }
@@ -119,7 +129,9 @@ export interface PendingContent {
   id: number;
   title: string;
   description: string;
-  text: any[];
+  text?: any[];
+  stories?: any[];
+  principal?: string;
   level: string;
   type: string;
   content_id: number;
@@ -175,7 +187,22 @@ export interface SelectedLanguageElement {
 
 export interface SelectedLanguageDetail {
   id: number;
+  base_language_id: number;
+  target_language: TargetLanguage;
+  target_language_id: number;
+  base_language: BaseLanguage;
+}
+
+export interface BaseLanguage {
+  id: number;
   name: string;
+  short_name: string;
+  coursesId: null;
+}
+
+export interface TargetLanguage {
+  name: string;
+  short_name: string;
 }
 
 export interface IconProps {
@@ -259,11 +286,11 @@ export interface ISection {
   id: number;
   title: string;
   description: string | null;
-  bg_color: "success" | "accent" | "primary" | "info" | "secondary" | "error";
   img_src: string | null;
   courseId: number;
   user_courses_id: null;
   units: IUnit[];
+  color: "success" | "accent" | "primary" | "info" | "secondary" | "error";
 }
 
 export interface IUnit {
@@ -275,13 +302,17 @@ export interface IUnit {
   levels: ILevel[];
   completed: boolean;
   completed_levels: number;
+  color: colors;
 }
 
 export interface ExercisesProps {
   data: IExercise;
   onCheckAnswer: (values: onCheckAnswerProps) => void;
   isMessageActive: boolean;
-  onExerciseFail: (correct_answer?: string, translationText?: string) => void;
+  onExerciseFail: (
+    correct_answer?: string,
+    translationText?: string
+  ) => Promise<void>;
 }
 
 export enum LevelState {
@@ -302,6 +333,7 @@ export interface LevelProps {
   row: number;
   state: LevelState;
   color: colors;
+  lives: ILives;
 }
 
 export enum colors {
@@ -317,10 +349,24 @@ export interface UnitProps {
   sectionId: string;
   unit: IUnit;
   color: colors;
+  lives: ILives;
 }
 
 export interface LevelBubbleProps {
   state: LevelState;
+  lives: ILives;
   href: string;
   difficulty?: ExerciseDifficulty;
+  level: ILevel;
+  color: colors;
+}
+
+export interface IStrikes {
+  strikes_length: number;
+  last_strike_date: string;
+}
+
+export interface ILives {
+  lives: number;
+  last_live_date: string;
 }

@@ -1,7 +1,7 @@
 import { validate } from "class-validator";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { CustomError, IUserSignUp, UserSignUpPOST } from "types/apiTypes";
-import { onThrowError } from "../../apiService";
+import { onSuccessRequest, onThrowError } from "../../apiService";
 import { HttpStatusCode } from "types/httpStatusCode";
 import prisma from "src/app/config/db";
 import bcrypt from "bcrypt";
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
     if (!token)
       throw new CustomError({
-        errors: [],
+        errors: [{ message: "Error parsing token." }],
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
         msg: "Error parsing token.",
       });
@@ -41,10 +41,27 @@ export async function POST(req: NextRequest) {
     body.password = await bcrypt.hash(body.password, 8);
     const name = body.name ? body.name : randomAnimal;
 
-    await sendMail(body.name, body.email, encodedToken);
+    const stringify = body.language.split(",");
+    const languageCombo = await prisma.languagesCombos.findFirst({
+      where: {
+        base_language: { name: stringify[0] },
+        target_language: { path: ["name"], equals: stringify[1] },
+      },
+      include: {
+        base_language: true,
+      },
+    });
+
+    if (!languageCombo)
+      throw new CustomError({
+        httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        errors: [{ message: "Cannot find language_combo" }],
+        msg: "Cannot find LanguageCombo.",
+      });
 
     const request = await prisma.user.create({
       data: {
+        active: true,
         email: body.email,
         password: body.password,
         name,
@@ -56,7 +73,7 @@ export async function POST(req: NextRequest) {
             languages: {
               create: {
                 active: true,
-                details: { connect: { id: +body.language + 1 } },
+                details: { connect: { id: languageCombo?.id } },
               },
             },
           },
@@ -70,13 +87,17 @@ export async function POST(req: NextRequest) {
         },
         user_courses: {
           create: {
+            active: true,
             course: {
               connect: {
-                language_id: +body.language + 1,
-                // CAMBIAR EN SIGUIENTE UPDATE
-                target_language_id: 2,
+                languages_id: languageCombo?.id,
               },
             },
+          },
+        },
+        lives_and_strikes: {
+          create: {
+            lives: 5,
           },
         },
       },
@@ -85,10 +106,21 @@ export async function POST(req: NextRequest) {
     if (!request)
       throw new CustomError({
         httpStatusCode: HttpStatusCode.INTERNAL_SERVER_ERROR,
+        errors: [{ message: "Unexpected error during user registration." }],
         msg: "Unexpected error during user registration.",
       });
 
-    return NextResponse.json(request);
+    await sendMail(
+      body.name,
+      body.email,
+      encodedToken,
+      languageCombo!.base_language.short_name
+    );
+
+    return onSuccessRequest({
+      data: request,
+      httpStatusCode: HttpStatusCode.CREATED,
+    });
   } catch (error: any) {
     return onThrowError(error);
   }

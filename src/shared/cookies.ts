@@ -29,6 +29,14 @@ const getSelectedLanguage = async () => {
   return await getCookie("selected_language");
 };
 
+const getStrikes = async () => {
+  return await getCookie("strikes");
+};
+
+const getLives = async () => {
+  return await getCookie("lives");
+};
+
 const logoutUser = async () => {
   const oneDay = 24 * 60 * 60 * 1000;
   return {
@@ -66,4 +74,6 @@ export {
   deleteCookie,
   logoutUser,
   getSelectedLanguage,
+  getLives,
+  getStrikes,
 };

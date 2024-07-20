@@ -7,11 +7,32 @@ export async function POST(req: NextRequest) {
   try {
     verifyUserAuth(req);
     let body = await req.json();
+    body = typeof body === "string" ? JSON.parse(body) : body;
+
+    const stringify = body.language.split(",");
 
     const languageAlreadyExistsInUser = await prisma.userLanguages.findFirst({
       where: {
-        details: { id: body.language_id },
+        details: {
+          base_language: { name: stringify[0] },
+          target_language: { path: ["name"], equals: stringify[1] },
+        },
         user_profile: { id: body.user_profile_id },
+      },
+      include: {
+        details: {
+          include: { base_language: true, user_language: true },
+        },
+      },
+    });
+
+    const languageCombo = await prisma.languagesCombos.findFirst({
+      where: {
+        base_language: { name: stringify[0] },
+        target_language: { path: ["name"], equals: stringify[1] },
+      },
+      include: {
+        base_language: true,
       },
     });
 
@@ -20,6 +41,10 @@ export async function POST(req: NextRequest) {
         data: { active: false },
         where: { user_profile: { id: body.user_profile_id } },
       }),
+      prisma.userCourses.updateMany({
+        data: { active: false },
+        where: { user: { id: body.user_profile_id } },
+      }),
     ];
 
     if (languageAlreadyExistsInUser) {
@@ -27,17 +52,28 @@ export async function POST(req: NextRequest) {
         prisma.userLanguages.update({
           where: { id: languageAlreadyExistsInUser.id },
           data: { active: true },
-          include: { details: true },
+          include: {
+            details: { include: { base_language: true, user_language: false } },
+          },
         })
       );
     } else {
+      const selectedCourse = await prisma.courses.findFirst({
+        where: {
+          languages: {
+            base_language: { name: stringify[0] },
+            target_language: { path: ["name"], equals: stringify[1] },
+          },
+        },
+      });
+
       transactions.push(
         prisma.userLanguages.create({
           data: {
             active: true,
             details: {
               connect: {
-                id: body.language_id,
+                id: languageCombo?.id,
               },
             },
             user_profile: {
@@ -46,7 +82,20 @@ export async function POST(req: NextRequest) {
               },
             },
           },
-          include: { details: true },
+          include: {
+            details: { include: { base_language: true, user_language: false } },
+          },
+        }),
+        prisma.userCourses.create({
+          data: {
+            active: true,
+            course: { connect: { id: selectedCourse?.id } },
+            user: {
+              connect: {
+                id: body.user_profile_id,
+              },
+            },
+          },
         })
       );
     }
@@ -55,7 +104,13 @@ export async function POST(req: NextRequest) {
       prisma.user.findFirst({
         where: { profile: { id: body.user_profile_id } },
         include: {
-          profile: { include: { languages: { include: { details: true } } } },
+          profile: {
+            include: {
+              languages: {
+                include: { details: { include: { base_language: true } } },
+              },
+            },
+          },
           rank: { include: { rank: true } },
         },
       })

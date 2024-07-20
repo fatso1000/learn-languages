@@ -1,0 +1,80 @@
+{
+  "generics": {
+    "signUp": "登録",
+    "signIn": "サインイン",
+    "startToday": "今すぐ始める",
+    "readings": "読み物",
+    "listenings": "聴解",
+    "course": "コース",
+    "more": "もっと",
+    "home": "ホーム",
+    "profile": "プロフィール",
+    "settings": "設定",
+    "logout": "ログアウト"
+  },
+  "pages": {
+    "unauthDashboard": {
+      "sectionOne": {
+        "subtitle": "好きな言語をオンラインツールやコンテンツで無料で学びましょう！"
+      },
+      "sectionTwo": {
+        "title": {
+          "fast": "速い",
+          "and": "と",
+          "free": "無料"
+        },
+        "subtitle": "LLOと一緒に学ぶことは本当に簡単で、何よりも無料です！私たちは誰もが制限なしに自分のスキルを練習する機会を持てるようにすることができます。"
+      },
+      "sectionThree": {
+        "title": {
+          "feel": "感じて",
+          "free": "自由に"
+        },
+        "subtitle": "私たちのプラットフォームは、あなたが簡単かつ無料でアクセスできるように設計されています。"
+      },
+      "footer": {
+        "about": {
+          "title": "約",
+          "label": {
+            "team": "チーム",
+            "purpose": "目的"
+          }
+        },
+        "helpAndSupport": {
+          "title": "ヘルプとサポート",
+          "label": { "faq": "質問", "contactUs": "お問い合わせ" }
+        },
+        "social": {
+          "title": "ネットワーク"
+        },
+        "privacityAndTerms": {
+          "title": "条項とプライバシー",
+          "label": { "terms": "条項", "privacity": "プライバシー" }
+        }
+      }
+    },
+    "signUp": {
+      "title": "Registro",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "repeatPassword": "Repetir contraseña",
+      "language": "Lenguage"
+    },
+    "signIn": {
+      "title": "Iniciar Sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "Olvidaste tu contraseña?"
+    },
+    "dashboard": {
+      "title": "Bienvenido de vuelta,",
+      "subtitle": "Continuemos con tu aprendizaje",
+      "contents": {
+        "lastContentsWatched": "Últimos contenidos vistos",
+        "notFinishedContent": "Contenido no finalizado",
+        "savedContent": "Contenido guardado"
+      }
+    }
+  }
+}

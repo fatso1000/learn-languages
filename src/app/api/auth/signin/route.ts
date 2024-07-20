@@ -21,24 +21,41 @@ export async function POST(req: NextRequest, res: NextResponse) {
       throw onValidationError(validation);
     }
 
-    const request = await prisma.user.findFirst({
+    const request = await prisma.user.findUnique({
       where: { email: body.email },
       include: {
-        profile: { include: { languages: { include: { details: true } } } },
+        profile: {
+          include: {
+            languages: {
+              include: {
+                details: {
+                  select: {
+                    base_language: true,
+                    id: true,
+                    base_language_id: true,
+                    target_language: true,
+                    target_language_id: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         rank: { include: { rank: true } },
+        lives_and_strikes: true,
       },
     });
 
     if (!request)
       throw new CustomError({
-        errors: [],
+        errors: [{ message: "User not found." }],
         msg: "User not found.",
         httpStatusCode: HttpStatusCode.NOT_FOUND,
       });
 
-    if (!request?.active)
+    if (!request.active)
       throw new CustomError({
-        errors: [],
+        errors: [{ message: "User is not verified." }],
         msg: "User not verified.",
         httpStatusCode: HttpStatusCode.UNAUTHORIZED,
       });
@@ -46,6 +63,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const isMatch = bcrypt.compareSync(body.password, request.password);
     if (!isMatch)
       throw new CustomError({
+        errors: [{ message: "Password is wrong." }],
         msg: "Password mismatch.",
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
       });
@@ -54,7 +72,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const jwt = logInUser(removePassword);
 
     return onSuccessRequest({
-      httpStatusCode: HttpStatusCode.CREATED,
+      httpStatusCode: 200,
       data: { token: jwt, user: removePassword },
     });
   } catch (error: any) {

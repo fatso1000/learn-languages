@@ -5,7 +5,8 @@ import { signInFormValidation } from "src/actions/auth";
 import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "src/shared/navigation";
+import { useTranslations } from "next-intl";
 
 const initialState = {
   errors: [],
@@ -13,16 +14,20 @@ const initialState = {
 };
 
 export default function SignInForm() {
+  const generics = useTranslations("generics");
+  const t = useTranslations("pages.signIn");
   const [state, formAction] = useFormState(signInFormValidation, initialState);
 
+  const router = useRouter();
+
   useEffect(() => {
-    if (state.success) redirect("/dashboard");
+    if (state.success) router.push("/");
   }, [state.success]);
 
   return (
     <form action={formAction} className="flex flex-col items-center gap-y-5">
       {state.errors && state.errors.length > 0 && (
-        <div className="card w-96 bg-base-100 shadow-xl">
+        <div className="card w-full bg-base-100 border">
           <div className="card-body">
             <h2 className="card-title text-error">
               <svg
@@ -52,20 +57,16 @@ export default function SignInForm() {
           </div>
         </div>
       )}
-      <FormInput
-        label="Email"
-        type="email"
-        required
-        placeholder="Email"
-        name="email"
-      />
+      <FormInput label={t("email")} type="email" required name="email" />
       <PasswordInput
-        label="Password"
-        placeholder="Password"
+        label={t("password")}
+        placeholder=""
         name="password"
         required
       />
-      <SubmitButton className="btn btn-success w-full">Sign In</SubmitButton>
+      <SubmitButton className="btn btn-success w-full">
+        {generics("signIn")}
+      </SubmitButton>
     </form>
   );
 }

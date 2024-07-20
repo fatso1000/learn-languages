@@ -58,9 +58,10 @@ const getContentByLanguageAndType = async (name: string, type: string) => {
   );
 };
 
-const getCourses = async () => {
+// AGREGAR USER_ID Y COURSE_ID
+const getCourseByUserId = async (user_id: number) => {
   return await handleCustomApiRequest<IUserCourse>(
-    getUrl + "/api/course",
+    getUrl + "/api/course?id=" + user_id,
     "GET"
   );
 };
@@ -139,6 +140,31 @@ const authorizeUser = async (token: any) => {
   );
 };
 
+const getUserLives = async (userId: number) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/lives/${userId}`,
+    "GET"
+  );
+};
+
+const continueOrFailStrikes = async (userId: number) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/strikes/${userId}`,
+    "GET"
+  );
+};
+
+const addOrRemoveLives = async (
+  userId: number,
+  body: { type: "sum" | "lose" }
+) => {
+  return await handleCustomApiRequest(
+    getUrl + `/api/actions/lives/${userId}`,
+    "POST",
+    body
+  );
+};
+
 export {
   getContentByLanguageAndType,
   getContentById,
@@ -148,11 +174,14 @@ export {
   signupUser,
   editUserProfile,
   getDashboardData,
-  getCourses,
+  getCourseByUserId,
   getSectionUnits,
   getExercises,
   authorizeUser,
   completeContent,
   addOrUpdateHistorical,
   addOrRemoveUserContent,
+  getUserLives,
+  addOrRemoveLives,
+  continueOrFailStrikes,
 };

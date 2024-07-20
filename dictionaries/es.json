@@ -1,0 +1,155 @@
+{
+  "generics": {
+    "signUp": "Registrarse",
+    "signIn": "Iniciar Sesión",
+    "startToday": "Empieza Ahora",
+    "readings": "Lecturas",
+    "listenings": "Escuchas",
+    "course": "Curso",
+    "more": "Más",
+    "home": "Inicio",
+    "profile": "Perfil",
+    "settings": "Configuración",
+    "logout": "Cerrar Sesión",
+    "read": "Leer",
+    "languages": {
+      "english": "Inglés",
+      "spanish": "Español",
+      "german": "Alemán",
+      "italian": "Italiano",
+      "japanese": "Japonés",
+      "french": "Francés"
+    },
+    "ranks": {
+      "iron": "Hierro",
+      "bronze": "Bronce",
+      "silver": "Plata"
+    },
+    "difficulty": {
+      "easy": "Fácil",
+      "medium": "Medio",
+      "hard": "Difícil"
+    },
+    "languagesModal": {
+      "title": "Elije un idioma",
+      "button": "Nuevo idioma!"
+    },
+    "lives": "Vidas",
+    "hours": "horas",
+    "minutes": "minutos",
+    "seconds": "segundos",
+    "nextLifeIn": "Próxima vida en {time} {dateTime}",
+    "strike": "días de racha"
+  },
+  "pages": {
+    "unauthDashboard": {
+      "sectionOne": {
+        "subtitle": "Aprende el idioma que desees con herramientas y contenido en línea, ¡todo de forma gratuita!"
+      },
+      "sectionTwo": {
+        "title": {
+          "fast": "Rápido",
+          "and": "y",
+          "free": "gratis"
+        },
+        "subtitle": "¡Aprender con LLO es realmente fácil y lo mejor de todo, ¡es gratis para todos! Hacemos esto posible para que cualquiera tenga la oportunidad de practicar sus habilidades sin limitaciones."
+      },
+      "sectionThree": {
+        "title": {
+          "feel": "Siéntete",
+          "free": "libre"
+        },
+        "subtitle": "Nuestra plataforma está diseñada para que puedas acceder de manera fácil y gratuita."
+      },
+      "footer": {
+        "about": {
+          "title": "Acerca de",
+          "label": {
+            "team": "Equipo",
+            "purpose": "Propósito"
+          }
+        },
+        "helpAndSupport": {
+          "title": "Ayuda y soporte",
+          "label": { "faq": "Preguntas", "contactUs": "Contáctanos" }
+        },
+        "social": {
+          "title": "Redes"
+        },
+        "privacityAndTerms": {
+          "title": "Términos y privacidad",
+          "label": { "terms": "Términos", "privacity": "Privacidad" }
+        }
+      }
+    },
+    "signUp": {
+      "title": "Registro",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "repeatPassword": "Repetir contraseña",
+      "language": "Lenguage"
+    },
+    "signIn": {
+      "title": "Iniciar Sesión",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "Olvidaste tu contraseña?"
+    },
+    "dashboard": {
+      "title": "Bienvenido de vuelta,",
+      "subtitle": "Continuemos con tu aprendizaje",
+      "contents": {
+        "lastContentsWatched": "Últimos contenidos vistos",
+        "noContentWatched": "Aún no hay contenido visto.",
+        "notFinishedContent": "Contenido no finalizado",
+        "noUnfinishedContent": "Aún no hay contenido sin terminar.",
+        "savedContent": "Contenido guardado",
+        "noSavedContent": "Aún no hay contenido guardado."
+      }
+    },
+    "profile": {
+      "accountCreatedOn": "Cuenta creada el",
+      "statistics": {
+        "title": "Estadísticas",
+        "streaks": "Días en racha",
+        "rank": "Rango actual"
+      },
+      "languages": "Lenguajes"
+    },
+    "reading": {
+      "title": "Textos en {language} para principiantes",
+      "subtitle": "Estos son algunos de los mejores textos para aprender y practicar {language} en línea y de forma gratuita."
+    },
+    "course": {
+      "title": "Aprendiendo {language}",
+      "etape": "Etapa",
+      "buttons": {
+        "review": "Repasar",
+        "blocked": "Bloqueado",
+        "continue": "Continuar"
+      }
+    },
+    "section": {
+      "currentLevel": "Nivel actual",
+      "start": "Empezar",
+      "practiceLevel": "Practica este nivel para tener más puntos.",
+      "practice": "Practicar",
+      "levelBlocked": "Completa los niveles anteriores para desbloquear este nivel!"
+    },
+    "languages": { "title": "Selección de Idiomas" },
+    "verify": {
+      "title": "¡Correo electrónico enviado!",
+      "subtitle": "Se envió un correo electrónico para verificar tu usuario."
+    },
+    "verified": {
+      "title": "¡Autenticado!",
+      "subtitle": "Tu correo electrónico ahora está verificado."
+    },
+    "error": {
+      "title": "Error 404",
+      "message": "La página que estabas buscando no existe.",
+      "goToHome": "Ir al Inicio"
+    }
+  }
+}
