@@ -1,3 +1,4 @@
+"use server";
 import { ILives, IStrikes, IUser, SelectedLanguageElement } from "src/types";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
 import { cookies, headers } from "next/headers";

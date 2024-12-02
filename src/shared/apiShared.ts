@@ -114,24 +114,28 @@ const groupByContentLevel = (array: PendingContentContent[]) => {
 };
 
 const getTTS = async (text: string) => {
-  const petition = await fetch(
-    "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
-    {
-      method: "POST",
-      headers: {
-        "xi-api-key": "be6d74e85e647e7c221ad26c218ce536",
-        "Content-Type": "application/json",
-        accept: "*/*",
-      },
-      body: `{"text":"${text}","model_id":"eleven_multilingual_v2","voice_settings":{"similarity_boost":0.5,"stability":0.5}}`,
-    }
-  );
-  const tts = petition.body as ReadableStream<Uint8Array>;
-  const blob = await put(`tts/${text}.mp3`, tts, {
-    access: "public",
-    token: process.env.BLOB_READ_WRITE_TOKEN,
-  });
-  return blob.url;
+  try {
+    const petition = await fetch(
+      "https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM",
+      {
+        method: "POST",
+        headers: {
+          "xi-api-key": "be6d74e85e647e7c221ad26c218ce536",
+          "Content-Type": "application/json",
+          accept: "*/*",
+        },
+        body: `{"text":"${text}","model_id":"eleven_multilingual_v2","voice_settings":{"similarity_boost":0.5,"stability":0.5}}`,
+      }
+    );
+    const tts = petition.body as ReadableStream<Uint8Array>;
+    const blob = await put(`tts/${text}.mp3`, tts, {
+      access: "public",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
+    return blob.url;
+  } catch (error) {
+    return "";
+  }
 };
 
 const processChoicesArray = (array: string[]) => {
@@ -238,7 +242,8 @@ const generateLevelData = async (data: ILevelBody) => {
       } as ILevelReturn;
     case "CompleteSentence":
       if (!completeSentenceValidation(data)) return undefined;
-      const ttsCS = await getTTS(compactTranslations![0]);
+      // const ttsCS = await getTTS(compactTranslations![0]);
+      const ttsCS = "";
       const displayTokens: any[] = correctSolutions![0]
         .split(/([ ,.!]+)/)
         .map((choice) => {

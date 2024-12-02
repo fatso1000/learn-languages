@@ -59,17 +59,21 @@ const getContentByLanguageAndType = async (name: string, type: string) => {
 };
 
 // AGREGAR USER_ID Y COURSE_ID
-const getCourseByUserId = async (user_id: number) => {
+const getCourseByUserId = async (user_id: string) => {
   return await handleCustomApiRequest<IUserCourse>(
     getUrl + "/api/course?id=" + user_id,
-    "GET"
+    "GET",
+    undefined,
+    true
   );
 };
 
 const getSectionUnits = async (section_id: string) => {
   return await handleCustomApiRequest<ISection>(
     getUrl + "/api/course/section?id=" + section_id,
-    "GET"
+    "GET",
+    undefined,
+    true
   );
 };
 

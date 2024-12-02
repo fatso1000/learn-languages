@@ -89,7 +89,7 @@ export default function LevelBubble({
               </span>
             </h3>
             <p>{t("currentLevel")}</p>
-            {/* {lives.lives === 0 ? (
+            {lives.lives === 0 ? (
               <div
                 className={`btn shadow-lg ${colors[color].btn}`}
                 onClick={onButtonClick}
@@ -103,13 +103,7 @@ export default function LevelBubble({
               >
                 {t("start")}
               </Link>
-            )} */}
-            <div
-              className={`btn shadow-lg ${colors[color].btn}`}
-              onClick={onButtonClick}
-            >
-              {t("start")}
-            </div>
+            )}
           </div>
           <div
             className={`w-4 h-4 arrow border-t-2 border-l-2 rotate-45 -top-2 absolute ${colors[color].arrow}`}

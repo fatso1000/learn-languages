@@ -3,8 +3,16 @@ import { getCourseByUserId } from "src/queryFn";
 import { ISection } from "src/types";
 import Section from "src/components/Course/Section";
 
-export default async function Course(props: any) {
-  if (!props.searchParams || !props.searchParams.id) return <div></div>;
+export default async function Course(props: {
+  params: {
+    locale: string;
+  };
+  searchParams: {
+    id: string;
+  };
+}) {
+  if (!props.hasOwnProperty("searchParams") || !props.searchParams.id)
+    return <div></div>;
 
   const request = await getCourseByUserId(props.searchParams.id);
 
