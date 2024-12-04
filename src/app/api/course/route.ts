@@ -17,13 +17,11 @@ function groupBy(array: any[], key: string) {
   }, {});
 }
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: number } }
-) {
+export async function GET(req: NextRequest) {
   try {
+    const searchParams = req.nextUrl.searchParams;
+    const id = searchParams.get("id");
     verifyUserAuth(req);
-    const id = +params.id;
 
     if (id === undefined || id === null)
       throw new CustomError({
@@ -33,7 +31,7 @@ export async function GET(
       });
 
     const request = await prisma.userCourses.findFirst({
-      where: { user_id: id, active: true },
+      where: { user_id: Number(id), active: true },
       include: {
         completed_levels: true,
         course: {

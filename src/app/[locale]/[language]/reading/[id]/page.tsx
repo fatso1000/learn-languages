@@ -6,11 +6,12 @@ import Navbar from "src/components/Navbar";
 import ReadingHeader from "src/components/Reading/ReadingHeader";
 import ErrorComponent from "src/components/Error";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { id?: string };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ id?: string }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const id = params.hasOwnProperty("id") ? params["id"] : "1";
 
   return {
@@ -19,13 +20,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function ReadingPageById({
-  params,
-  searchParams,
-}: {
-  params: { id?: string; language?: string };
-  searchParams: { userId?: string };
-}) {
+export default async function ReadingPageById(
+  props0: {
+    params: Promise<{ id?: string; language?: string }>;
+    searchParams: Promise<{ userId?: string }>;
+  }
+) {
+  const searchParams = await props0.searchParams;
+  const params = await props0.params;
   const id = params.hasOwnProperty("id") ? params["id"] : "1",
     userId = searchParams.hasOwnProperty("userId")
       ? searchParams["userId"]

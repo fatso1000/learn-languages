@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
 
-import { experimental_useFormState as useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useActionState } from "react";
 import { Link, useRouter } from "src/shared/navigation";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import { LanguageSelectProps } from "src/types";
 import Modal from "src/components/Modal";
 import languagesList from "src/shared/languagesList";
-import { useTranslations } from "use-intl";
 
 const initialState: any = {
   errors: [],
@@ -16,11 +14,9 @@ const initialState: any = {
 };
 
 export default function LanguageSelect(props: LanguageSelectProps) {
-  const generics = useTranslations("generics");
-
-  const { selectedLanguage, languages } = props;
+  const { selectedLanguage, languages, generics } = props;
   const router = useRouter();
-  const [state, formAction] = useFormState(selectUserLanguageFormValidation, {
+  const [state, formAction] = useActionState(selectUserLanguageFormValidation, {
     ...initialState,
     user_profile_id: selectedLanguage.user_profile_id,
   });
@@ -49,11 +45,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
           />
         )}
       </button>
-      <Modal
-        id="languagesModal"
-        modalRef={modalRef}
-        title={generics("languagesModal.title")}
-      >
+      <Modal id="languagesModal" modalRef={modalRef} title={generics.title}>
         <form
           action={formAction}
           ref={formRef}
@@ -129,7 +121,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
                   d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                 />
               </svg>
-              <span>{generics("languagesModal.button")}</span>
+              <span>{generics.button}</span>
             </Link>
           </label>
         </form>

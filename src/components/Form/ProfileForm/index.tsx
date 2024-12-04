@@ -1,7 +1,7 @@
 "use client";
+import { useActionState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import Image from "next/image";
-import { experimental_useFormState as useFormState } from "react-dom";
 import { editProfileFormValidation } from "src/actions/auth";
 import {
   ClockIcon,
@@ -23,7 +23,7 @@ const initialState = {
   success: false,
 };
 
-export default function ProfileForm(props: any) {
+export default function ProfileForm(props: { props: unknown }) {
   const t = useTranslations("pages.profile");
   const generics = useTranslations("generics");
 
@@ -31,7 +31,7 @@ export default function ProfileForm(props: any) {
   const { currentUser, strikes } = useUser(props);
   const { isEditMode, handleEditMode, isEditIconMode, handleEditIconMode } =
     useEditUser(props);
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     editProfileFormValidation,
     initialState
   );

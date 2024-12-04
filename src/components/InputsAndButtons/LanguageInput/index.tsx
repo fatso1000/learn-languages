@@ -85,11 +85,9 @@ export default function LanguageInput(props: {
         className="select select-bordered w-full"
         name="type"
         required
+        value={selectedLanguage}
         onChange={onLanguageChange}
       >
-        <option disabled selected>
-          I speak {localesJSON[defaultLanguage].long}
-        </option>
         <option value={"all"}>All languages</option>
         {languages.map((type) => (
           <option value={type} key={type}>
@@ -109,10 +107,11 @@ export default function LanguageInput(props: {
             )
             .map((language, i) => {
               const value = [language.base, language.target];
-              const isChecked =
+              const isChecked = Boolean(
                 selectedLanguageInput &&
-                selectedLanguageInput[0] === language.base &&
-                selectedLanguageInput[1] === language.target;
+                  selectedLanguageInput[0] === language.base &&
+                  selectedLanguageInput[1] === language.target
+              );
               return (
                 <label
                   key={i}

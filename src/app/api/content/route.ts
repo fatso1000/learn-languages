@@ -9,6 +9,7 @@ import {
   groupByContentLevel,
   verifyUserAuth,
 } from "src/shared/apiShared";
+import { Types } from "@prisma/client";
 
 export async function GET(req: NextRequest) {
   try {
@@ -88,7 +89,7 @@ export async function POST(req: NextRequest) {
         language: { connect: { id: body.language_id } },
         title: body.title,
         level: body.level,
-        type: body.type as any,
+        type: body.type as Types,
       },
     });
     if (!request)

@@ -3,11 +3,12 @@ import Navbar from "src/components/Navbar";
 import { authorizeUser } from "src/queryFn";
 import { getTranslations } from "next-intl/server";
 
-export default async function Verified({
-  searchParams,
-}: {
-  searchParams: { token: string };
-}) {
+export default async function Verified(
+  props: {
+    searchParams: Promise<{ token: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const t = await getTranslations("pages.verify");
   const generics = await getTranslations("generics");
 

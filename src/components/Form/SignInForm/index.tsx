@@ -1,10 +1,9 @@
 "use client";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
-import { experimental_useFormState as useFormState } from "react-dom";
 import { signInFormValidation } from "src/actions/auth";
 import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
-import { useEffect } from "react";
+import { useEffect, useActionState } from "react";
 import { useRouter } from "src/shared/navigation";
 import { useTranslations } from "next-intl";
 
@@ -16,12 +15,15 @@ const initialState = {
 export default function SignInForm() {
   const generics = useTranslations("generics");
   const t = useTranslations("pages.signIn");
-  const [state, formAction] = useFormState(signInFormValidation, initialState);
+  const [state, formAction] = useActionState(
+    signInFormValidation,
+    initialState
+  );
 
   const router = useRouter();
 
   useEffect(() => {
-    if (state.success) router.push("/");
+    if (state.success) router.refresh();
   }, [state.success]);
 
   return (

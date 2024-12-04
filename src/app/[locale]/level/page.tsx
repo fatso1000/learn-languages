@@ -5,20 +5,20 @@ import { ILives, IStrikes, IUser } from "src/types";
 
 export default async function Course(props: any) {
   if (
-    !props.searchParams ||
-    !props.searchParams.unit_id ||
-    !props.searchParams.difficulty ||
-    !props.searchParams.section_id ||
-    !props.searchParams.lang
+    !(await props.searchParams) ||
+    !(await props.searchParams).unit_id ||
+    !(await props.searchParams).difficulty ||
+    !(await props.searchParams).section_id ||
+    !(await props.searchParams).lang
   )
     return <div></div>;
   const request = await getExercises(
-    props.searchParams.difficulty,
-    props.searchParams.unit_id,
-    props.searchParams.lang
+    (await props.searchParams).difficulty,
+    (await props.searchParams).unit_id,
+    (await props.searchParams).lang
   );
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
     lives: cookieStore.get("lives"),
@@ -41,12 +41,12 @@ export default async function Course(props: any) {
   if (!request.data || !currentUser) return <div></div>;
 
   return (
-    <LevelManager
+    (<LevelManager
       data={request.data}
-      sectionId={props.searchParams.section_id}
-      lang={props.searchParams.lang}
+      sectionId={(await props.searchParams).section_id}
+      lang={(await props.searchParams).lang}
       userId={currentUser.id}
       userLives={lives!}
-    />
+    />)
   );
 }

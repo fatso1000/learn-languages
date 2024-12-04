@@ -1,5 +1,5 @@
 import AnimalComponent from "src/components/Animal";
-import { colorsListObject } from "src/shared/LevelsColors";
+import { colorsListObject, type PredefinedKeys } from "src/shared/LevelsColors";
 import { animalsList } from "src/shared/helpers";
 import { IconProps } from "src/types";
 
@@ -26,7 +26,7 @@ export default function IconAnimals(props: {
             />
             <div className="border-4 border-transparent rounded-full">
               <AnimalComponent
-                color={colorsListObject[selectedIcon.color]}
+                color={colorsListObject[selectedIcon.color as PredefinedKeys]}
                 animalName={animal}
                 size="65px"
               />

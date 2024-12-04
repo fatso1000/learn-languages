@@ -1,4 +1,5 @@
 import { Link } from "src/shared/navigation";
+import type { JSX } from "react";
 
 export default function BottomNavigationButton({
   href,

@@ -37,7 +37,7 @@ const CarouselArrow = (props: {
 
 export default function CarouselComponent(props: {
   items: ContentElement[];
-  options: EmblaOptionsType;
+  options?: EmblaOptionsType;
 }) {
   const { items, options } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options);

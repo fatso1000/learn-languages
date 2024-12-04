@@ -1,8 +1,8 @@
-import "./globals.css";
-import React from "react";
-import { Nunito } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
+import { ReactNode } from "react";
 import { getMessages } from "next-intl/server";
+import "./globals.css";
+import { Nunito } from "next/font/google";
+import ClientIntlProvider from "src/components/IntlProvider";
 
 export const metadata = {
   title: "Learn Lenguages Online",
@@ -14,15 +14,20 @@ const nunito = Nunito({
 });
 
 interface props {
-  children: React.ReactNode;
-  params: { locale: "en" | "es" | "jp" };
+  children: ReactNode;
+  params: Promise<{ locale: "en" | "es" | "jp" }>;
 }
 
-export default async function RootLayout({
-  children,
-  params: { locale },
-}: props) {
+export default async function RootLayout(props0: props) {
+  const params = await props0.params;
+
+  const { locale } = params;
+
+  const { children } = props0;
+
   const messages = await getMessages();
+
+  const timeZone = "America/Argentina/Buenos_Aires";
 
   return (
     <html
@@ -31,9 +36,13 @@ export default async function RootLayout({
       className={nunito.className + " antialiased"}
     >
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <ClientIntlProvider
+          timeZone={timeZone}
+          locale={locale}
+          messages={messages}
+        >
           <main>{children}</main>
-        </NextIntlClientProvider>
+        </ClientIntlProvider>
       </body>
     </html>
   );

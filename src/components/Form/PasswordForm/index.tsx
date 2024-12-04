@@ -1,7 +1,5 @@
 "use client";
-import { experimental_useFormState as useFormState } from "react-dom";
-
-import { useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import useUser from "src/hooks/useUser";
 import { userPasswordFormValidation } from "src/actions/auth";
@@ -14,7 +12,7 @@ const initialState: any = {
 };
 
 export default function PasswordForm(props: any) {
-  const [state, formAction] = useFormState(userPasswordFormValidation, {
+  const [state, formAction] = useActionState(userPasswordFormValidation, {
     ...initialState,
   });
 
