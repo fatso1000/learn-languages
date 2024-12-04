@@ -9,7 +9,7 @@ export default async function LoggedInDashboard(props: {
   selectedLanguage: SelectedLanguageElement;
   currentUser: IUser;
 }) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const tokenCookie = cookieStore.get("token"),
     token = tokenCookie && tokenCookie.value ? tokenCookie.value : undefined;
 

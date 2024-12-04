@@ -4,13 +4,14 @@ import Navbar from "src/components/Navbar";
 import ErrorComponent from "src/components/Error";
 import ListeningManager from "src/components/Listening/ListeningManager";
 
-export default async function ListeningPageById({
-  params,
-  searchParams,
-}: {
-  params: { id?: string; language?: string };
-  searchParams: { userId?: string };
-}) {
+export default async function ListeningPageById(
+  props0: {
+    params: Promise<{ id?: string; language?: string }>;
+    searchParams: Promise<{ userId?: string }>;
+  }
+) {
+  const searchParams = await props0.searchParams;
+  const params = await props0.params;
   const id = params.hasOwnProperty("id") ? params["id"] : "1",
     userId = searchParams.hasOwnProperty("userId")
       ? searchParams["userId"]

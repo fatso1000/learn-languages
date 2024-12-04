@@ -6,10 +6,8 @@ import { HttpStatusCode } from "src/types/httpStatusCode";
 import prisma from "src/app/config/db";
 import bcrypt from "bcrypt";
 
-export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { id: number } }
-) {
+export async function PATCH(req: NextRequest, props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   try {
     verifyUserAuth(req);
     const id = +params.id;

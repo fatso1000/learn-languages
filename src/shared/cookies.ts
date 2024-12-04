@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 const getCookie = async (cookieKey: string) => {
   try {
-    return await cookies().get(cookieKey);
+    return (await cookies()).get(cookieKey);
   } catch (error: any) {
     return undefined;
   }
@@ -40,17 +40,23 @@ const getLives = async () => {
 const logoutUser = async () => {
   const oneDay = 24 * 60 * 60 * 1000;
   return {
-    user: await cookies().set({
+    user: await (
+      await cookies()
+    ).set({
       name: "current_user",
       value: "",
       expires: Date.now() - oneDay,
     }),
-    token: await cookies().set({
+    token: await (
+      await cookies()
+    ).set({
       name: "token",
       value: "",
       expires: Date.now() - oneDay,
     }),
-    selected_language: await cookies().set({
+    selected_language: await (
+      await cookies()
+    ).set({
       name: "selected_language",
       value: "",
       expires: Date.now() - oneDay,
@@ -60,7 +66,7 @@ const logoutUser = async () => {
 
 const deleteCookie = async (cookieKey: string) => {
   try {
-    return await cookies().delete(cookieKey);
+    return await (await cookies()).delete(cookieKey);
   } catch (error: any) {
     return undefined;
   }

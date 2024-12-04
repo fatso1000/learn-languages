@@ -7,11 +7,12 @@ import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import ErrorComponent from "src/components/Error";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { language?: Languages };
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<{ language?: Languages }>;
+  }
+): Promise<Metadata> {
+  const params = await props.params;
   const language = params.hasOwnProperty("language")
     ? params["language"]
     : undefined;
@@ -29,11 +30,12 @@ const languageslist = [
   Languages.japanese,
 ];
 
-export default async function ReadingsPage({
-  params,
-}: {
-  params: { language?: Languages };
-}) {
+export default async function ReadingsPage(
+  props: {
+    params: Promise<{ language?: Languages }>;
+  }
+) {
+  const params = await props.params;
   const generics = await getTranslations("generics");
   const t = await getTranslations("pages.reading");
 
@@ -41,7 +43,7 @@ export default async function ReadingsPage({
     ? params["language"]
     : undefined;
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const current_user = cookieStore.get("current_user");
 
   const currentUser: IUser | undefined =

@@ -139,7 +139,7 @@ export async function signInFormValidation(
         ),
         livesStringify = JSON.stringify({ lives, last_live_date }),
         strikesStringify = JSON.stringify({ strikes_length, last_strike_date });
-      setLoginCookies(
+      await setLoginCookies(
         userStringify,
         languageStringify,
         user.data.token,

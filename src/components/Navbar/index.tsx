@@ -1,18 +1,20 @@
-'use server';
+"use server";
 import { ILives, IStrikes, IUser, SelectedLanguageElement } from "src/types";
 import LanguageSelect from "../InputsAndButtons/LanguageSelect";
 import { cookies, headers } from "next/headers";
 import HeartDropdown from "./HeartDropdown";
 import StrikeDropdown from "./StrikeDropdown";
-import { getTranslations } from "next-intl/server";
 import { Link } from "src/shared/navigation";
 import { levelAuthRegex } from "src/shared/helpers";
 import LocaleSelect from "../InputsAndButtons/LocaleSelect";
+import { getTranslations } from "next-intl/server";
 
 export default async function Navbar(props: any) {
-  const t = await getTranslations("generics");
+  const generics = await getTranslations("generics");
+  const title = generics("languagesModal.title"),
+    button = generics("languagesModal.button");
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
     token: cookieStore.get("token"),
@@ -42,7 +44,7 @@ export default async function Navbar(props: any) {
         ? JSON.parse(cookiesObj.strikes.value)
         : undefined;
 
-  const headersList = headers(),
+  const headersList = await headers(),
     pathname = headersList.get("x-url") || "";
 
   const isLoggedIn = currentUser && token ? true : false;
@@ -67,6 +69,10 @@ export default async function Navbar(props: any) {
         !levelAuthRegex.test(pathname) ? (
           <>
             <LanguageSelect
+              generics={{
+                title,
+                button,
+              }}
               selectedLanguage={selectedLanguage}
               languages={currentUser.profile.languages}
             />

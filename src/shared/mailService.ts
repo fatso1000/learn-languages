@@ -1,5 +1,6 @@
 import { render } from "@react-email/render";
 import nodemailer from "nodemailer";
+import { Options } from "nodemailer/lib/mailer";
 import EmailTemplate from "src/components/EmailTemplate";
 
 export async function sendMail(
@@ -16,11 +17,11 @@ export async function sendMail(
     },
   });
 
-  const emailHtml = render(
+  const emailHtml = await render(
     EmailTemplate({ username, uri: `/${locale}/auth/verified?token=${token}` })
   );
 
-  const mailOptions = {
+  const mailOptions: Options = {
     from: process.env.NODEMAILER_EMAIL,
     to: toEmail,
     subject: "Email confirmation",

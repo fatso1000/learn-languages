@@ -7,7 +7,7 @@ import {
   ListeningIcon,
   ReadingIcon,
 } from "src/components/Icons";
-import { colorsListObject } from "src/shared/LevelsColors";
+import { colorsListObject, type PredefinedKeys } from "src/shared/LevelsColors";
 import { DashboardProps, IUser, SelectedLanguageElement } from "src/types";
 import { EmblaOptionsType } from "embla-carousel";
 import { getTranslations } from "next-intl/server";
@@ -35,7 +35,9 @@ export default async function Header(props: {
           <div className="z-10 max-md:hidden max-md:w-full">
             <div className="rounded-full m-auto w-32 h-32">
               <AnimalComponent
-                color={colorsListObject[currentUser.profile.color]}
+                color={
+                  colorsListObject[currentUser.profile.color as PredefinedKeys]
+                }
                 animalName={currentUser.profile.animal_name}
                 size="8rem"
               />

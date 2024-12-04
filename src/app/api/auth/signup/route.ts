@@ -28,13 +28,12 @@ export async function POST(req: NextRequest) {
 
     const token = logInUser(body);
 
-    if (validation.length > 0) {
+    if (validation.length > 0)
       throw new CustomError({
         errors: validation,
         msg: "Error during data validation.",
         httpStatusCode: HttpStatusCode.BAD_REQUEST,
       });
-    }
 
     if (!token)
       throw new CustomError({
@@ -128,7 +127,7 @@ export async function POST(req: NextRequest) {
       data: request,
       httpStatusCode: HttpStatusCode.CREATED,
     });
-  } catch (error: any) {
+  } catch (error) {
     return onThrowError(error);
   }
 }

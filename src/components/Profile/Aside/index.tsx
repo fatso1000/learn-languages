@@ -1,6 +1,6 @@
 import AnimalComponent from "src/components/Animal";
 import { IUser } from "src/types";
-import { colorsListObject } from "src/shared/LevelsColors";
+import { colorsListObject, type PredefinedKeys } from "src/shared/LevelsColors";
 
 export default function Aside({
   currentUser,
@@ -26,7 +26,9 @@ export default function Aside({
           <header className="flex flex-row gap-4 max-md:flex-col relative">
             <div className="rounded-full m-auto z-10 h-[150px] w-[150px] md:w-[96px] md:h-[96px]">
               <AnimalComponent
-                color={colorsListObject[currentUser.profile.color]}
+                color={
+                  colorsListObject[currentUser.profile.color as PredefinedKeys]
+                }
                 animalName={currentUser.profile.animal_name}
                 size="100%"
               />

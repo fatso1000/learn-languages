@@ -1,6 +1,7 @@
 import { logoutUserFormAction } from "src/actions/auth";
 import { LogoutUserSolidIcon } from "src/components/Icons";
 import { Link } from "src/shared/navigation";
+import type { JSX } from "react";
 
 export default function LinkButton({
   href,

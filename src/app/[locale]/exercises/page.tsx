@@ -1,8 +1,7 @@
 "use client";
 
 import { ExerciseDifficulty } from "@prisma/client";
-import { ChangeEvent, useState } from "react";
-import { experimental_useFormState as useFormState } from "react-dom";
+import { ChangeEvent, useState, useActionState } from "react";
 import { ExercisesType } from "src/types";
 import { exercisesLevelFormAction } from "src/actions/auth";
 
@@ -184,7 +183,7 @@ const initialState = {
 };
 
 export default function Exercises(props: any) {
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     exercisesLevelFormAction,
     initialState
   );

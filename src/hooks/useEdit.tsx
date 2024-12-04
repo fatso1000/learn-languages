@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useEditUser(props?: any) {
+export default function useEditUser(props?: unknown) {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isEditIconMode, setIsEditIconMode] = useState<boolean>();
 

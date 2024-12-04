@@ -15,7 +15,7 @@ export default async function Template({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies(),
+  const cookieStore = await cookies(),
     cookiesObj = {
       current_user: cookieStore.get("current_user"),
       token: cookieStore.get("token"),
@@ -33,7 +33,7 @@ export default async function Template({
 
   const isLoggedIn = currentUser && token ? true : false;
   const t = await getTranslations("generics"),
-    headersList = headers(),
+    headersList = await headers(),
     pathname = headersList.get("x-url") || "";
 
   return (

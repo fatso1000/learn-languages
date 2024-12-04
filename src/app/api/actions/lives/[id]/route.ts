@@ -5,10 +5,8 @@ import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import { MAX_LIVES, calculate2HourIntervals } from "src/shared/helpers";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: number } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   try {
     const user_id = Number(params.id);
 
@@ -28,10 +26,8 @@ export async function GET(
   }
 }
 
-export async function POST(
-  req: NextRequest,
-  { params }: { params: { id: number } }
-) {
+export async function POST(req: NextRequest, props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   try {
     const { type } = await req.json();
     const user_id = Number(params.id);

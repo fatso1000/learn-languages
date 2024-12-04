@@ -1,7 +1,6 @@
 "use client";
 
-import { experimental_useFormState as useFormState } from "react-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useActionState } from "react";
 import {
   deleteUserFormValidation,
   userAccountFormValidation,
@@ -18,10 +17,10 @@ const initialState: any = {
 };
 
 export default function SettingsForm(props: any) {
-  const [state, formAction] = useFormState(userAccountFormValidation, {
+  const [state, formAction] = useActionState(userAccountFormValidation, {
     ...initialState,
   });
-  const [stateDelete, formActionDelete] = useFormState(
+  const [stateDelete, formActionDelete] = useActionState(
     deleteUserFormValidation,
     {
       ...initialState,

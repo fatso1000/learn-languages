@@ -5,10 +5,8 @@ import { CustomError } from "src/types/apiTypes";
 import { HttpStatusCode } from "src/types/httpStatusCode";
 import { hasOneDayPassed, isSameDay } from "src/shared/helpers";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: number } }
-) {
+export async function GET(req: NextRequest, props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
   try {
     const user_id = Number(params.id);
 

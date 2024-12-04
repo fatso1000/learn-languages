@@ -3,8 +3,8 @@ import LoggedInDashboard from "src/components/LoggedInDashboard";
 import Navbar from "src/components/Navbar";
 import { IUser, SelectedLanguageElement } from "src/types";
 
-export default function Dashboard(props: any) {
-  const cookieStore = cookies();
+export default async function Dashboard(props: any) {
+  const cookieStore = await cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
     token: cookieStore.get("token"),
