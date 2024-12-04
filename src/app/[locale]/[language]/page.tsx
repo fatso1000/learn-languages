@@ -18,7 +18,8 @@ const languageslist = [
   Languages.japanese,
 ];
 
-export default async function ReadingsPage({ params }: any) {
+export default async function ReadingsPage(props: any) {
+  const params = await props.params;
   const language = params.hasOwnProperty("language")
     ? params["language"]
     : undefined;

@@ -1,11 +1,10 @@
 "use client";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
-import { experimental_useFormState as useFormState } from "react-dom";
 import { signUpFormValidation } from "src/actions/auth";
 import PasswordInput from "src/components/InputsAndButtons/PasswordInput";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
-import { useEffect } from "react";
+import { useEffect, useActionState } from "react";
 import { Link, useRouter } from "src/shared/navigation";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
@@ -18,7 +17,7 @@ const initialState = {
 export default function SignUpForm() {
   const t = useTranslations("pages.signUp");
   const generics = useTranslations("generics");
-  const [state, formAction]: any[] = useFormState(
+  const [state, formAction]: any[] = useActionState(
     signUpFormValidation,
     initialState
   );

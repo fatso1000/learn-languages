@@ -1,6 +1,5 @@
 "use client";
-import { experimental_useFormState as useFormState } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useActionState } from "react";
 import { selectUserLanguageFormValidation } from "src/actions/auth";
 import LanguageInput from "src/components/InputsAndButtons/LanguageInput";
 import useUser from "src/hooks/useUser";
@@ -18,7 +17,7 @@ export default function LanguagesForm({
 }: {
   smallContainer?: boolean;
 }) {
-  const [state, formAction] = useFormState(selectUserLanguageFormValidation, {
+  const [state, formAction] = useActionState(selectUserLanguageFormValidation, {
     ...initialState,
   });
 

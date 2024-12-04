@@ -14,9 +14,10 @@ const getSearchQuery = (urlString: string, searchParamsNames: string[]) => {
   return searchParamsNames.map((v) => searchParams.get(v));
 };
 
-const setCookie = (cookieKey: string, value: any) => {
+const setCookie = async (cookieKey: string, value: any) => {
   try {
-    cookies().set({
+    const cookie = await cookies();
+    cookie.set({
       name: cookieKey,
       value: value,
       maxAge: 3600,
@@ -28,22 +29,22 @@ const setCookie = (cookieKey: string, value: any) => {
   }
 };
 
-const setLoginCookies = (
+const setLoginCookies = async (
   user: string,
   language: string,
   token?: string,
   lives?: string,
   strikes?: string
 ) => {
-  setCookie("current_user", user);
-  setCookie("selected_language", language);
-  lives && setCookie("lives", lives);
-  strikes && setCookie("strikes", strikes);
-  token && setCookie("token", token);
+  await setUserCookie(user);
+  await setCookie("selected_language", language);
+  lives && (await setCookie("lives", lives));
+  strikes && (await setCookie("strikes", strikes));
+  token && (await setCookie("token", token));
 };
 
-const setUserCookie = (user: string) => {
-  setCookie("current_user", user);
+const setUserCookie = async (user: string) => {
+  await setCookie("current_user", user);
 };
 
 const logInUser = (user: any) => {
@@ -63,9 +64,10 @@ const logInUser = (user: any) => {
   }
 };
 
-const removeCookie = (cookieKey: string) => {
+const removeCookie = async (cookieKey: string) => {
   try {
-    cookies().set({ name: cookieKey, maxAge: 0, value: "" });
+    const cookie = await cookies();
+    cookie.set({ name: cookieKey, maxAge: 0, value: "" });
     return true;
   } catch (error) {
     return false;

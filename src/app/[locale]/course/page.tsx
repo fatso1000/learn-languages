@@ -4,17 +4,17 @@ import { ISection } from "src/types";
 import Section from "src/components/Course/Section";
 
 export default async function Course(props: {
-  params: {
+  params: Promise<{
     locale: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     id: string;
-  };
+  }>;
 }) {
-  if (!props.hasOwnProperty("searchParams") || !props.searchParams.id)
+  if (!props.hasOwnProperty("searchParams") || !(await props.searchParams).id)
     return <div></div>;
 
-  const request = await getCourseByUserId(props.searchParams.id);
+  const request = await getCourseByUserId((await props.searchParams).id);
 
   if (!request.data) return <div></div>;
 

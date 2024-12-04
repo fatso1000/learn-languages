@@ -3,7 +3,7 @@ import { ArrowLeftShort } from "src/components/Icons";
 import Navbar from "src/components/Navbar";
 import Unit from "src/components/Section/Unit";
 import { getSectionUnits } from "src/queryFn";
-import { ILives, IUnit, IUser, colors } from "src/types";
+import { ILives, IUnit, colors } from "src/types";
 import { cookies } from "next/headers";
 import LifesModal from "src/components/LevelExercises/LevelManager/LifesModal";
 
@@ -17,8 +17,9 @@ const colorsList = [
 ];
 
 export default async function Section(props: any) {
-  if (!props.searchParams || !props.searchParams.id) return <div></div>;
-  const cookieStore = cookies();
+  const searchParams = await props.searchParams;
+  if (!searchParams || !searchParams.id) return <div></div>;
+  const cookieStore = await cookies();
   const cookiesObj = {
     current_user: cookieStore.get("current_user"),
     lives: cookieStore.get("lives"),
@@ -30,7 +31,7 @@ export default async function Section(props: any) {
       ? JSON.parse(cookiesObj.lives.value)
       : undefined;
 
-  const request = await getSectionUnits(props.searchParams.id);
+  const request = await getSectionUnits(searchParams.id);
 
   if (!request.data) return <div></div>;
 
@@ -60,7 +61,7 @@ export default async function Section(props: any) {
                 <Unit
                   lives={lives!}
                   unit={unit}
-                  sectionId={props.searchParams.id}
+                  sectionId={searchParams.id}
                   key={unit.id}
                   color={unit.color}
                 />
@@ -71,7 +72,7 @@ export default async function Section(props: any) {
         <LifesModal
           isLevel={false}
           isLifesOver={false}
-          sectionId={props.searchParams.id}
+          sectionId={searchParams.id}
         />
       </main>
     </>

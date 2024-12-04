@@ -3,7 +3,7 @@ import { IUser } from "src/types";
 import SubmitButton from "src/components/InputsAndButtons/SubmitButton";
 import FormInput from "src/components/InputsAndButtons/FormInput";
 import FormTextarea from "src/components/InputsAndButtons/FormTextarea";
-import { colorsListObject } from "src/shared/LevelsColors";
+import { colorsListObject, type PredefinedKeys } from "src/shared/LevelsColors";
 
 export default function Edit({
   user,
@@ -19,7 +19,7 @@ export default function Edit({
       <div className="flex flex-col items-center  gap-4 py-2">
         <div className="relative">
           <AnimalComponent
-            color={colorsListObject[user.profile.color]}
+            color={colorsListObject[user.profile.color as PredefinedKeys]}
             animalName={user.profile.animal_name}
             size="6em"
           />

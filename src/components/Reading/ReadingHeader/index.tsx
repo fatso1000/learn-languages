@@ -29,7 +29,7 @@ export default function ReadingHeader(props: {
 
   return (
     <div className="inline-flex gap-3">
-      <Link className="btn" href={`/${props.language}/listening`}>
+      <Link className="btn" href={`/${props.language}/reading`}>
         <ArrowLeftShort />
       </Link>
       {props.userId && (

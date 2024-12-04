@@ -1,5 +1,10 @@
 import { StaticImageData } from "next/image";
-import { InputHTMLAttributes, RefObject, TextareaHTMLAttributes } from "react";
+import {
+  InputHTMLAttributes,
+  RefObject,
+  TextareaHTMLAttributes,
+  type JSX,
+} from "react";
 import { IChoice } from "./apiTypes";
 import { ExerciseDifficulty } from "@prisma/client";
 
@@ -26,7 +31,7 @@ export interface ModalProps {
   children: JSX.Element;
   onSuccess?: () => void;
   onClose?: () => void;
-  modalRef: RefObject<HTMLDialogElement>;
+  modalRef: RefObject<HTMLDialogElement | null>;
   id: string;
 }
 
@@ -175,6 +180,10 @@ export interface IColorsObject {
 export interface LanguageSelectProps {
   selectedLanguage: SelectedLanguageElement;
   languages: SelectedLanguageElement[];
+  generics: {
+    title: string;
+    button: string;
+  };
 }
 
 export interface SelectedLanguageElement {

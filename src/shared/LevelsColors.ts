@@ -1,4 +1,12 @@
-const colorsListObject: any = {
+type PredefinedKeys =
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "success"
+  | "info"
+  | "error";
+
+const colorsListObject: Record<PredefinedKeys, string> = {
   primary: "#8C0327",
   secondary: "#D75050",
   accent: "#DCBDFF",
@@ -94,4 +102,4 @@ const levelColors = {
   },
 };
 
-export { levelColors, colorsListObject };
+export { levelColors, colorsListObject, type PredefinedKeys };
