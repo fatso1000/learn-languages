@@ -10,6 +10,13 @@ import { getRandomAnimalName, getRandomColor } from "src/shared/helpers";
 import { sendMail } from "src/shared/mailService";
 import { logInUser } from "src/shared/apiShared";
 
+export async function OPTIONS() {
+  return onSuccessRequest({
+    data: {},
+    httpStatusCode: HttpStatusCode.OK,
+  });
+}
+
 export async function POST(req: NextRequest) {
   try {
     let body: IUserSignUp = await req.json();
