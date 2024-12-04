@@ -1,7 +1,7 @@
 "use client";
 
 import { IntlProvider, NextIntlClientProvider } from "next-intl";
-import { ComponentProps } from "react";
+import { ComponentProps, type JSX } from "react";
 
 type ProviderProps = Omit<
   ComponentProps<typeof IntlProvider>,
