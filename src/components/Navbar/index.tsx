@@ -50,7 +50,7 @@ export default async function Navbar(props: any) {
   const isLoggedIn = currentUser && token ? true : false;
 
   return (
-    <nav className="navbar bg-base-100 px-4 md:px-8 mt-2 bg-opacity-90 text-base-content h-16 backdrop-blur transition-all duration-100 shadow-sm">
+    <nav className="navbar bg-base-100 px-4 md:px-8 mt-2 bg-opacity-90 text-base-content h-16 backdrop-blur border-b border-base-300/50">
       <div className="flex-1">
         <Link
           className="btn btn-ghost leading-none normal-case text-xl font-extrabold"

@@ -28,7 +28,7 @@ export default async function LocaleSelect({ pathname }: { pathname: string }) {
       </div>
       <div
         tabIndex={0}
-        className="dropdown-content z-[1] menu shadow bg-base-100 rounded-xl w-full gap-2 p-4"
+        className="dropdown-content z-[1] menu bg-base-100/80 rounded-xl w-full gap-2 p-4 border border-base-300"
       >
         {locales.map(
           (locale, i) =>

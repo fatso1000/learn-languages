@@ -89,7 +89,7 @@ export default async function LevelComponent(props: LevelProps) {
     >
       {state === "studying" && <StudyingBubble />}
       <div
-        className={`${styleContent} rounded-2xl h-24 w-24 flex justify-center z-10 cursor-pointer active:scale-90`}
+        className={`${styleContent} rounded-2xl h-24 w-24 flex justify-center z-10 cursor-pointer`}
       >
         <LevelIcon state={state} />
       </div>

@@ -141,7 +141,7 @@ export default function LanguageInput(props: {
                       alt="flag"
                       width={63}
                       height={24}
-                      className="m-auto h-9 w-12 rounded-md absolute top-0 right-0 shadow"
+                      className="m-auto h-9 w-12 rounded-md absolute top-0 right-0 border border-base-300"
                     />
                   )}
                   <span>{language.target}</span>

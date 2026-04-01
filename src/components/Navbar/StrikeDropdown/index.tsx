@@ -86,7 +86,7 @@ export default function StrikeDropdown({
       </button>
       <div
         tabIndex={0}
-        className="dropdown-content z-[1] menu p-4 gap-2 shadow bg-error text-error-content flex-col rounded-box flex top-12"
+        className="dropdown-content z-[1] menu p-4 gap-2 bg-error/90 backdrop-blur-md border border-error-content/20 text-error-content flex-col rounded-box flex top-12"
       >
         <div className="inline-flex justify-between items-center">
           <h5 className="font-black text-xl">

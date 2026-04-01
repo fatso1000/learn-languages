@@ -62,7 +62,7 @@ export default function LevelBubble({
       return (
         <div
           tabIndex={0}
-          className="dropdown-content z-40 card card-compact w-64 p-4 shadow-md bg-base-200 border-base-200 text-base-content top-32 relative flex flex-col items-center border-2"
+          className="dropdown-content z-40 card card-compact w-64 p-4 bg-base-200/80 border-base-300 text-base-content top-32 relative flex flex-col items-center border-2"
         >
           <div className="card-body text-start !p-0 flex flex-col gap-2 w-full">
             <h3 className="text-lg font-black flex justify-between ">
@@ -77,7 +77,7 @@ export default function LevelBubble({
       return (
         <div
           tabIndex={0}
-          className={`dropdown-content z-40 card card-compact w-64 p-4 shadow-md top-32 relative flex flex-col items-center border-2 ${colors[color].box}`}
+          className={`dropdown-content z-40 card card-compact w-64 p-4 top-32 relative flex flex-col items-center border-2 ${colors[color].box}`}
         >
           <div className="card-body text-start !p-0 flex flex-col gap-2 w-full">
             <h3 className="text-lg font-black flex justify-between ">
@@ -91,7 +91,7 @@ export default function LevelBubble({
             <p>{t("currentLevel")}</p>
             {lives.lives === 0 ? (
               <div
-                className={`btn shadow-lg ${colors[color].btn}`}
+                className={`btn ${colors[color].btn}`}
                 onClick={onButtonClick}
               >
                 {t("start")}
@@ -99,7 +99,7 @@ export default function LevelBubble({
             ) : (
               <Link
                 href={href}
-                className={`btn shadow-lg ${colors[color].btn}`}
+                className={`btn ${colors[color].btn}`}
               >
                 {t("start")}
               </Link>
@@ -114,7 +114,7 @@ export default function LevelBubble({
       return (
         <div
           tabIndex={0}
-          className={`dropdown-content z-40 card card-compact w-64 p-4 shadow-md top-32 relative flex flex-col items-center border-2 ${colors[color].box}`}
+          className={`dropdown-content z-40 card card-compact w-64 p-4 top-32 relative flex flex-col items-center border-2 ${colors[color].box}`}
         >
           <div className="card-body text-start !p-0 flex flex-col gap-2 w-full">
             <h3 className="text-lg font-black flex justify-between ">
@@ -131,13 +131,13 @@ export default function LevelBubble({
               ) : (
                 <Link
                 href={href}
-                className={`btn shadow-lg ${colors[color].btn}`}
+                className={`btn ${colors[color].btn}`}
                 >
                 {t("practice")}
                 </Link>
               )} */}
             <div
-              className={`btn shadow-lg ${colors[color].btn}`}
+              className={`btn ${colors[color].btn}`}
               onClick={onButtonClick}
             >
               {t("practice")}

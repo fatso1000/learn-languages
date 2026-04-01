@@ -32,10 +32,10 @@ export default async function RootLayout(props0: props) {
   return (
     <html
       lang={locale}
-      data-theme="autumn"
-      className={nunito.className + " antialiased"}
+      data-theme="glasspastel"
+      className={`${nunito.className} antialiased tracking-tight`}
     >
-      <body>
+      <body className="min-h-svh text-base-content">
         <ClientIntlProvider
           timeZone={timeZone}
           locale={locale}

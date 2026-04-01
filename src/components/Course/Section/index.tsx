@@ -107,7 +107,7 @@ export default async function Section({
         </div>
       </div>
       <Image
-        className="flex-1 w-3/5 h-auto object-contain drop-shadow-xl max-w-[260px]"
+        className="flex-1 w-3/5 h-auto object-contain max-w-[260px]"
         src={
           section?.img_src ||
           "https://www.katywang.co.uk/img/misc/stickers/hare.gif"

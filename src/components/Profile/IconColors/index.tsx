@@ -20,7 +20,7 @@ export default function IconColors(props: {
 
           <div
             tabIndex={0}
-            className="menu menu-sm dropdown-content p-2 shadow z-[1] bg-base-100 rounded-box w-[280px] grid grid-cols-4 gap-2 justify-center items-center"
+            className="menu menu-sm dropdown-content p-2 z-[1] border border-base-300 bg-base-100 rounded-box w-[280px] grid grid-cols-4 gap-2 justify-center items-center"
           >
             {Object.keys(colorsListObject).map((color) => (
               <label
