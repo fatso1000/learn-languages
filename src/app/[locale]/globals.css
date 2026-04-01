@@ -26,16 +26,70 @@ html {
 body {
   margin: 0;
   line-height: inherit;
+  min-height: 100svh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background-color: hsl(var(--b1) / 1);
+  background-image:
+    radial-gradient(
+      ellipse 120% 80% at 10% 0%,
+      hsl(330 70% 94% / 0.95),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 100% 70% at 90% 10%,
+      hsl(210 85% 92% / 0.9),
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 80% 60% at 50% 100%,
+      hsl(160 45% 90% / 0.85),
+      transparent 55%
+    ),
+    linear-gradient(180deg, hsl(var(--b1) / 1) 0%, hsl(var(--b2) / 1) 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  .card,
+  .dropdown-content,
+  .navbar,
+  .menu {
+    @apply bg-white/45 backdrop-blur-md border border-white/70 shadow-none !important;
+    box-shadow: none !important;
+  }
+
+  .btn {
+    @apply shadow-none backdrop-blur-sm border border-white/60 !important;
+    box-shadow: none !important;
+  }
+
+  .btn:active,
+  .card:active {
+    transform: none !important;
+  }
+
+  .card:active {
+    @apply bg-white/65 !important;
+  }
+
+  .btn:active {
+    filter: brightness(0.97);
+  }
 }
 
 ::-webkit-scrollbar-track {
   background-color: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #7b7b7b;
+  background-color: hsl(var(--bc) / 0.25);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #919191;
+  background-color: hsl(var(--bc) / 0.35);
 }
 ::-webkit-scrollbar {
   background-color: transparent;
@@ -66,15 +120,21 @@ body {
 
 .user-frame::before {
   content: "";
-  background-image: linear-gradient(transparent, white, transparent);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--bc) / 0.12),
+    transparent
+  );
   position: absolute;
-  width: 150%;
-  height: 0.75rem;
+  width: 100%;
+  height: 0.5rem;
   inset: var(--offset);
   top: 45%;
-  left: -100%;
+  left: 0;
   aspect-ratio: 1;
-  animation: movment 2s linear infinite;
+  opacity: 0.6;
+  pointer-events: none;
 }
 .user-frame::after {
   content: "";
@@ -87,16 +147,8 @@ body {
   height: calc(10px);
   width: calc(10px);
 }
-@keyframes movment {
-  from {
-    transform: translateX(0%) rotate(-60deg);
-  }
-  to {
-    transform: translateX(100%) rotate(-60deg);
-  }
-}
 progress[value]::-webkit-progress-value {
-  transition: width 0.5s;
+  transition: none;
 }
 
 .fadeOut {

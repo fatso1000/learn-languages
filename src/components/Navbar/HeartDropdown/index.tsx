@@ -51,7 +51,7 @@ export default function HeartDropdown({
 
       <div
         tabIndex={0}
-        className="dropdown-content z-[1] min-w-[200px] bg-error menu p-4 gap-2 shadow text-error-content flex-col rounded-box flex top-12"
+        className="dropdown-content z-[1] min-w-[200px] bg-error/90 backdrop-blur-md menu p-4 gap-2 border border-error-content/20 text-error-content flex-col rounded-box flex top-12"
       >
         <div className="inline-flex justify-between items-center">
           <h5 className="font-black text-xl">

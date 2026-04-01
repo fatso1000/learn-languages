@@ -44,10 +44,28 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        autumn: {
-          ...require("daisyui/src/theming/themes")["[data-theme=autumn]"],
-          info: "#41ACBA",
+        glasspastel: {
+          ...require("daisyui/src/theming/themes")["[data-theme=pastel]"],
+          primary: "#ffc4d9",
+          "primary-content": "#4a3040",
+          secondary: "#bde0fe",
+          "secondary-content": "#1e3a5f",
           accent: "#DBBBFF",
+          "accent-content": "#3d2f52",
+          neutral: "#c8b8d4",
+          "neutral-content": "#3d3548",
+          "base-100": "#fef8fb",
+          "base-200": "#f3eef8",
+          "base-300": "#e2dce8",
+          "base-content": "#3d3548",
+          info: "#a8dadc",
+          "info-content": "#1d3557",
+          success: "#d8f3dc",
+          "success-content": "#1b4332",
+          warning: "#ffe5b4",
+          "warning-content": "#5c3d00",
+          error: "#ffadad",
+          "error-content": "#4a1515",
         },
       },
     ],

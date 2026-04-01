@@ -92,7 +92,7 @@ export default function LanguageSelect(props: LanguageSelectProps) {
                       alt="flag"
                       width={63}
                       height={24}
-                      className="m-auto h-4 w-6 rounded-md absolute top-0 right-0 shadow"
+                      className="m-auto h-4 w-6 rounded-md absolute top-0 right-0 border border-base-300"
                     />
                   )}
                 </div>

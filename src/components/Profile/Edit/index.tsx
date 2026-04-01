@@ -25,7 +25,7 @@ export default function Edit({
           />
           <button
             type="button"
-            className="w-8 h-8 bg-base-100 shadow absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
+            className="w-8 h-8 bg-base-100 border border-base-300 absolute right-0 bottom-0 rounded-[2rem] flex items-center justify-center"
             onClick={() => handleEditIconMode()}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
